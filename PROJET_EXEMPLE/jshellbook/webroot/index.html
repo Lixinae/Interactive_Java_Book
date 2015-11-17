@@ -1,0 +1,31 @@
+<html>
+ <head>
+  <script src="asset/jquery-2.1.4.js"></script>
+  <script>
+   $(document).ready(function() {
+     var element = $("#exercise");
+     
+     $.get('/exercise/5', function(items) {
+       console.log(items);
+     
+       $.each(items, function(index, item) {
+          if (item.question) {
+            element.append('<p>' + item.question + '</p>');
+          } else {
+            element.append('<textarea class=\"answer\" rows="' + item.answer +'">Your answser !</textarea>');
+          }
+       });
+       
+       $("body").on("input", ".answer", function() {
+         alert("change !"); 
+       });
+     })
+   });
+  </script>
+ </head>
+ <body>
+  <div id="exercise">
+  </div>
+
+ </body>
+</html>
