@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Interactive_Java_Book" default="dist" basedir=".">
+<project name="Interactive_Java_Book" basedir=".">
   <description>
     simple example build file
   </description>
