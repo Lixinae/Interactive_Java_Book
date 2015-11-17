@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Interactive_Java_Book" default="dist" basedir=".">
+  <description>
+    simple example build file
+  </description>
+  <!-- set global properties for this build -->
+  <property name="src" location="src"/>
+  <property name="build" location="classes"/>
+  <property name="dist" location="dist"/>
 <script type="text/javascript" src="/libs/jquery-2.1.4.min.js"></script>
 
 

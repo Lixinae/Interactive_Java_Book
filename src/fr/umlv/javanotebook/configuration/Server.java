@@ -5,22 +5,26 @@ public class Server{
 	final int port; // port du server
 	final String adress; // nom du serveur , localhost car on ne travail que en local 
 	
-	public Server(int port){
-		adress="localhost";
-		this.port=port;
+	public Server(){
+		this.adress="localhost";
+		this.port=8989;
 	}
 	
 	// Permet de lancer le serveur
-	public void launch(){
+	public void start(){
 		
 		
 	}
+	
 	// Affiche l'url du serveur sur le terminal
 	public void print_url(){
-		System.out.println();
+		System.out.println(this.adress+" "+this.port);
 
 	}
 	
+	public boolean verify(){
+		return true;
+	}
 	
 
 
