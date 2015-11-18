@@ -22,7 +22,7 @@ public class Server extends AbstractVerticle{
 		// otherwise serve static pages
 		router.route().handler(StaticHandler.create());
 
-		vertx.createHttpServer().requestHandler(router::accept).listen(8989);
+		vertx.createHttpServer().requestHandler(router::accept).listen(port);
 	}
 
 //	private void getAnExercise(RoutingContext routingContext) {
