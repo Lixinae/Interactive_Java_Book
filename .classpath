@@ -17,5 +17,10 @@
 	<classpathentry kind="lib" path="vert.x-3.0.0/lib/vertx-core-3.0.0.jar"/>
 	<classpathentry kind="lib" path="vert.x-3.0.0/lib/vertx-unit-3.0.0.jar"/>
 	<classpathentry kind="lib" path="vert.x-3.0.0/lib/vertx-web-3.0.0.jar"/>
+	<classpathentry kind="lib" path="libs/parboiled-core-1.1.7-javadoc.jar"/>
+	<classpathentry kind="lib" path="libs/parboiled-core-1.1.7.jar"/>
+	<classpathentry kind="lib" path="libs/parboiled-java-1.1.7-javadoc.jar"/>
+	<classpathentry kind="lib" path="libs/parboiled-scala-1.0.2-javadoc.jar"/>
+	<classpathentry kind="lib" path="libs/parboiled-scala-1.0.2.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>
