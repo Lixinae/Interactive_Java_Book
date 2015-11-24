@@ -18,12 +18,12 @@ import java.util.Scanner;
 public class Main_test_Parser {
 
     public static void main(String[] args) throws FileNotFoundException {
-    	String fichier = "./exercice/test.MARKDOWN";
+    	String fichier = "./exercice/test_2.MARKDOWN";
     	InputStream input = new FileInputStream(fichier);    	
     	char[] markdown = FileUtils.readAllChars(input);
     	Preconditions.checkNotNull(markdown, "The specified file isn't found - "+fichier);
     	ExerciceParser exparser = Parboiled.createParser(ExerciceParser.class);
-    	//ParsingResult<?> result = new ReportingParseRunner(exparser.test()).run(markdown);
+    	ParsingResult<?> result = new ReportingParseRunner(exparser.test()).run(markdown);
     	
     	
     	System.out.println(markdown);
