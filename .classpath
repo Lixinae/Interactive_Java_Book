@@ -21,7 +21,7 @@
 	<classpathentry kind="lib" path="vert.x-3.0.0/lib/vertx-unit-3.0.0.jar"/>
 	<classpathentry kind="lib" path="vert.x-3.0.0/lib/vertx-web-3.0.0.jar"/>
 	<classpathentry kind="lib" path="libs/asm-all-5.0.4.jar"/>
-	<classpathentry kind="lib" path="libs/pegdown/pegdown-1.2.1.jar"/>
+	<classpathentry kind="lib" path="libs/pegdown/pegdown-1.2.1.jar" sourcepath="libs/pegdown/pegdown-1.2.1-sources.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre1.8.0_65"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

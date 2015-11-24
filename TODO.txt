@@ -1,0 +1,12 @@
+
+- Format d'un exercice
+	- Parser un fichier .markdown
+
+- Creer des exercices
+	- Ajout de test JUnit pour les exercices (affichable sur demande)
+		- Chaque test est associé à 1 exercice
+	
+- Plusieurs processus (idée de base) :
+		- Recuperation des exercice
+		- Scan du code java des reponses des exercice
+		- 
