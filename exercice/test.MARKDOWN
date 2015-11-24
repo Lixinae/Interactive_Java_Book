@@ -1,0 +1,42 @@
+ParaNode
+    SuperNode
+        TextNode
+        SpecialTextNode
+        TextNode
+        SpecialTextNode
+ParaNode
+    SuperNode
+        TextNode
+        SpecialTextNode
+HeaderNode
+    TextNode
+ParaNode
+    SuperNode
+        TextNode
+        SpecialTextNode
+        TextNode
+        SpecialTextNode
+BulletListNode
+    ListItemNode
+        RootNode
+            SuperNode
+                TextNode
+                SpecialTextNode
+                TextNode
+    ListItemNode
+        RootNode
+            SuperNode
+                TextNode
+                SpecialTextNode
+                TextNode
+ParaNode
+    SuperNode
+        TextNode
+        SpecialTextNode
+        TextNode
+        SpecialTextNode
+VerbatimNode
+ParaNode
+    SuperNode
+        TextNode
+        SpecialTextNode
