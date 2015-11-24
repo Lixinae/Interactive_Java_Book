@@ -34,14 +34,16 @@ public class WatchTest {
                 for (WatchEvent<?> event : key.pollEvents()) {
                     WatchEvent.Kind<?> kind = event.kind();
                      
-                    //@SuppressWarnings("unchecked")
+                    @SuppressWarnings("unchecked")
                     WatchEvent<Path> ev = (WatchEvent<Path>) event;
                     Path fileName = ev.context();
-                     
+                    
+                    // Peut ajouter des test a ce moment pour voir ce que l'on fait en cas de modification
+                    
                     System.out.println(kind.name() + ": " + fileName);
                      
                     if (kind == ENTRY_MODIFY &&
-                            fileName.toString().equals("WatchTest.java")) {
+                        fileName.toString().equals("WatchTest.java")) {
                         System.out.println("My source file has changed!!!");
                     }
                 }
