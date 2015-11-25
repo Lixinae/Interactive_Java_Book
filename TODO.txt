@@ -6,7 +6,7 @@
 	- Ajout de test JUnit pour les exercices (affichable sur demande)
 		- Chaque test est associé à 1 exercice
 	
-- Plusieurs processus (idée de base) :
+- Plusieurs processus (idée de base), 1 processus par idée :
 		- Recuperation des exercice
 		- Scan du code java des reponses des exercice
-		- 
+		- Surveillance du dossier des exercice 
