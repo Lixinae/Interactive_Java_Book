@@ -58,3 +58,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 /PROJET_EXEMPLE/
+
+#eclipse_files
+.classpath
+.project
