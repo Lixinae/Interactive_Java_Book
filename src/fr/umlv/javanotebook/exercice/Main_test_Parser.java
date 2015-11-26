@@ -66,7 +66,9 @@ public class Main_test_Parser {
 		PegDownProcessor processor = new PegDownProcessor(Extensions.ALL);
 
 		// convertie le fichier markdown au format html
-		// envoyer la string au server qui l'a renvoie au client
+		// Creer page html basique avec fichier javascript dans le header
+		// <head> <script src="truc.js"> </script> </head>
+		// Ajouter le code generer dans une div dans la page par defaut
 		String html_code=processor.markdownToHtml(markdown);
 		
 		System.out.println(html_code);
