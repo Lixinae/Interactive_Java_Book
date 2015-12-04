@@ -2,29 +2,36 @@
  <head>
   <script src="asset/jquery-2.1.4.js"></script>
   <script>
-   $(document).ready(function() {
-     var element = $("#exercise");
-     
-     $.get('/exercise/5', function(items) {
-       console.log(items);
-     
-       $.each(items, function(index, item) {
-          if (item.question) {
-            element.append('<p>' + item.question + '</p>');
-          } else {
-            element.append('<textarea class=\"answer\" rows="' + item.answer +'">Your answser !</textarea>');
-          }
-       });
-       
-       $("body").on("input", ".answer", function() {
-         alert("change !"); 
-       });
-     })
-   });
+
+	<!-- 
+	Ajouter generateur bouton pour clique exo
+	"1" -> 1.markdown
+	"2" -> 2.markdown...etc
+	-->
+	
+	
+	<!-- -->
+	$(document).ready(function(){
+		<!-- Pointe sur la div exercice --> 
+		var element = $("#exercice");
+		
+		<!-- Pointe sur le button et applique la fonction lors du click -->
+		$("button").click(function(){ 
+			<!-- Envoie la requete '/exercice/3.markdown' au serveur et ajoute la data lu dans la div "element" -->
+			$.get('/exercice/3.markdown',function(data){
+				console.log(data);
+				element.append(data);
+			});
+		});
+	});
+	
+	
   </script>
  </head>
  <body>
-  <div id="exercise">
+ <button> magic </button>
+  <div id="exercice">
+  
   </div>
 
  </body>

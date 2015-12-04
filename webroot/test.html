@@ -1,0 +1,30 @@
+<html>
+ <head>
+  <script src="asset/jquery-2.1.4.js"></script>
+  <script>
+
+	var towrite = "<p>An introduction sentence. Another introduction sentence.</p><p>An introduction sentence.</p><ul><li>this a test</li></ul><h1>First header title</h1><p>Some content. Some content.</p><ul><li>List item 1: some description</li><li>List item 2: some description</li></ul><p>Some content. Some content.</p><pre><code>SomeClass clazz = new SomeClass();clazz.test();</code></pre><p>Some content.</p>"
+	  
+	document.write(towrite);
+	
+	$(document).ready(function(){
+		var element = $("#exercice");
+		$("button").click(function(){
+			$.get('/exercise/2.markdown',function(data){
+				alert("Data : "+ data);	
+			});
+		});
+	
+	
+	});
+	
+	
+  </script>
+ </head>
+ <body>
+ <button> this a test button </button>
+  <div id="exercise">
+  </div>
+
+ </body>
+</html>

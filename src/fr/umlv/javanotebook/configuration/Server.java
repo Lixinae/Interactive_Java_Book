@@ -1,7 +1,11 @@
 package fr.umlv.javanotebook.configuration;
 
+import java.io.FileNotFoundException;
+
+import fr.umlv.javanotebook.exercice.Main_test_Parser;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.ext.web.Router;
+import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.StaticHandler;
 
 public class Server extends AbstractVerticle{
@@ -16,12 +20,14 @@ public class Server extends AbstractVerticle{
 	
 	@Override
 	public void start() {
-		Router router = Router.router(vertx);
+		Router router = Router.router(vertx);	
+		
 		// route to JSON REST APIs 
-		//router.get("/exercise/:id").handler(this::getAnExercise);
+		
+		// Requete get faite dans le javascript
+		router.get("/exercice/:id").handler(this::getExercise);
 		// otherwise serve static pages
 		router.route().handler(StaticHandler.create());
-
 		vertx.createHttpServer().requestHandler(router::accept).listen(port);
 	}
 
@@ -32,6 +38,14 @@ public class Server extends AbstractVerticle{
 //		.putHeader("content-type", "application/json")
 //		.end(exercise.toJSON());
 //	}
+	
+	private void getExercise(RoutingContext routingContext) {
+		String id = routingContext.request().getParam("id");
+		System.out.println("ask for an exercise by id " + id);
+		routingContext.response()
+	       //.putHeader("content-type", "application/json")
+	       .end(Main_test_Parser.toWeb(id));
+	}
 	
 	// Affiche l'url du serveur sur le terminal
 	public void print_url(){

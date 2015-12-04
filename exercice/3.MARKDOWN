@@ -1,0 +1,4 @@
+# Exercice 3
+
+* Question 1 :
+Write a code to do 2+2
