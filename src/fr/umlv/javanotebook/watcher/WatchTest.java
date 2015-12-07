@@ -15,6 +15,13 @@ import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 
 // Exemple de code afin voir comment fonctionne la classe "watchservice"
+/*
+ * 
+ * Classe de test
+ *  Non inclus dans le rendu final
+ * 
+ * 
+ */
 public class WatchTest {
 
 	

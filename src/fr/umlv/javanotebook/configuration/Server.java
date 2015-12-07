@@ -1,8 +1,6 @@
 package fr.umlv.javanotebook.configuration;
 
-import java.io.FileNotFoundException;
-
-import fr.umlv.javanotebook.exercice.Main_test_Parser;
+import fr.umlv.javanotebook.exercice.ExerciceParser;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
@@ -44,7 +42,7 @@ public class Server extends AbstractVerticle{
 		System.out.println("ask for an exercise by id " + id);
 		routingContext.response()
 	       //.putHeader("content-type", "application/json")
-	       .end(Main_test_Parser.toWeb(id));
+	       .end(ExerciceParser.toWeb(id));
 	}
 	
 	// Affiche l'url du serveur sur le terminal

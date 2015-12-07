@@ -8,6 +8,14 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
+
+/*
+ * 
+ * Classe de test
+ *  Non inclus dans le rendu final
+ * 
+ * 
+ */
 public class Main_test_Parser {
 
 	// TODO
