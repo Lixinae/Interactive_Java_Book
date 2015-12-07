@@ -34,10 +34,4 @@ public class Main_test_Parser {
 		return html_code;
 	}
 	
-	public static void main(String[] args) throws FileNotFoundException {
-		
-
-		
-		//System.out.println(html_code);
-	}
 }

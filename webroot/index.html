@@ -4,10 +4,9 @@
   <script>
 
 	<!-- 
-	Ajouter generateur bouton pour clique exo
-	"1" -> 1.markdown
-	"2" -> 2.markdown...etc
-	-->
+	<!-- Ajouter generateur bouton pour clique exo-->
+	<!-- "1" -> 1.markdown-->
+	<!-- "2" -> 2.markdown...etc-->
 	
 	
 	<!-- -->
@@ -16,9 +15,9 @@
 		var element = $("#exercice");
 		
 		<!-- Pointe sur le button et applique la fonction lors du click -->
-		$("button").click(function(){ 
+		$("button.button1").click(function(){ 
 			<!-- Envoie la requete '/exercice/3.markdown' au serveur et ajoute la data lu dans la div "element" -->
-			$.get('/exercice/3.markdown',function(data){
+			$.get('/exercice/3.MARKDOWN',function(data){
 				console.log(data);
 				element.append(data);
 			});
@@ -29,7 +28,8 @@
   </script>
  </head>
  <body>
- <button> magic </button>
+ <button id=button1> magic </button>
+ <button id=button2> magic two </button>
   <div id="exercice">
   
   </div>
