@@ -1,4 +1,4 @@
-package fr.umlv.javanotebook;
+package fr.umlv.javanotebook.watcher;
 
 import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
