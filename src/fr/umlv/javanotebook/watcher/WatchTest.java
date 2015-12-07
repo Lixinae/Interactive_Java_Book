@@ -17,6 +17,7 @@ import java.nio.file.WatchService;
 // Exemple de code afin voir comment fonctionne la classe "watchservice"
 public class WatchTest {
 
+	
 	public static void main(String[] args) {
 		try {
 			WatchService watcher = FileSystems.getDefault().newWatchService();
