@@ -7,12 +7,26 @@ import java.util.List;
 
 import jdk.jshell.Snippet.Status;
 
-class Validation {
+public class MyValidation {
+	
+	/* Enter some Java code: 2+2
+		Successful addition of 2+2
+		Value is: 4
+		 Enter some Java code: prout
+		Failed addition of prout
+		 Enter some Java code: public int aff(){ return 0; }
+		Successful addition of public int aff(){ return 0; }
+		 Enter some Java code: aff()
+		Successful addition of aff()
+		Value is: 0
+		 Enter some Java code: 
+ */
+	
 	public static void main(String[] args) {
 		Console console = System.console();
 		try (JShell js = JShell.create()) {
 			do {
-				System.out.print("Enter some Java code: ");
+				System.out.print(" Enter some Java code: ");
 				String input = console.readLine();
 				if (input == null) {
 					break;
@@ -56,5 +70,15 @@ class Validation {
 			} while (true);
 		}
 		System.out.println("\nGoodbye");
+	}
+
+	/**
+	 * 
+	 * @param id : ID of the exercice
+	 * @return : string with html format
+	 */
+	public static String accept(String id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
