@@ -4,7 +4,6 @@ import java.io.File;
 
 public class Exercice {
 
-	//private static int numberOfExercices;
 	
 	/**
 	 * 

@@ -76,7 +76,8 @@ public class Watcher {
 	private void doEvents(WatchKey key) {
 		for (WatchEvent<?> event : key.pollEvents()) {
 			Kind<?> kind = event.kind();
-			// SuppressWarning -> I know what i'm
+			// TODO
+			// SuppressWarning -> 
 			@SuppressWarnings("unchecked")
 			WatchEvent<Path> ev = (WatchEvent<Path>) event;
 			Path fileName = ev.context();
@@ -92,15 +93,11 @@ public class Watcher {
 			} else if (kind == ENTRY_DELETE) {
 
 			} else if (kind == ENTRY_MODIFY) {
+				// TODO
 				// Update de l'exercice modifié si c'est exercice courant
 				// Si autre exo -> rien faire , chargement effectuer uniquement
 				// lors de la demande utilisateur
 			}
-
-//			if (kind == ENTRY_MODIFY &&
-//					fileName.toString().equals("WatchTest.java")) {
-//				System.out.println("My source file has changed!!!");
-//			}
 		}
 	}
 }
