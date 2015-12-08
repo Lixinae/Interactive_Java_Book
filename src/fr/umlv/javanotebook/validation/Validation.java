@@ -1,22 +1,60 @@
 package fr.umlv.javanotebook.validation;
 
-import jdk.jshell.JShell;
+import jdk.jshell.*;
 
-public class Validation {
-	public boolean valid(String answer){
-		String[] copy = answer.split(" ");
-		int it = 0;
-		for (int i=0;i<copy.length;i++){
-			if (copy[i].equals("return")){
-				it=i;
-			}
-		}
-		if(Integer.parseInt(copy[it+1])==4){
-			return true;
-		}
-		return false;
-	}
+import java.io.Console;
+import java.util.List;
+
+import jdk.jshell.Snippet.Status;
+
+class Validation {
 	public static void main(String[] args) {
-		
+		Console console = System.console();
+		try (JShell js = JShell.create()) {
+			do {
+				System.out.print("Enter some Java code: ");
+				String input = console.readLine();
+				if (input == null) {
+					break;
+				}
+				List<SnippetEvent> events = js.eval(input);
+				for (SnippetEvent e : events) {
+					StringBuilder sb = new StringBuilder();
+					if (e.causeSnippet() == null) {
+						//  We have a snippet creation event
+						switch (e.status()) {
+						case VALID:
+							sb.append("Successful ");
+							break;
+						case RECOVERABLE_DEFINED:
+							sb.append("With unresolved references ");
+							break;
+						case RECOVERABLE_NOT_DEFINED:
+							sb.append("Possibly reparable, failed  ");
+							break;
+						case REJECTED:
+							sb.append("Failed ");
+							break;
+						default:
+							new IllegalStateException();
+							break;
+						}
+						if (e.previousStatus() == Status.NONEXISTENT) {
+							sb.append("addition");
+						} else {
+							sb.append("modification");
+						}
+						sb.append(" of ");
+						sb.append(e.snippet().source());
+						System.out.println(sb);
+						if (e.value() != null) {
+							System.out.printf("Value is: %s\n", e.value());
+						}
+						System.out.flush();
+					}
+				}
+			} while (true);
+		}
+		System.out.println("\nGoodbye");
 	}
 }
