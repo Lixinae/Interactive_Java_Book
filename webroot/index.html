@@ -2,37 +2,56 @@
  <head>
   <script src="asset/jquery-2.1.4.js"></script>
   <script>
-
-	<!-- 
-	<!-- Ajouter generateur bouton pour clique exo-->
-	<!-- "1" -> 1.markdown-->
-	<!-- "2" -> 2.markdown...etc-->
-	
-	
-	<!-- -->
-	$(document).ready(function(){
-		<!-- Pointe sur la div exercice --> 
-		var element = $("#exercice");
-		
-		<!-- Pointe sur le button et applique la fonction lors du click -->
-		$("button.button1").click(function(){ 
-			<!-- Envoie la requete '/exercice/3.markdown' au serveur et ajoute la data lu dans la div "element" -->
-			$.get('/exercice/3.MARKDOWN',function(data){
+		function printExercice(id){
+			var element = $("#exercice");
+			var noData = '<p>There is no file Exercice_'+id+' </p>' ;
+			element.html("");
+			$.get('/exercice/'+id+'.MARKDOWN',function(data){
 				console.log(data);
 				element.append(data);
+				
+				if(data.localeCompare(noData) != 0){
+					element.append('<textarea class=\"answer\" rows=10 cols=50 >Your answser !</textarea>');
+				}
+				// TODO Change this
+				$("body").on("input", ".answer", function() {
+					
+					alert("change Me !"); 
+				});
 			});
+		}
+		
+		// TODO 
+		// Resoudre probleme clignotement au moment de l'actualisation des buttons
+		function printButtons(){
+			var buttons = $("#buttons");
+			buttons.html("");
+			$.get('/countfiles',function(data){
+				//buttons.append('<input id=button'+0+' type=button'+' value=Exercice_'+0+' onclick=printExercice(3);'+' />');
+				for(i=0 ;i< parseInt(data);i++){
+					//buttons.append('<button id=button'+i+'>Exercice '+i+'</button>');
+					
+					buttons.append('<input id=button'+i+' type=button '+' value=Exercice_'+i+' onclick=printExercice('+i+');'+' </input>');
+				}
+			});
+		}
+		
+		$(document).ready(function(){
+			printButtons();
+			var interval = 1000 * 60 * 1;
+			setInterval(printButtons,interval);
 		});
-	});
-	
-	
+
+		
   </script>
  </head>
  <body>
- <button id=button1> magic </button>
- <button id=button2> magic two </button>
-  <div id="exercice">
+	<div id="buttons">
+
+	</div>
+	<div id="exercice">
   
-  </div>
+	</div>
 
  </body>
 </html>

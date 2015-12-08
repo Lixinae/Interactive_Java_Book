@@ -10,7 +10,5 @@ public class InterJavaBook {
 		Vertx vertx = Vertx.vertx();
 		vertx.deployVerticle(s);
 		s.print_url();
-
 	}
-
 }

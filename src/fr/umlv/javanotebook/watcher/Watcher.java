@@ -15,15 +15,20 @@ import java.nio.file.WatchService;
 import java.nio.file.WatchEvent.Kind;
 
 
-// La classe Watcher ne sera implementer qu'au dernier moment , une fois que le reste
-// fonctionne , elle n'est pas indispensable !!!
+// Implementer a la fin
 public class Watcher {
 	private WatchService watcher;
 	private Path dir;
 	private boolean isWorking;
 	
 	
-	
+	/**
+	 * Creates a watcher on the folder giving by path
+	 * 
+	 * @param path : path of the folder that is watched
+	 * 
+	 * 
+	 */
 	
 	public Watcher(String path) {
 		try {
@@ -39,16 +44,25 @@ public class Watcher {
 	
 	// Not the final name
 	
-	// Can throw an InterruptedException since it can be interrupted
-	// If its throw an Exception
+	// TODO
+	// Add documentation
 	
-	public void actions() throws InterruptedException{
+	/**
+	 * 
+	 * 
+	 * 
+	 * 
+	 */
+	
+	public void actions() {
 		while (isWorking) {
 			WatchKey key;
 			try {
 				key = watcher.take();
+				// renvoie 2 exception
 			} catch (InterruptedException ex) {
-				throw new InterruptedException();
+				isWorking = false;
+				return;
 			}
 			doEvents(key);
 			//boolean valid = key.reset();
@@ -62,10 +76,11 @@ public class Watcher {
 	private void doEvents(WatchKey key) {
 		for (WatchEvent<?> event : key.pollEvents()) {
 			Kind<?> kind = event.kind();
+			// SuppressWarning -> I know what i'm
 			@SuppressWarnings("unchecked")
 			WatchEvent<Path> ev = (WatchEvent<Path>) event;
 			Path fileName = ev.context();
-			// Peut ajouter des test a ce moment pour voir ce que l'on fait en cas de modification
+			
 			System.out.println(kind.name() + ": " + fileName);
 
 			
