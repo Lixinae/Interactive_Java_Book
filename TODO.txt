@@ -1,6 +1,6 @@
 
 - Format d'un exercice
-	- Parser un fichier .markdown
+	- Parser un fichier .markdown  -> Done
 
 - Creer des exercices
 	- Ajout de test JUnit pour les exercices (affichable sur demande)
@@ -10,3 +10,5 @@
 		- Recuperation des exercice
 		- Scan du code java des reponses des exercice
 		- Surveillance du dossier des exercice 
+		
+- Ajouter des logs pour le serveur		
