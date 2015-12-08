@@ -4,19 +4,21 @@
   <script>
 		function printExercice(id){
 			var element = $("#exercice");
-			var noData = '<p>There is no file Exercice_'+id+' </p>' ;
+			var noData = '<p>There is no Exercice_'+id+'.MARKDOWN</p>' ;
+			alert(noData);
 			element.html("");
 			$.get('/exercice/'+id+'.MARKDOWN',function(data){
 				console.log(data);
 				element.append(data);
-				
+				alert(data);
+				alert(data.localeCompare(noData));
 				if(data.localeCompare(noData) != 0){
 					element.append('<textarea class=\"answer\" rows=10 cols=50 >Your answser !</textarea>');
 				}
 				// TODO Change this
 				$("body").on("input", ".answer", function() {
 					
-					alert("change Me !"); 
+					dalert("change Me !"); 
 				});
 			});
 		}

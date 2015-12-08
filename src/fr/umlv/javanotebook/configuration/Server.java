@@ -32,21 +32,25 @@ public class Server extends AbstractVerticle{
 	@Override
 	public void start() {
 		Router router = Router.router(vertx);	
-				
 		// Liste des requetes du javascript
+		listOfRequest(router);
+		// otherwise serve static pages
+		router.route().handler(StaticHandler.create());
+		vertx.createHttpServer().requestHandler(router::accept).listen(port);
+	}
+
+
+	private void listOfRequest(Router router) {
 		router.get("/exercice/:id").handler(this::getExercise);
 		router.get("/countfiles").handler(this::getNumberOfFiles);
 		// Ajouter les nouvelles requetes a faire
 		// router.get("validateExercice:id").handler(this::validateExercice);
 		// par exemple
 		// router.get("showJUnitTest").handler(this::showJUnitTest);
-		
-		
-		// otherwise serve static pages
-		router.route().handler(StaticHandler.create());
-		vertx.createHttpServer().requestHandler(router::accept).listen(port);
 	}
 
+	
+	
 	private void getExercise(RoutingContext routingContext) {
 		String id = routingContext.request().getParam("id");
 		System.out.println("ask for an exercise by id " + id);

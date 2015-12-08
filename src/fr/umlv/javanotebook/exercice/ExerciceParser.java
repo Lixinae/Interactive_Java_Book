@@ -25,7 +25,7 @@ public class ExerciceParser {
 			//System.out.println("I should not be her");
 		} catch (FileNotFoundException e) {
 			//System.out.println("test");
-			return "<p>There is no file Exercice_"+name+"</p>";			
+			return "<p>There is no Exercice_"+name+"</p>";			
 		}    	
 		char[] markdown = FileUtils.readAllChars(input);
 		Preconditions.checkNotNull(markdown, "The specified file isn't found - "+fichier);
