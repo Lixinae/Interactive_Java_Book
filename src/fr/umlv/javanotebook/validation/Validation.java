@@ -2,18 +2,15 @@ package fr.umlv.javanotebook.validation;
 
 import jdk.jshell.*;
 
-import java.io.Console;
 import java.util.List;
 
 import jdk.jshell.Snippet.Status;
 
 class Validation {
-	public static void main(String[] args) {
-		Console console = System.console();
+	public String accept(String input) {
+		StringBuilder sbrow = new StringBuilder();
 		try (JShell js = JShell.create()) {
 			do {
-				System.out.print("Enter some Java code: ");
-				String input = console.readLine();
 				if (input == null) {
 					break;
 				}
@@ -46,15 +43,15 @@ class Validation {
 						}
 						sb.append(" of ");
 						sb.append(e.snippet().source());
-						System.out.println(sb);
+						sbrow.append(sb.toString());
 						if (e.value() != null) {
-							System.out.printf("Value is: %s\n", e.value());
+							sbrow.append("Value is: "+e.value()+"\n");
 						}
 						System.out.flush();
 					}
 				}
 			} while (true);
 		}
-		System.out.println("\nGoodbye");
+		return sbrow.toString();
 	}
 }
