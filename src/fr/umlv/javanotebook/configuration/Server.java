@@ -2,6 +2,7 @@ package fr.umlv.javanotebook.configuration;
 
 import fr.umlv.javanotebook.exercice.Exercice;
 import fr.umlv.javanotebook.exercice.ExerciceParser;
+import fr.umlv.javanotebook.validation.MyValidation;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
@@ -69,10 +70,11 @@ public class Server extends AbstractVerticle{
 	
 	//TODO
 	// Ajouter retour fonction de validation dans end()
+	
 	private void validateExercice(RoutingContext routingContext){
 		String id = routingContext.request().getParam("id");
 		System.out.println("Asking to validate exercice "+id);
-		routingContext.response().end();
+		routingContext.response().end(MyValidation.accept(id));
 	}
 	
 	//TODO
