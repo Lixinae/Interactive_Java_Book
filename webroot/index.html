@@ -7,8 +7,7 @@
 			var element = $("#exercice");
 			var answerToSend = $("#answer");
 			alert(answerToSend.val());
-			$.post('/validateExercice/'+id,
-					answerToSend.val(),
+			$.post('/validateExercice/'+answerToSend.val(),
 					function(data){
 						console.log(data);
 						element.append(data);
