@@ -45,7 +45,7 @@ public class Server extends AbstractVerticle{
 		router.get("/exercice/:id").handler(this::getExercise);
 		router.get("/countfiles").handler(this::getNumberOfFiles);
 		// Ajouter les nouvelles requetes a faire
-		// router.get("validateExercice:id").handler(this::validateExercice);
+		router.post("/validateExercice/:id").handler(this::validateExercice);
 		// par exemple
 		// router.get("showJUnitTest").handler(this::showJUnitTest);
 	}
@@ -54,7 +54,7 @@ public class Server extends AbstractVerticle{
 	
 	private void getExercise(RoutingContext routingContext) {
 		String id = routingContext.request().getParam("id");
-		System.out.println("ask for an exercise by id " + id);
+		System.out.println("Asking for exercise" + id);
 		routingContext.response()
 	       //.putHeader("content-type", "application/json")
 	       .end(ExerciceParser.toWeb(id));

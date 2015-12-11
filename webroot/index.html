@@ -2,24 +2,44 @@
  <head>
   <script src="asset/jquery-2.1.4.js"></script>
   <script>
+  
+		function sendAnswer(id){
+			var element = $("#exercice");
+			var answerToSend = $("#answer");
+			alert(answerToSend.val());
+			$.post('/validateExercice/'+id,
+					answerToSend.val(),
+					function(data){
+						console.log(data);
+						element.append(data);
+					
+					}
+					);
+			alert(answerToSend.val());		
+		
+		
+		}
+
 		function printExercice(id){
 			var element = $("#exercice");
 			var noData = '<p>There is no Exercice_'+id+'.MARKDOWN</p>' ;
-			alert(noData);
+			//alert(noData);
 			element.html("");
-			$.get('/exercice/'+id+'.MARKDOWN',function(data){
-				console.log(data);
-				element.append(data);
-				alert(data);
-				alert(data.localeCompare(noData));
-				if(data.localeCompare(noData) != 0){
-					element.append('<textarea class=\"answer\" rows=10 cols=50 >Your answser !</textarea>');
-				}
-				// TODO Change this
-				$("body").on("input", ".answer", function() {
+			$.get('/exercice/'+id+'.MARKDOWN',
+				function(data){
+					console.log(data);
+					element.append(data);
+					//alert(data);
+					//alert(data.localeCompare(noData));
+					if(data.localeCompare(noData) != 0){
+						element.append('<textarea id=\"answer\" rows=10 cols=50 >Your answser !</textarea>');
+					}
+					element.append('<input id=Send_answer type=button value=Send_answer onclick=sendAnswer('+id+');'+' </input>');
+					// TODO Change this
+				//$("body").on("input", ".answer", function() {
 					
-					dalert("change Me !"); 
-				});
+				//	dalert("change Me !"); 
+				//});
 			});
 		}
 		
