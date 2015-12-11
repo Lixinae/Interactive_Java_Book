@@ -85,10 +85,10 @@ class Validation {
 	public static String accept(String input) {
 		StringBuilder sbrow = new StringBuilder();
 		try (JShell js = JShell.create()) {
-			do {
-				if (input == null) {
-					break;
-				}
+			//do {
+//				if (input == null) {
+//					break;
+//				}
 				List<SnippetEvent> events = js.eval(input);
 				for (SnippetEvent e : events) {
 					StringBuilder sb = new StringBuilder();
@@ -125,7 +125,7 @@ class Validation {
 						System.out.flush();
 					}
 				}
-			} while (true);
+			//} while (true);
 		}
 		return sbrow.toString();
 	}
