@@ -54,7 +54,7 @@ public class Server extends AbstractVerticle{
 	
 	private void getExercise(RoutingContext routingContext) {
 		String id = routingContext.request().getParam("id");
-		System.out.println("Asking for exercise" + id);
+		System.out.println("Asking for exercise " + id);
 		routingContext.response()
 	       //.putHeader("content-type", "application/json")
 	       .end(ExerciceParser.toWeb(id));

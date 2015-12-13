@@ -22,7 +22,7 @@ public class ExerciceParser {
 		try {
 			input = new FileInputStream(fichier);
 		} catch (FileNotFoundException e) {
-			return "<p>There is no Exercice_"+name+"</p>";			
+			return "<p>There is no Exercice "+name+"</p>";			
 		}    	
 		char[] markdown = FileUtils.readAllChars(input);
 		//Preconditions.checkNotNull(markdown, "The specified file isn't found - "+fichier);

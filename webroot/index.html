@@ -21,25 +21,33 @@
 
 		function printExercice(id){
 			var element = $("#exercice");
-			var noData = '<p>There is no Exercice_'+id+'.MARKDOWN</p>' ;
+			var respon = $("#respons");
+			var sendB = $("#sendButton");
+
+			var noData = '<p>There is no Exercice '+id+'.MARKDOWN</p>' ;
 			//alert(noData);
 			element.html("");
 			$.get('/exercice/'+id+'.MARKDOWN',
 				function(data){
 					console.log(data);
 					element.append(data);
-					//alert(data);
-					//alert(data.localeCompare(noData));
-					if(data.localeCompare(noData) != 0){
-						element.append('<textarea id=\"answer\" rows=10 cols=50 >Your answser !</textarea>');
+					if(data.localeCompare(noData) == 0){
+						respon.html("");
+						sendB.html("");
 					}
-					element.append('<input id=Send_answer type=button value=Send_answer onclick=sendAnswer('+id+');'+' </input>');
-					// TODO Change this
-				//$("body").on("input", ".answer", function() {
-					
-				//	dalert("change Me !"); 
-				//});
 			});
+		}
+		
+		function printAnswerArea(){
+			var respon = $("#respons");
+			respon.html("");
+			respon.append('<textarea id=\"answer\" rows=10 cols=50 >Your answser !</textarea>');
+		}
+		
+		function printAnswerButton(){
+			var sendB = $("#sendButton");
+			sendB.html("");
+			sendB.append('<input id=Send_answer type=button value=Send_answer onclick=sendAnswer('+id+');'+' </input>');
 		}
 		
 		// TODO 
@@ -52,7 +60,7 @@
 				for(i=0 ;i< parseInt(data);i++){
 					//buttons.append('<button id=button'+i+'>Exercice '+i+'</button>');
 					
-					buttons.append('<input id=button'+i+' type=button '+' value=Exercice_'+i+' onclick=printExercice('+i+');'+' </input>');
+					buttons.append('<input id=button'+i+' type=button '+' value=Exercice_'+i+' onclick=printExercice('+i+');printAnswerArea();printAnswerButton();'+' </input>');
 				}
 			});
 		}
@@ -71,10 +79,12 @@
 
 	</div>
 	<div id="exercice">
-		<div id="response">
-		</div>
+		
   
 	</div>
-
+	<div id="respons">
+		</div>
+	<div id="sendButton">
+	</div>
  </body>
 </html>
