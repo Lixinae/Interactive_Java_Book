@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 import org.parboiled.common.FileUtils;
-import org.parboiled.common.Preconditions;
 import org.pegdown.Extensions;
 import org.pegdown.PegDownProcessor;
 
@@ -22,13 +21,11 @@ public class ExerciceParser {
 		InputStream input = null;
 		try {
 			input = new FileInputStream(fichier);
-			//System.out.println("I should not be her");
 		} catch (FileNotFoundException e) {
-			//System.out.println("test");
 			return "<p>There is no Exercice_"+name+"</p>";			
 		}    	
 		char[] markdown = FileUtils.readAllChars(input);
-		Preconditions.checkNotNull(markdown, "The specified file isn't found - "+fichier);
+		//Preconditions.checkNotNull(markdown, "The specified file isn't found - "+fichier);
 		return generateHtml(markdown);
 	}
 

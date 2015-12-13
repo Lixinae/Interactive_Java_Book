@@ -1,6 +1,6 @@
 package fr.umlv.javanotebook.configuration;
 
-import fr.umlv.javanotebook.exercice.Exercice;
+import fr.umlv.javanotebook.exercice.Exercices;
 import fr.umlv.javanotebook.exercice.ExerciceParser;
 import fr.umlv.javanotebook.validation.MyValidation;
 import io.vertx.core.AbstractVerticle;
@@ -65,7 +65,7 @@ public class Server extends AbstractVerticle{
 	private void getNumberOfFiles(RoutingContext routingContext){
 		routingContext.request();
 		System.out.println("Asking for number of file in folder");
-		routingContext.response().end(Exercice.countFiles());
+		routingContext.response().end(Exercices.countFiles());
 	}
 	
 	//TODO
