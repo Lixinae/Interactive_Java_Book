@@ -82,7 +82,7 @@ class Validation {
 }
  */
 	
-	public static String accept(String input) {
+	public static String accept(String numExo,String input) {
 		StringBuilder sbrow = new StringBuilder();
 		try (JShell js = JShell.create()) {
 			//do {

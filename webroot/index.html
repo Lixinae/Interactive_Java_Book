@@ -7,7 +7,8 @@
 			var element = $("#exercice");
 			var answerToSend = $("#answer");
 			alert(answerToSend.val());
-			$.post('/validateExercice/'+answerToSend.val(),
+			alert("id = "+id);
+			$.post('/validateExercice/'+id+'/'+answerToSend.val(),
 					function(data){
 						console.log(data);
 						element.append(data);
@@ -32,6 +33,7 @@
 					console.log(data);
 					element.append(data);
 					if(data.localeCompare(noData) == 0){
+						alert("test");
 						respon.html("");
 						sendB.html("");
 					}
@@ -44,10 +46,13 @@
 			respon.append('<textarea id=\"answer\" rows=10 cols=50 >Your answser !</textarea>');
 		}
 		
-		function printAnswerButton(){
+		function printAnswerButton(id){
 			var sendB = $("#sendButton");
+			
 			sendB.html("");
+			alert("blork");
 			sendB.append('<input id=Send_answer type=button value=Send_answer onclick=sendAnswer('+id+');'+' </input>');
+			alert("test print answer");
 		}
 		
 		// TODO 
@@ -56,11 +61,9 @@
 			var buttons = $("#buttons");
 			buttons.html("");
 			$.get('/countfiles',function(data){
-				//buttons.append('<input id=button'+0+' type=button'+' value=Exercice_'+0+' onclick=printExercice(3);'+' />');
 				for(i=0 ;i< parseInt(data);i++){
-					//buttons.append('<button id=button'+i+'>Exercice '+i+'</button>');
-					
-					buttons.append('<input id=button'+i+' type=button '+' value=Exercice_'+i+' onclick=printExercice('+i+');printAnswerArea();printAnswerButton();'+' </input>');
+					//alert(i);					
+					buttons.append('<input id=button'+i+' type=button '+' value=Exercice_'+i+' onclick=printExercice('+i+');printAnswerArea();printAnswerButton('+i+');'+' </input>');
 				}
 			});
 		}
@@ -80,11 +83,12 @@
 	</div>
 	<div id="exercice">
 		
-  
 	</div>
 	<div id="respons">
-		</div>
+		
+	</div>
 	<div id="sendButton">
+
 	</div>
  </body>
 </html>

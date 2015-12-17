@@ -45,7 +45,7 @@ public class Server extends AbstractVerticle{
 		router.get("/exercice/:id").handler(this::getExercise);
 		router.get("/countfiles").handler(this::getNumberOfFiles);
 		// Ajouter les nouvelles requetes a faire
-		router.post("/validateExercice/:input").handler(this::validateExercice);
+		router.post("/validateExercice/:id/:input").handler(this::validateExercice);
 		// par exemple
 		// router.get("showJUnitTest").handler(this::showJUnitTest);
 	}
@@ -72,9 +72,10 @@ public class Server extends AbstractVerticle{
 	// Ajouter retour fonction de validation dans end()
 	
 	private void validateExercice(RoutingContext routingContext){
+		String id = routingContext.request().getParam("id");
 		String input = routingContext.request().getParam("input");
 		System.out.println("Asking to validate exercice "+input);
-		routingContext.response().end(MyValidation.accept(input));
+		routingContext.response().end(MyValidation.accept(id,input));
 	}
 	
 	//TODO

@@ -45,6 +45,8 @@ public class Exercices {
 		Exercices ex = new Exercices() ;
 		ex.getAllExercicesAndAnswers();
 		System.out.println(ex.exercices);
+		
+		System.out.println(countFiles());
 	}
 	
 }
