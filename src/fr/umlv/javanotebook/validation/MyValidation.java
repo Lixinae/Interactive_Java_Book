@@ -1,10 +1,10 @@
 package fr.umlv.javanotebook.validation;
 
-import jdk.jshell.*;
+import jdk.jshell.JShell;
+import jdk.jshell.Snippet.Status;
+import jdk.jshell.SnippetEvent;
 
 import java.util.List;
-
-import jdk.jshell.Snippet.Status;
 
 public class MyValidation {
 	
@@ -108,8 +108,7 @@ class Validation {
 							sb.append("Failed ");
 							break;
 						default:
-							new IllegalStateException();
-							break;
+							throw new IllegalStateException();
 						}
 						if (e.previousStatus() == Status.NONEXISTENT) {
 							sb.append("addition");
@@ -120,7 +119,7 @@ class Validation {
 						sb.append(e.snippet().source());
 						sbrow.append(sb.toString());
 						if (e.value() != null) {
-							sbrow.append("Value is: "+e.value()+"\n");
+							sbrow.append("Value is: ").append(e.value()).append("\n");
 						}
 						System.out.flush();
 					}
@@ -129,10 +128,4 @@ class Validation {
 		}
 		return sbrow.toString();
 	}
-
-	/**
-	 * 
-	 * @param id : ID of the exercice
-	 * @return : string with html format
-	 */
 }
