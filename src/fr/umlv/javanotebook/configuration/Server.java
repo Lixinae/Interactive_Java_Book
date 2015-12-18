@@ -1,7 +1,6 @@
 package fr.umlv.javanotebook.configuration;
 
 import fr.umlv.javanotebook.exercice.Exercices;
-import fr.umlv.javanotebook.exercice.ExerciceParser;
 import fr.umlv.javanotebook.validation.MyValidation;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.ext.web.Router;
@@ -57,7 +56,7 @@ public class Server extends AbstractVerticle{
 		System.out.println("Asking for exercise " + id);
 		routingContext.response()
 	       //.putHeader("content-type", "application/json")
-	       .end(ExerciceParser.toWeb(id));
+				.end(Exercices.toWeb(id));
 	}
 	
 	// Sends the number of files to the client
