@@ -46,8 +46,16 @@ public class Server extends AbstractVerticle{
 		router.get("/countfiles").handler(this::getNumberOfFiles);
 		// Ajouter les nouvelles requetes a faire
 		router.post("/validateExercice/:id/:input").handler(this::validateExercice);
+		router.get("/watcherModify/:id").handler(this::updateFile);
 		// par exemple
 		// router.get("showJUnitTest").handler(this::showJUnitTest);
+	}
+	
+	private void updateFile(RoutingContext routingContext){
+		String id = routingContext.request().getParam("id");
+		System.out.println("Asking for exercise modify " + id);
+		Exercice ex = new Exercice();
+		routingContext.response().end(ex.toWeb(id));
 	}
 
 	
@@ -76,10 +84,9 @@ public class Server extends AbstractVerticle{
 		MyValidation valid = new MyValidation();
 		// TODO Ajouter fonction d'ajouter dans la file d'attente
 		// Changer le MyValidation.accept par autre fonction
-
-		// exemple de fonction valid.AddQueue(input)
+		valid.addInQueue(input);
 		System.out.println("Asking to validate exercice " + id);
-		routingContext.response().end(valid.accept(id, input));
+		routingContext.response().end(valid.accept(id));
 	}
 
 	//TODO Ajouter fonction d'affichage des tests dans end

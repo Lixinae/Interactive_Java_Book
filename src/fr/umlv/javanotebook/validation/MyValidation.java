@@ -5,9 +5,13 @@ import jdk.jshell.Snippet.Status;
 import jdk.jshell.SnippetEvent;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
 public class MyValidation {
-	
+
+	final BlockingQueue<String> queue = new ArrayBlockingQueue<String>(10);
 	/* Enter some Java code: 2+2
 		Successful addition of 2+2
 		Value is: 4
@@ -92,19 +96,23 @@ class Validation {
 	//
 	// TODO Ajouter une fonction pour ajouter dans la queue Bloquante
 	// Exemple :
-	// public addInQueue(E elem){ queue.put(elem) }
+	// public void addInQueue(E elem){ queue.put(elem) }
 	//
 	//
+	public void addInQueue(String input){
+		Objects.requireNonNull(input);
+		try {
+			queue.put(input);
+		} catch (InterruptedException|ClassCastException|IllegalArgumentException e) {
+			e.printStackTrace();
+		}
+	}
 
-
-	public String accept(String numExo, String input) {
+	public String accept(String numExo) {
 		System.out.printf(numExo); // Ligne juste pour eviter que l'IDE m'emmerde.
+		String input = takeFromQueue();
 		StringBuilder sbrow = new StringBuilder();
 		try (JShell js = JShell.create()) {
-			//do {
-//				if (input == null) {
-//					break;
-//				}
 				List<SnippetEvent> events = js.eval(input);
 				for (SnippetEvent e : events) {
 					StringBuilder sb = new StringBuilder();
@@ -140,8 +148,17 @@ class Validation {
 						System.out.flush();
 					}
 				}
-			//} while (true);
 		}
 		return sbrow.toString();
+	}
+
+	private String takeFromQueue() {
+		String tmp=null;
+		try {
+			tmp=queue.take();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		return Objects.requireNonNull(tmp);
 	}
 }

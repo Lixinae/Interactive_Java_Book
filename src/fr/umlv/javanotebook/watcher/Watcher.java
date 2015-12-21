@@ -30,7 +30,6 @@ public class Watcher {
 			isWorking = true;
 		} catch (IOException e) {
 			isWorking = false;
-			// TODO Do something with exception
 			System.err.println(e);
 		}
 	}
@@ -74,9 +73,7 @@ public class Watcher {
 			WatchEvent<Path> ev = (WatchEvent<Path>) event;
 			Path fileName = ev.context();
 			
-			System.out.println(kind.name() + ": " + fileName);
-
-			
+			//System.out.println(kind.name() + ": " + fileName);
 			
 			if (kind == OVERFLOW) {
 				continue;
