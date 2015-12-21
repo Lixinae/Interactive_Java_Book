@@ -81,8 +81,24 @@ class Validation {
 	}
 }
  */
-	
-	public static String accept(String numExo,String input) {
+
+	public MyValidation() {
+
+	}
+
+	// TODO Ajouter une queue bloquante en attribut de classe
+	// Par exemple
+	// final BlockingQueue<String> queue = new ArrayBlockingQueue<String>(10);
+	//
+	// TODO Ajouter une fonction pour ajouter dans la queue Bloquante
+	// Exemple :
+	// public addInQueue(E elem){ queue.put(elem) }
+	//
+	//
+
+
+	public String accept(String numExo, String input) {
+		System.out.printf(numExo); // Ligne juste pour eviter que l'IDE m'emmerde.
 		StringBuilder sbrow = new StringBuilder();
 		try (JShell js = JShell.create()) {
 			//do {

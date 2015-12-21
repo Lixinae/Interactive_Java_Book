@@ -1,5 +1,6 @@
 package fr.umlv.javanotebook.configuration;
 
+import fr.umlv.javanotebook.exercice.Exercice;
 import fr.umlv.javanotebook.exercice.Exercices;
 import fr.umlv.javanotebook.validation.MyValidation;
 import io.vertx.core.AbstractVerticle;
@@ -54,9 +55,10 @@ public class Server extends AbstractVerticle{
 	private void getExercise(RoutingContext routingContext) {
 		String id = routingContext.request().getParam("id");
 		System.out.println("Asking for exercise " + id);
-		routingContext.response()
-	       //.putHeader("content-type", "application/json")
-				.end(Exercices.toWeb(id));
+		Exercice ex = new Exercice();
+		routingContext.response().end(ex.toWeb(id));
+		//.putHeader("content-type", "application/json")
+
 	}
 	
 	// Sends the number of files to the client
@@ -67,18 +69,20 @@ public class Server extends AbstractVerticle{
 		routingContext.response().end(Exercices.countFiles());
 	}
 	
-	//TODO
-	// Ajouter retour fonction de validation dans end()
-	
+
 	private void validateExercice(RoutingContext routingContext){
 		String id = routingContext.request().getParam("id");
 		String input = routingContext.request().getParam("input");
-		System.out.println("Asking to validate exercice "+input);
-		routingContext.response().end(MyValidation.accept(id,input));
+		MyValidation valid = new MyValidation();
+		// TODO Ajouter fonction d'ajouter dans la file d'attente
+		// Changer le MyValidation.accept par autre fonction
+
+		// exemple de fonction valid.AddQueue(input)
+		System.out.println("Asking to validate exercice " + id);
+		routingContext.response().end(valid.accept(id, input));
 	}
-	
-	//TODO
-	// Ajouter fonction d'affichage des tests dans end
+
+	//TODO Ajouter fonction d'affichage des tests dans end
 	private void showJUnitTest(RoutingContext routingContext){
 		String id = routingContext.request().getParam("id");
 		System.out.println("Asking to see JUnit test for exercise "+id);

@@ -1,18 +1,10 @@
 package fr.umlv.javanotebook.watcher;
 
-import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
-import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
-import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
-import static java.nio.file.StandardWatchEventKinds.OVERFLOW;
-
 import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.WatchEvent;
-import java.nio.file.WatchKey;
-import java.nio.file.WatchService;
+import java.nio.file.*;
 import java.nio.file.WatchEvent.Kind;
+
+import static java.nio.file.StandardWatchEventKinds.*;
 
 
 // Implementer a la fin
@@ -38,14 +30,14 @@ public class Watcher {
 			isWorking = true;
 		} catch (IOException e) {
 			isWorking = false;
+			// TODO Do something with exception
 			System.err.println(e);
 		}
 	}
 	
 	// Not the final name
-	
-	// TODO
-	// Add documentation
+
+	// TODO Add documentation
 	
 	/**
 	 * 
@@ -93,10 +85,11 @@ public class Watcher {
 			} else if (kind == ENTRY_DELETE) {
 
 			} else if (kind == ENTRY_MODIFY) {
-				// TODO
-				// Update de l'exercice modifié si c'est exercice courant
+				/* TODO
+				// Update de l'exercice modifie si c'est exercice courant
 				// Si autre exo -> rien faire , chargement effectuer uniquement
 				// lors de la demande utilisateur
+				*/
 			}
 		}
 	}

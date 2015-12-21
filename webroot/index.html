@@ -6,8 +6,8 @@
 		function sendAnswer(id){
 			var element = $("#exercice");
 			var answerToSend = $("#answer");
-			alert(answerToSend.val());
-			alert("id = "+id);
+			//alert(answerToSend.val());
+			//alert("id = "+id);
 			$.post('/validateExercice/'+id+'/'+answerToSend.val(),
 					function(data){
 						console.log(data);
@@ -15,7 +15,7 @@
 					
 					}
 					);
-			alert(answerToSend.val());		
+			//alert(answerToSend.val());		
 		}
 
 		function printExercice(id){
@@ -31,7 +31,7 @@
 					console.log(data);
 					element.append(data);
 					if(data.localeCompare(noData) == 0){
-						alert("test");
+						//alert("test");
 						respon.html("");
 						sendB.html("");
 					}
@@ -48,9 +48,9 @@
 			var sendB = $("#sendButton");
 			
 			sendB.html("");
-			alert("blork");
+			//alert("blork");
 			sendB.append('<input id=Send_answer type=button value=Send_answer onclick=sendAnswer('+id+');'+' </input>');
-			alert("test print answer");
+			//alert("test print answer");
 		}
 		
 		// TODO 
