@@ -6,15 +6,12 @@
 		function sendAnswer(id){
 			var element = $("#exercice");
 			var answerToSend = $("#answer");
-			//alert(answerToSend.val());
-			//alert("id = "+id);
 			$.post('/validateExercice/'+id+'/'+answerToSend.val(),
 					function(data){
 						console.log(data);
 						element.append(data);
 					}
 				);
-			//alert(answerToSend.val());		
 		}
 
 		function printExercice(id){
@@ -23,18 +20,17 @@
 			var sendB = $("#sendButton");
 
 			var noData = '<p>There is no Exercice '+id+'.MARKDOWN</p>' ;
-			//alert(noData);
 			element.html("");
 			$.get('/exercice/'+id+'.MARKDOWN',
 				function(data){
 					console.log(data);
 					element.append(data);
 					if(data.localeCompare(noData) == 0){
-						//alert("test");
 						respon.html("");
 						sendB.html("");
 					}
-			});
+				}
+			);
 		}
 		
 		function printAnswerArea(){
@@ -47,9 +43,7 @@
 			var sendB = $("#sendButton");
 			
 			sendB.html("");
-			//alert("blork");
 			sendB.append('<input id=Send_answer type=button value=Send_answer onclick=sendAnswer('+id+');'+' </input>');
-			//alert("test print answer");
 		}
 		
 		// TODO 
@@ -57,14 +51,15 @@
 		function printButtons(){
 			var buttons = $("#buttons");
 			buttons.html("");
-			$.get('/countfiles',function(data){
-				for(i=0 ;i< parseInt(data);i++){
-					//alert(i);					
-					buttons.append('<input id=button'+i+' type=button '+' value=Exercice_'+i+' onclick=printExercice('+i+');printAnswerArea();printAnswerButton('+i+');'+' </input>');
+			$.get('/countfiles',
+				function(data){
+					for(i=0 ;i< parseInt(data);i++){
+						buttons.append('<input id=button'+i+' type=button '+' value=Exercice_'+i+' onclick=printExercice('+i+');printAnswerArea();printAnswerButton('+i+');'+' </input>');
+					}
 				}
-			});
-		
+			);		
 		}
+		
 		//function testModify(){
 		//	$.get('/watcherModify',function(data){
 		//
@@ -76,7 +71,6 @@
 			//testModify();
 			var interval = 1000 * 60 * 1;
 			setInterval(printButtons,interval);
-			//setInterval(testModify,interval);
 		});
 
 		
