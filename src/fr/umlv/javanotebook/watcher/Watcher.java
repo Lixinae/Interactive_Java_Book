@@ -11,8 +11,7 @@ import static java.nio.file.StandardWatchEventKinds.*;
 public class Watcher {
 	private WatchService watcher;
 	private Path dir;
-	private boolean isWorking;
-	
+
 	
 	/**
 	 * Creates a watcher on the folder giving by path
@@ -27,9 +26,7 @@ public class Watcher {
 			watcher = FileSystems.getDefault().newWatchService();
 			dir = Paths.get(path);
 			dir.register(watcher, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
-			isWorking = true;
 		} catch (IOException e) {
-			isWorking = false;
 			System.err.println(e);
 		}
 	}
@@ -44,7 +41,7 @@ public class Watcher {
 	 * 
 	 * 
 	 */
-	
+
 	public boolean action() {
 			WatchKey key;
 			key = watcher.poll();
@@ -57,17 +54,15 @@ public class Watcher {
 	private boolean doEvents(WatchKey key) {
 		for (WatchEvent<?> event : key.pollEvents()) {
 			Kind<?> kind = event.kind();
-			@SuppressWarnings("unchecked")
-			WatchEvent<Path> ev = (WatchEvent<Path>) event;
-			Path fileName = ev.context();
-			
 			if (kind == OVERFLOW) {
 				continue;
 			} 
 			else if (kind == ENTRY_MODIFY) {
+				key.reset();
 				return true;
 			}
 		}
+		key.reset();
 		return false;
 	}
 }

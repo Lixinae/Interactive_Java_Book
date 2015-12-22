@@ -47,25 +47,14 @@ public class Server extends AbstractVerticle{
 	private void listOfRequest(Router router) {
 		router.get("/exercice/:id").handler(this::getExercise);
 		router.get("/countfiles").handler(this::getNumberOfFiles);
-		router.get("/watcherModify").handler(this::updateFile);
+		router.get("/watcherModify/:id").handler(this::updateFile);
 		// Ajouter les nouvelles requetes a faire
 		router.post("/validateExercice/:id/:input").handler(this::validateExercice);
 		// par exemple
 		// router.get("showJUnitTest").handler(this::showJUnitTest);
 	}
 	
-	private void updateFile(RoutingContext routingContext){
-		String id = routingContext.request().getParam("id");
-		System.out.println("Asking for exercise modify " + id);//code pour updateFile
-		if(watcher.action()){
-			System.out.println("Asking for exercise "+id);
-			Exercice ex = new Exercice();
-			routingContext.response().end(ex.toWeb(id));
-		}
-		else{
-			routingContext.response().end();
-		}
-	}
+
 
 	
 	
@@ -85,8 +74,21 @@ public class Server extends AbstractVerticle{
 		System.out.println("Asking for number of file in folder");
 		routingContext.response().end(Exercices.countFiles());
 	}
-	
 
+
+	private void updateFile(RoutingContext routingContext){
+		String id = routingContext.request().getParam("id");
+		System.out.println("Asking for exercise modify " + id);//code pour updateFile
+		if(watcher.action()){
+			System.out.println("Asking for exercise "+id);
+			Exercice ex = new Exercice();
+			routingContext.response().end(ex.toWeb(id));
+		}
+		else{
+			System.out.println("Didn\'t update exercice");
+			routingContext.response().end();
+		}
+	}
 	private void validateExercice(RoutingContext routingContext){
 		String id = routingContext.request().getParam("id");
 		String input = routingContext.request().getParam("input");
@@ -97,6 +99,7 @@ public class Server extends AbstractVerticle{
 		System.out.println("Asking to validate exercice " + id);
 		routingContext.response().end(valid.accept(id));
 	}
+
 
 	//TODO Ajouter fonction d'affichage des tests dans end
 	private void showJUnitTest(RoutingContext routingContext){

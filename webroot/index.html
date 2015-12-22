@@ -2,6 +2,8 @@
  <head>
   <script src="asset/jquery-2.1.4.js"></script>
   <script>
+		var currentID=-1;
+		//alert(currentID);
   
 		function sendAnswer(id){
 			var element = $("#exercice");
@@ -19,10 +21,11 @@
 			var respon = $("#respons");
 			var sendB = $("#sendButton");
 
-			var noData = '<p>There is no Exercice '+id+'.MARKDOWN</p>' ;
-			element.html("");
+
 			$.get('/exercice/'+id+'.MARKDOWN',
 				function(data){
+					var noData = '<p>There is no Exercice '+id+'.MARKDOWN</p>' ;
+					element.html("");
 					console.log(data);
 					element.append(data);
 					if(data.localeCompare(noData) == 0){
@@ -31,6 +34,8 @@
 					}
 				}
 			);
+			currentID = id;
+			//alert(currentID);
 		}
 		
 		function printAnswerArea(){
@@ -40,8 +45,7 @@
 		}
 		
 		function printAnswerButton(id){
-			var sendB = $("#sendButton");
-			
+			var sendB = $("#sendButton");			
 			sendB.html("");
 			sendB.append('<input id=Send_answer type=button value=Send_answer onclick=sendAnswer('+id+');'+' </input>');
 		}
@@ -60,17 +64,32 @@
 			);		
 		}
 		
-		//function testModify(){
-		//	$.get('/watcherModify',function(data){
-		//
-		//	}
-		//}
+		function testModify(){
+			var element = $("#exercice");
+			var id = currentID;
+			if(id == -1){
+				return;
+			}
+			
+			//alert("testModify");
+			$.get('/watcherModify/'+id+'.MARKDOWN',
+				function(data){
+					var noData = '' ;
+					if(data.localeCompare(noData) != 0){
+						element.html("");
+						console.log(data);
+						element.append(data);
+					}
+				}
+			);
+		}
 		
 		$(document).ready(function(){
 			printButtons();
-			//testModify();
+			testModify();
 			var interval = 1000 * 60 * 1;
 			setInterval(printButtons,interval);
+			setInterval(testModify,10000);
 		});
 
 		
