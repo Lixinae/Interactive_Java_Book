@@ -7,7 +7,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 
-// TODO Change name
+/**
+ * Project :Interactive_Java_Book
+ * Created by Narex on 02/12/2015.
+ */
 public class Exercices {
 
 	//	private final int id;
@@ -27,13 +30,6 @@ public class Exercices {
 		return "" + (new File("./exercice").listFiles().length - 1);
 	}
 
-	public static void main(String[] args) {
-		Exercices ex = new Exercices() ;
-		ex.getAllExercicesAndAnswers();
-		System.out.println(ex.exercices);
-
-		System.out.println(countFiles());
-	}
 
 	/**
 	 * Fetches all the exercise

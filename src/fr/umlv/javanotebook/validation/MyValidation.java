@@ -9,6 +9,10 @@ import java.util.Objects;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
+/**
+ * Project :Interactive_Java_Book
+ * Created by kbondel on 21/12/2015.
+ */
 public class MyValidation {
 
 	final BlockingQueue<String> queue = new ArrayBlockingQueue<String>(10);
@@ -90,15 +94,6 @@ class Validation {
 
 	}
 
-	// TODO Ajouter une queue bloquante en attribut de classe
-	// Par exemple
-	// final BlockingQueue<String> queue = new ArrayBlockingQueue<String>(10);
-	//
-	// TODO Ajouter une fonction pour ajouter dans la queue Bloquante
-	// Exemple :
-	// public void addInQueue(E elem){ queue.put(elem) }
-	//
-	//
 	public void addInQueue(String input){
 		Objects.requireNonNull(input);
 		try {

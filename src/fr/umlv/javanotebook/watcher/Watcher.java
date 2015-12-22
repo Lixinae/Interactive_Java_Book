@@ -7,7 +7,10 @@ import java.nio.file.WatchEvent.Kind;
 import static java.nio.file.StandardWatchEventKinds.*;
 
 
-// Implementer a la fin
+/**
+ * Project :Interactive_Java_Book
+ * Created by Narex on 02/12/2015.
+ */
 public class Watcher {
 	private WatchService watcher;
 	private Path dir;
@@ -30,15 +33,9 @@ public class Watcher {
 			System.err.println(e);
 		}
 	}
-	
-	// Not the final name
-
 	// TODO Add documentation
 	
 	/**
-	 * 
-	 * 
-	 * 
 	 * 
 	 */
 

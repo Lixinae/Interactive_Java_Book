@@ -16,10 +16,10 @@ public class Server extends AbstractVerticle{
 	private final Watcher watcher;
 	
 	/**
-	 * Initialise the name and port of the server
-	 * 
+	 * Initialize the name and port of the server
+	 * And create a new watcher on the folder "exercice"
 	 */
-	
+
 	public Server(){
 		this.adress="localhost";
 		this.port=8989;
@@ -48,10 +48,7 @@ public class Server extends AbstractVerticle{
 		router.get("/exercice/:id").handler(this::getExercise);
 		router.get("/countfiles").handler(this::getNumberOfFiles);
 		router.get("/watcherModify/:id").handler(this::updateFile);
-		// Ajouter les nouvelles requetes a faire
 		router.post("/validateExercice/:id/:input").handler(this::validateExercice);
-		// par exemple
-		// router.get("showJUnitTest").handler(this::showJUnitTest);
 	}
 	
 
@@ -67,8 +64,6 @@ public class Server extends AbstractVerticle{
 
 	}
 	
-	// Sends the number of files to the client
-	// & Generating all the buttons needed
 	private void getNumberOfFiles(RoutingContext routingContext){
 		routingContext.request();
 		System.out.println("Asking for number of file in folder");
