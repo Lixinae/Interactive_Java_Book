@@ -45,50 +45,30 @@ public class Watcher {
 	 * 
 	 */
 	
-	public void actions() {
-		while (isWorking) {
+	public boolean action() {
 			WatchKey key;
-			try {
-				key = watcher.take();
-				// renvoie 2 exception
-			} catch (InterruptedException ex) {
-				isWorking = false;
-				return;
+			key = watcher.poll();
+			if(key!=null){
+				return doEvents(key);
 			}
-			doEvents(key);
-			//boolean valid = key.reset();
-			if (!key.reset()) {
-				break;
-			}
-		}
-		
+			return false;
 	}
 
-	private void doEvents(WatchKey key) {
+	private boolean doEvents(WatchKey key) {
 		for (WatchEvent<?> event : key.pollEvents()) {
 			Kind<?> kind = event.kind();
-			// TODO
-			// SuppressWarning -> 
 			@SuppressWarnings("unchecked")
 			WatchEvent<Path> ev = (WatchEvent<Path>) event;
 			Path fileName = ev.context();
 			
-			//System.out.println(kind.name() + ": " + fileName);
-			
 			if (kind == OVERFLOW) {
 				continue;
-			} else if (kind == ENTRY_CREATE) {
-				// Eventuellement ajouter dans liste sinon rien
-			} else if (kind == ENTRY_DELETE) {
-
-			} else if (kind == ENTRY_MODIFY) {
-				/* TODO
-				// Update de l'exercice modifie si c'est exercice courant
-				// Si autre exo -> rien faire , chargement effectuer uniquement
-				// lors de la demande utilisateur
-				*/
+			} 
+			else if (kind == ENTRY_MODIFY) {
+				return true;
 			}
 		}
+		return false;
 	}
 }
 

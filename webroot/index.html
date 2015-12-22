@@ -63,12 +63,20 @@
 					buttons.append('<input id=button'+i+' type=button '+' value=Exercice_'+i+' onclick=printExercice('+i+');printAnswerArea();printAnswerButton('+i+');'+' </input>');
 				}
 			});
+		
 		}
+		//function testModify(){
+		//	$.get('/watcherModify',function(data){
+		//
+		//	}
+		//}
 		
 		$(document).ready(function(){
 			printButtons();
+			//testModify();
 			var interval = 1000 * 60 * 1;
 			setInterval(printButtons,interval);
+			//setInterval(testModify,interval);
 		});
 
 		

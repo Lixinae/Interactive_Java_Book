@@ -3,6 +3,7 @@ package fr.umlv.javanotebook.configuration;
 import fr.umlv.javanotebook.exercice.Exercice;
 import fr.umlv.javanotebook.exercice.Exercices;
 import fr.umlv.javanotebook.validation.MyValidation;
+import fr.umlv.javanotebook.watcher.Watcher;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
@@ -12,6 +13,7 @@ public class Server extends AbstractVerticle{
 
 	private final int port; // port du server
 	private final String adress; // nom du serveur , localhost car on ne travail que en local 
+	private final Watcher watcher;
 	
 	/**
 	 * Initialise the name and port of the server
@@ -21,6 +23,7 @@ public class Server extends AbstractVerticle{
 	public Server(){
 		this.adress="localhost";
 		this.port=8989;
+		watcher = new Watcher("./exercice");
 	}
 	
 	
@@ -44,18 +47,24 @@ public class Server extends AbstractVerticle{
 	private void listOfRequest(Router router) {
 		router.get("/exercice/:id").handler(this::getExercise);
 		router.get("/countfiles").handler(this::getNumberOfFiles);
+		router.get("/watcherModify").handler(this::updateFile);
 		// Ajouter les nouvelles requetes a faire
 		router.post("/validateExercice/:id/:input").handler(this::validateExercice);
-		router.get("/watcherModify/:id").handler(this::updateFile);
 		// par exemple
 		// router.get("showJUnitTest").handler(this::showJUnitTest);
 	}
 	
 	private void updateFile(RoutingContext routingContext){
 		String id = routingContext.request().getParam("id");
-		System.out.println("Asking for exercise modify " + id);
-		Exercice ex = new Exercice();
-		routingContext.response().end(ex.toWeb(id));
+		System.out.println("Asking for exercise modify " + id);//code pour updateFile
+		if(watcher.action()){
+			System.out.println("Asking for exercise "+id);
+			Exercice ex = new Exercice();
+			routingContext.response().end(ex.toWeb(id));
+		}
+		else{
+			routingContext.response().end();
+		}
 	}
 
 	
