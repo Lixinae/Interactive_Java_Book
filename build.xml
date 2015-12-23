@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Interactive_Java_Book" default="jar" basedir=".">
+<project name="Interactive_Java_Book" default="all" basedir=".">
 	<description>
 		Build file for Interactive_Java_Book
 	</description>
 	<!-- set global properties for this build -->
 	<property name="src.dir" location="src"/>
-	<property name="build.dir" location="classes"/>
-	<property name="dest.dir" location="dest"/>
+	<property name="classes.dir" location="classes"/>
 	<property name="lib.dir" location="libs"/>
-	<property name="docs.dir" location="docs"/>
-	<property name="jdk1.8" location="~/jdk1.8.0_65"/>
+	<property name="api.dir" location="./docs/api"/>
+	<property name="libvertx.dir" location="./vert.x-3.0.0/lib" />
 
 
 	<!--  Create a classpath container which can be later used in the ant task -->
@@ -17,48 +16,69 @@
 		<fileset dir="${lib.dir}">
 			<include name="**/*.jar" />
 		</fileset>
+		<fileset dir="${libvertx.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+
 	</path>
 
 	<!-- Clean all the generated files -->
 	<target name="clean" description="Removing the all generated files.">
-		<delete dir="${build.dir}"/>
-		<delete dir="${dest.dir}"/>
+		<delete dir="${classes.dir}"/>
+		<delete dir="${api.dir}"/>
+		<delete file ="jshellbook.jar"/>
+		<delete file ="MANIFEST.MF"/>
+
 	</target>
 
 	<!-- Cleans the folder and creates the necessary directorie -->
 	<target name="prepare" depends="clean">
-		<mkdir dir="${build.dir}"/>
-		<mkdir dir="${dest.dir}"/>
+		<mkdir dir="${classes.dir}"/>
 		<mkdir dir="${src.dir}"/>
+		<mkdir dir="${api.dir}"/>
+
 	</target>
 
 	<!-- Compile the program -->
 	<target name="compile" depends="prepare" description="Compilation of all source code.">
 		<javac srcdir="${src.dir}"
-			   destdir="${build.dir}"
+			   destdir="${classes.dir}"
 			   fork = "true"
-			   executable="$(jdk1.8)/bin/javac"
-			   taskname="javac1.8"
 			   includeantruntime="false"
+			   classpathref="build.classpath"
 		/>
 	</target>
 
 	<!-- Creates Javadoc -->
-	<target name="docs" depends="compile">
-		<javadoc packagenames="src" sourcepath="${src.dir}" destdir="${docs.dir}">
+	<target name="docs" depends="compile" description="Generate documentation">
+		<javadoc packagenames="src" sourcepath="${src.dir}" destdir="${api.dir}">
 			<!-- Define which files / directory should get included, we include all -->
-			<fileset dir="${.dir}">
+			<fileset dir="${src.dir}">
 				<include name="**" />
 			</fileset>
 		</javadoc>
 	</target>
 
 	<target name="jar" depends="compile" description="Generates jshellbook.jar file in to the 'dest' directory.">
-		<jar jarfile="${dest.dir}/jshellbook.jar" basedir="${build.dir}">
-			<manifest>
-				<attribute name="Interactive_Java_Book" value="InterJavaBook.Main" />
-			</manifest>
-		</jar>
+		<pathconvert property="mf.classpath" pathsep=" ">
+			<path refid="build.classpath"/>
+			<flattenmapper />
+		</pathconvert>
+
+		<tstamp/>
+		<manifest file="MANIFEST.MF" >
+			<attribute name="Main-Class" value="fr.umlv.javanotebook.main.InterJavaBook" />
+			<attribute name = "Class-Path" value="${mf.classpath}"/>
+			<attribute name ="Built-Date" value="${TODAY}"/>
+		</manifest>
+		<jar jarfile="jshellbook.jar"
+			 basedir="${classes.dir}"
+			 manifest="MANIFEST.MF"
+		/>
+	</target>
+
+	<target name="all" depends="jar,docs" description="Generation complete">
+		<echo message="Generation complete."/>
 	</target>
 
 
