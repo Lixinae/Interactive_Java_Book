@@ -2,15 +2,10 @@ package fr.umlv.javanotebook.watcher;
 
 import java.io.IOException;
 import java.nio.file.*;
-import java.nio.file.WatchEvent.Kind;
 
 import static java.nio.file.StandardWatchEventKinds.*;
 
 
-/**
- * Project :Interactive_Java_Book
- * Created by Narex on 02/12/2015.
- */
 public class Watcher {
 	private WatchService watcher;
 	private Path dir;
@@ -20,7 +15,7 @@ public class Watcher {
 	 * Creates a watcher on the folder giving by path
 	 * 
 	 * @param path : path of the folder that is watched
-	 * 
+	 *
 	 * 
 	 */
 	
@@ -33,9 +28,11 @@ public class Watcher {
 			System.err.println(e);
 		}
 	}
-	// TODO Add documentation
 	
 	/**
+	 * This function tests if the watcher finds a modified file in the folder attached
+	 * 
+	 * @return if file in folder was modified return true, else return false.
 	 * 
 	 */
 
@@ -50,11 +47,7 @@ public class Watcher {
 
 	private boolean doEvents(WatchKey key) {
 		for (WatchEvent<?> event : key.pollEvents()) {
-			Kind<?> kind = event.kind();
-			if (kind == OVERFLOW) {
-				continue;
-			} 
-			else if (kind == ENTRY_MODIFY) {
+			if (event.kind() == ENTRY_MODIFY) {
 				key.reset();
 				return true;
 			}
