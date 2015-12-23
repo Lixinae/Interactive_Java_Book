@@ -1,39 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Interactive_Java_Book" basedir=".">
+<project name="Interactive_Java_Book" default="jar" basedir=".">
   <description>
-    simple example build file
+    Build file for Interactive_Java_Book
   </description>
   <!-- set global properties for this build -->
   <property name="src" location="src"/>
   <property name="build" location="classes"/>
-  <property name="dist" location="dist"/>
+  <property name="dest" location="dest"/>
 
 
-	  <target name="init">
-	    <!-- Create the time stamp -->
-	    <tstamp/>
-	    <!-- Create the build directory structure used by compile -->
-	    <mkdir dir="${build}"/>
-	  </target>
+	<path id="libs">
+		<fileset dir="lib" includes="*.jar"></fileset>
+	</path>
 
-	  <target name="compile" depends="init" description="compile the source">
-	    <!-- Compile the java code from ${src} into ${build} -->
-	    <javac srcdir="${src}" destdir="${build}"/>
-	  </target>
-	
-	  <target name="dist" depends="compile" description="generate the distribution">
-	    <!-- Create the distribution directory -->
-	    <mkdir dir="${dist}/lib"/>
+	<!-- Clean all the generated files -->
+	<target name="clean" description="Removing the all generated files.">
+		<delete dir="${build}"/>
+		<delete dir="${dest}"/>
+	</target>
 
-	    <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
-	    <jar jarfile="${dist}/lib/Interactive_Java_Book-${DSTAMP}.jar" basedir="${build}"/>
-	  </target>
-	
-	  <target name="clean"
-	        description="clean up">
-	    <!-- Delete the ${build} and ${dist} directory trees -->
-	    <delete dir="${build}"/>
-	    <delete dir="${dist}"/>
-	  </target>
-	
+	<!-- Cleans the folder and creates the necessary directorie -->
+	<target name="prepare" depends="clean">
+		<mkdir dir="${build}"/>
+		<mkdir dir="${dest}"/>
+		<mkdir dir="${src}"/>
+	</target>
+
+	<target name="compile" depends="prepare" description="Compilation of all source code.">
+		<javac srcdir="${src}"
+			   destdir="${build}"
+			   includeantruntime="false"
+		/>
+	</target>
+
+
+	<target name="jar" depends="compile" description="Generates jshellbook.jar file in to the 'dest' directory.">
+		<jar jarfile="${dest}/jshellbook.jar" basedir="${build}"/>
+	</target>
+
+
 </project>
