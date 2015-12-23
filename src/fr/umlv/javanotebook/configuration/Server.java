@@ -99,9 +99,13 @@ public class Server extends AbstractVerticle{
 			//if (valid.validate()==exerciceAndAnswers[id]){
 				routingContext.response().end("Excelent.");
 			//}
+		if (!valid.accept()){
+			routingContext.response().end(valid.status());
+			valid.reset();
 		}
-		else{
-			routingContext.response().end("Erreur dans ton programme.");
+		else /*if (valid.validate()==exercices[id])*/{
+			routingContext.response().end("Bravo");
+			valid.reset();
 		}
 	}
 
