@@ -6,11 +6,13 @@
 		//alert(currentID);
   
 		function sendAnswer(id){
-			var element = $("#exercice");
+			var element = $("#answerFromServer");
 			var answerToSend = $("#answer");
+			element.html("");
 			$.post('/validateExercice/'+id+'/'+answerToSend.val(),
 					function(data){
 						console.log(data);
+						
 						element.append(data);
 					}
 				);
@@ -108,5 +110,9 @@
 	<div id="sendButton">
 
 	</div>
+	<div id="answerFromServer">
+
+	</div>
+	
  </body>
 </html>

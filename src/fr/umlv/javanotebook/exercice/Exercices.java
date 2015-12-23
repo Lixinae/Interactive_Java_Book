@@ -44,4 +44,8 @@ public class Exercices {
 		}
 	}
 
+	public String getAnswerFromKey(Object key){
+		return exercices.get(key);
+	}
+
 }

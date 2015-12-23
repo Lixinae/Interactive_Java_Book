@@ -9,12 +9,14 @@ import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.StaticHandler;
 
+
 public class Server extends AbstractVerticle{
 
 	private final int port; // port du server
 	private final String adress; // nom du serveur , localhost because we work on local only
 	private final Watcher watcher;
-	//champ hashmap exercices
+	private final Exercices exs;
+	//champ hashmap exerciceAndAnswers
 	
 	/**
 	 * Initialize the name and port of the server
@@ -25,7 +27,8 @@ public class Server extends AbstractVerticle{
 		this.adress="localhost";
 		this.port=8989;
 		watcher = new Watcher("./exercice");
-		//recuperer les exercices
+		exs = new Exercices();
+		//recuperer les exerciceAndAnswers
 	}
 	
 	
@@ -60,8 +63,9 @@ public class Server extends AbstractVerticle{
 	private void getExercise(RoutingContext routingContext) {
 		String id = routingContext.request().getParam("id");
 		System.out.println("Asking for exercise " + id);
-		Exercice ex = new Exercice();
-		routingContext.response().end(ex.toWeb(id));
+		String answer = exs.getAnswerFromKey(id);
+		Exercice ex = new Exercice(id,answer);
+		routingContext.response().end(ex.toWeb());
 	}
 	
 	private void getNumberOfFiles(RoutingContext routingContext){
@@ -76,8 +80,9 @@ public class Server extends AbstractVerticle{
 		System.out.println("Asking for exercise modify " + id);
 		if(watcher.action()){
 			System.out.println("Asking for exercise "+id);
-			Exercice ex = new Exercice();
-			routingContext.response().end(ex.toWeb(id));
+			String answer = exs.getAnswerFromKey(id);
+			Exercice ex = new Exercice(id,answer);
+			routingContext.response().end(ex.toWeb());
 		}
 		else{
 			System.out.println("Didn\'t update exercice");
@@ -91,7 +96,7 @@ public class Server extends AbstractVerticle{
 		valid.addInQueue(input);
 		System.out.println("Asking to validate exercice " + id);
 		if (valid.accept()){
-			//if (valid.validate()==exercices[id]){
+			//if (valid.validate()==exerciceAndAnswers[id]){
 				routingContext.response().end("Excelent.");
 			//}
 		}
