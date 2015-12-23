@@ -17,3 +17,5 @@ Some content. Some content.
     clazz.test();
 
 Some content.
+
+another test

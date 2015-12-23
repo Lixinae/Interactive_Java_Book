@@ -39,15 +39,17 @@ public class Exercices {
 		} catch (IOException e) {
 			System.err.println(e);
 		}
+
+
 	}
 
 	public String getAnswerFromKey(String key){
 		for (Exercice ex: exercices){
-			if (ex.getNumero()==key){
+			if (ex.getNumero().compareTo(key.substring(0,1))==0){
 				return ex.getRespons();
 			}
 		}
-		throw new IllegalStateException("Exercice doesnt exist");
+		throw new IllegalStateException("Answer to exercice "+key +" doesn't exist");
 	}
 
 }

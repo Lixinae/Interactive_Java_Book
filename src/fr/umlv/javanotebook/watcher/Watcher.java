@@ -16,7 +16,6 @@ public class Watcher {
 	 * 
 	 * @param path : path of the folder that is watched
 	 *
-	 * 
 	 */
 	
 	public Watcher(String path) {
@@ -39,10 +38,10 @@ public class Watcher {
 	public boolean action() {
 			WatchKey key;
 			key = watcher.poll();
-			if(key!=null){
-				return doEvents(key);
-			}
-			return false;
+			//if(key!=null){
+			return key!=null && doEvents(key);
+//			}
+//			return false;
 	}
 
 	private boolean doEvents(WatchKey key) {
