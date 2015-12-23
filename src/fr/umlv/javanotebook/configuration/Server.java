@@ -71,7 +71,7 @@ public class Server extends AbstractVerticle{
 	private void getNumberOfFiles(RoutingContext routingContext){
 		routingContext.request();
 		System.out.println("Asking for number of file in folder");
-		routingContext.response().end(Exercices.countFiles());
+		routingContext.response().end(exs.countFiles());
 	}
 
 
@@ -99,8 +99,12 @@ public class Server extends AbstractVerticle{
 			routingContext.response().end(valid.status());
 			valid.reset();
 		}
-		else /*if (valid.validate()==exercices[id])*/{
-			routingContext.response().end("Bravo");
+		else if (valid.validate().compareTo(exs.getAnswerFromKey(id))==0){
+			routingContext.response().end("Congratulations");
+			valid.reset();
+		}
+		else{
+			routingContext.response().end("Wrong answer");
 			valid.reset();
 		}
 	}

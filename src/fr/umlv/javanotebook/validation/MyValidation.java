@@ -151,7 +151,7 @@ public class MyValidation {
 						sb.append(e.snippet().source());
 						sbrow.append(sb.toString());
 						if (e.value() != null) {
-							sbrow.append("Value is: ").append(e.value()).append("\n");
+							sbrow.append(e.value()).append("\n");
 						}
 						System.out.flush();
 				}
