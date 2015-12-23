@@ -6,28 +6,38 @@ import jdk.jshell.SnippetEvent;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
 
-/**
- * Project :Interactive_Java_Book
- * Created by kbondel on 21/12/2015.
- */
 public class MyValidation {
 
-	final BlockingQueue<String> queue;
+	private final ReentrantLock rlock = new ReentrantLock();
+	private final Condition c = rlock.newCondition();
+	private String input=null;
 
 	public MyValidation() {
-		queue = new ArrayBlockingQueue<String>(10);
 	}
-
+/**
+ * add the answer of user in input (thread-safe)
+ * @param input is the answer of user.
+ */
 	public void addInQueue(String input){
+		
 		Objects.requireNonNull(input);
+		rlock.lock();
 		try {
-			queue.put(input);
-		} catch (InterruptedException|ClassCastException|IllegalArgumentException e) {
-			e.printStackTrace();
+			while(this.input!=null){
+				try {
+					c.await();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			this.input=input;
+		}finally{
+			rlock.unlock();
 		}
+			
 	}
 	
 	/*
@@ -72,14 +82,12 @@ public class MyValidation {
 		return sbrow.toString();
 		*/
 	/**
-	 * 
+	 * the fonction tests if code is valid or not.
 	 * @return return true if code is valid, false else.
 	 */
 	public boolean accept() {
-		String input = takeFromQueue();
 		try (JShell js = JShell.create()) {
-				List<SnippetEvent> events = js.eval(input);
-				for (SnippetEvent e : events) {
+				for (SnippetEvent e : js.eval(input)) {
 					if (e.causeSnippet() == null) {
 						switch (e.status()) {
 						case VALID:
@@ -98,9 +106,37 @@ public class MyValidation {
 		}
 		return true;
 	}
-	
+	/**
+	 * the fonction return some trick for correcting the code
+	 * @return the specified problem on the code.
+	 * @exception IllegalStateException if error on program eval, or if
+	 */
+	public String status() {
+		try (JShell js = JShell.create()) {
+			for (SnippetEvent e : js.eval(input)) {
+				if (e.causeSnippet() == null) {
+					switch (e.status()) {
+					case VALID:
+						continue;
+					case RECOVERABLE_DEFINED:
+						return "Code with unresolved references";
+					case RECOVERABLE_NOT_DEFINED:
+						return "Code possibly reparable, but failed";
+					case REJECTED:
+						return "Code failed";
+					default:
+						throw new IllegalStateException("internal error");
+					}
+				}
+			}
+		}
+		throw new IllegalStateException("valid when accept return false (invalid code)");
+	}
+	/**
+	 * This function return the answer of user with the good format for testing
+	 * @return value of code for answer question
+	 */
 	public String validate(){
-		String input = takeFromQueue();
 		StringBuilder sbrow = new StringBuilder();
 		try (JShell js = JShell.create()) {
 				List<SnippetEvent> events = js.eval(input);
@@ -124,7 +160,7 @@ public class MyValidation {
 		
 	}
 
-	private String takeFromQueue() {
+	/*private String takeFromQueue() {
 		String tmp=null;
 		try {
 			tmp=queue.take();
@@ -132,5 +168,13 @@ public class MyValidation {
 			e.printStackTrace();
 		}
 		return Objects.requireNonNull(tmp);
+	}*/
+	/**
+	 * free the code for continue to validate another input.
+	 */
+	public void reset() {
+		c.signal();
 	}
+
+
 }

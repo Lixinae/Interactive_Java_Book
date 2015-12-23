@@ -90,13 +90,13 @@ public class Server extends AbstractVerticle{
 		MyValidation valid = new MyValidation();
 		valid.addInQueue(input);
 		System.out.println("Asking to validate exercice " + id);
-		if (valid.accept()){
-			//if (valid.validate()==exercices[id]){
-				routingContext.response().end("Excelent.");
-			//}
+		if (!valid.accept()){
+			routingContext.response().end(valid.status());
+			valid.reset();
 		}
-		else{
-			routingContext.response().end("Erreur dans ton programme.");
+		else /*if (valid.validate()==exercices[id])*/{
+			routingContext.response().end("Bravo");
+			valid.reset();
 		}
 	}
 
