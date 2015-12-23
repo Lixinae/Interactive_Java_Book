@@ -73,8 +73,9 @@
 		</manifest>
 		<jar jarfile="jshellbook.jar"
 			 basedir="${classes.dir}"
-			 manifest="MANIFEST.MF"
-		/>
+			 manifest="MANIFEST.MF">
+			<zipgroupfileset dir="${lib.dir}" includes="*.jar"/>
+		</jar>
 	</target>
 
 	<target name="all" depends="jar,docs" description="Generation complete">
