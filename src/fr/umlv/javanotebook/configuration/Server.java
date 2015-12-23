@@ -99,9 +99,6 @@ public class Server extends AbstractVerticle{
 			//if (valid.validate()==exerciceAndAnswers[id]){
 				routingContext.response().end("Excelent.");
 			//}
-		if (!valid.accept()){
-			routingContext.response().end(valid.status());
-			valid.reset();
 		}
 		else /*if (valid.validate()==exercices[id])*/{
 			routingContext.response().end("Bravo");
@@ -110,7 +107,7 @@ public class Server extends AbstractVerticle{
 	}
 
 
-	@SuppressWarnings("unused")
+
 	private void showJUnitTest(RoutingContext routingContext){
 		String id = routingContext.request().getParam("id");
 		System.out.println("Asking to see JUnit test for exercise "+id);
