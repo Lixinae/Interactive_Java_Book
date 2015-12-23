@@ -149,13 +149,15 @@ public class MyValidation {
 						}
 						sb.append(" of ");
 						sb.append(e.snippet().source());
-						sbrow.append(sb.toString());
+						//sbrow.append(sb.toString());
 						if (e.value() != null) {
-							sbrow.append(e.value()).append("\n");
+							sbrow.append(e.value());
+							//sbrow.append("\n"); inutile car concerne que affichage
 						}
 						System.out.flush();
 				}
 		}
+		System.out.println("In function validate "+ sbrow);
 		return sbrow.toString();
 		
 	}
@@ -173,7 +175,7 @@ public class MyValidation {
 	 * free the code for continue to validate another input.
 	 */
 	public void reset() {
-		c.signal();
+		c.signalAll();
 	}
 
 

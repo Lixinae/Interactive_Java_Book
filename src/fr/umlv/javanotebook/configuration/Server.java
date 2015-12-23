@@ -97,16 +97,17 @@ public class Server extends AbstractVerticle{
 		System.out.println("Asking to validate exercice " + id);
 		if (!valid.accept()){
 			routingContext.response().end(valid.status());
-			valid.reset();
+//			valid.reset();
 		}
 		else if (valid.validate().compareTo(exs.getAnswerFromKey(id))==0){
 			routingContext.response().end("Congratulations");
-			valid.reset();
+//			valid.reset();
 		}
 		else{
 			routingContext.response().end("Wrong answer");
-			valid.reset();
+//			valid.reset();
 		}
+		valid.reset();
 	}
 
 

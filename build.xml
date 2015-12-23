@@ -67,8 +67,8 @@
 
 		<tstamp/>
 		<manifest file="MANIFEST.MF" >
-			<attribute name="Main-Class" value="fr.umlv.javanotebook.main.InterJavaBook" />
-			<attribute name = "Class-Path" value="${mf.classpath}"/>
+			<attribute name ="Main-Class" value="fr.umlv.javanotebook.main.InterJavaBook" />
+			<attribute name ="Class-Path" value="${mf.classpath}"/>
 			<attribute name ="Built-Date" value="${TODAY}"/>
 		</manifest>
 		<jar jarfile="jshellbook.jar"
