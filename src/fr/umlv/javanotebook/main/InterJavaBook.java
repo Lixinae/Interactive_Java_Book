@@ -1,7 +1,6 @@
 package fr.umlv.javanotebook.main;
 
 import fr.umlv.javanotebook.configuration.Server;
-import fr.umlv.javanotebook.exercice.Exercice;
 import fr.umlv.javanotebook.exercice.Exercices;
 import io.vertx.core.Vertx;
 

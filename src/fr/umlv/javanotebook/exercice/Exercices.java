@@ -13,9 +13,6 @@ import java.util.HashMap;
  */
 public class Exercices {
 
-	//	private final int id;
-	//	private String respons;
-
 	// TODO Changer Integer en Exerice plus tard eventuellement
 	private final HashMap<Integer, String> exercices = new HashMap<>();
 

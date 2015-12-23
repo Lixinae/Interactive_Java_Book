@@ -12,8 +12,9 @@ import io.vertx.ext.web.handler.StaticHandler;
 public class Server extends AbstractVerticle{
 
 	private final int port; // port du server
-	private final String adress; // nom du serveur , localhost car on ne travail que en local 
+	private final String adress; // nom du serveur , localhost because we work on local only
 	private final Watcher watcher;
+	//champ hashmap exercices
 	
 	/**
 	 * Initialize the name and port of the server
@@ -24,6 +25,7 @@ public class Server extends AbstractVerticle{
 		this.adress="localhost";
 		this.port=8989;
 		watcher = new Watcher("./exercice");
+		//recuperer les exercices
 	}
 	
 	
@@ -60,8 +62,6 @@ public class Server extends AbstractVerticle{
 		System.out.println("Asking for exercise " + id);
 		Exercice ex = new Exercice();
 		routingContext.response().end(ex.toWeb(id));
-		//.putHeader("content-type", "application/json")
-
 	}
 	
 	private void getNumberOfFiles(RoutingContext routingContext){
@@ -73,7 +73,7 @@ public class Server extends AbstractVerticle{
 
 	private void updateFile(RoutingContext routingContext){
 		String id = routingContext.request().getParam("id");
-		System.out.println("Asking for exercise modify " + id);//code pour updateFile
+		System.out.println("Asking for exercise modify " + id);
 		if(watcher.action()){
 			System.out.println("Asking for exercise "+id);
 			Exercice ex = new Exercice();
@@ -88,15 +88,20 @@ public class Server extends AbstractVerticle{
 		String id = routingContext.request().getParam("id");
 		String input = routingContext.request().getParam("input");
 		MyValidation valid = new MyValidation();
-		// TODO Ajouter fonction d'ajouter dans la file d'attente
-		// Changer le MyValidation.accept par autre fonction
 		valid.addInQueue(input);
 		System.out.println("Asking to validate exercice " + id);
-		routingContext.response().end(valid.accept(id));
+		if (valid.accept()){
+			//if (valid.validate()==exercices[id]){
+				routingContext.response().end("Excelent.");
+			//}
+		}
+		else{
+			routingContext.response().end("Erreur dans ton programme.");
+		}
 	}
 
 
-	//TODO Ajouter fonction d'affichage des tests dans end
+	@SuppressWarnings("unused")
 	private void showJUnitTest(RoutingContext routingContext){
 		String id = routingContext.request().getParam("id");
 		System.out.println("Asking to see JUnit test for exercise "+id);
@@ -108,7 +113,6 @@ public class Server extends AbstractVerticle{
 	/**
 	 * Prints the adress of the server on the terminal
 	 */
-	// Affiche l'url du serveur sur le terminal
 	public void print_url(){
 		System.out.println("Copy to browser to start");
 		System.out.println(this.adress+":"+this.port);
