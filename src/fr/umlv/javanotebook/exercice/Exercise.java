@@ -9,12 +9,12 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Objects;
 
-class Exercice {
+class Exercise {
 
 	private final String respons;
 	private final String numero;
 
-	Exercice(String numero, String respons) {
+	Exercise(String numero, String respons) {
 		this.numero = Objects.requireNonNull(numero);
 		this.respons = Objects.requireNonNull(respons);
 	}

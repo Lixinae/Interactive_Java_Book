@@ -7,15 +7,15 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Exercices {
+public class Exercises {
 
-	private final List<Exercice> exercices = new ArrayList<>();
+	private final List<Exercise> exercices = new ArrayList<>();
 
 	/**
 	 * Fetches all the exercise Associating the id of the exercise with the
 	 * awaited respons
 	 */
-	public Exercices() {
+	public Exercises() {
 		getAllExercicesAndAnswers();
 	}
 
@@ -30,12 +30,11 @@ public class Exercices {
 		Path path = Paths.get("./exercice/answers.rep");
 		try {
 			Files.lines(path).forEach(
-					l -> exercices.add(new Exercice(l.split(" : ")[0], l
+					l -> exercices.add(new Exercise(l.split(" : ")[0], l
 							.split(" : ")[1])));
 		} catch (IOException e) {
 			System.err.println(e);
 		}
-
 	}
 
 <<<<<<< HEAD
@@ -44,7 +43,7 @@ public class Exercices {
 			if (ex.getNumero().compareTo(key)==0){
 =======
 	public String getAnswerFromKey(String key) {
-		for (Exercice ex : exercices) {
+		for (Exercise ex : exercices) {
 			if (ex.getNumero().compareTo(key.substring(0, 1)) == 0) {
 >>>>>>> 32a87bf107d6ac549365e4ccc914a359f2a93568
 				return ex.getRespons();
@@ -61,7 +60,7 @@ public class Exercices {
 =======
 
 	public String getToWebFromKey(String key) {
-		for (Exercice ex : exercices) {
+		for (Exercise ex : exercices) {
 			if (ex.getNumero().compareTo(key.substring(0, 1)) == 0) {
 >>>>>>> 32a87bf107d6ac549365e4ccc914a359f2a93568
 				return ex.toWeb();
