@@ -14,7 +14,7 @@ public class MyValidation {
 	private final ReentrantLock rlock = new ReentrantLock();
 	private final Condition condition = rlock.newCondition();
 	private String input=null;
-	private boolean isWaiting = false;
+	private int nbWait = 0;
 
 	public MyValidation() {
 	}
@@ -28,7 +28,7 @@ public class MyValidation {
 		try {
 			while(this.input!=null){
 				try {
-					isWaiting=true;
+					nbWait++;
 					condition.await();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
@@ -45,8 +45,9 @@ public class MyValidation {
 	 */
 	public void reset() {
 		input=null;
-		if (isWaiting){			
+		if (nbWait > 0){			
 			condition.signal();
+			nbWait--;
 		}
 	}
 	/**
