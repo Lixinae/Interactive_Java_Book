@@ -11,10 +11,10 @@ import io.vertx.ext.web.handler.StaticHandler;
 public class Server extends AbstractVerticle {
 
 	private final int port; // port du server
-	private final String adress; // nom du serveur , localhost because we work
-									// on local only
+	private final String adress; // nom du serveur , localhost because we work on local only
 	private final Watcher watcher;
 	private final Exercises exs;
+	private final MyValidation valid;
 
 	/**
 	 * Initialize the name and port of the server And create a new watcher on
@@ -26,6 +26,7 @@ public class Server extends AbstractVerticle {
 		this.port = 8989;
 		watcher = new Watcher("./exercice");
 		exs = new Exercises();
+		valid = new MyValidation();
 	}
 
 	/**
@@ -48,8 +49,7 @@ public class Server extends AbstractVerticle {
 		router.get("/exercice/:id").handler(this::getExercise);
 		router.get("/countfiles").handler(this::getNumberOfFiles);
 		router.get("/watcherModify/:id").handler(this::updateFile);
-		router.post("/validateExercice/:id/:input").handler(
-				this::validateExercice);
+		router.post("/validateExercice/:id/:input").handler(this::validateExercice);
 	}
 
 	private void getExercise(RoutingContext routingContext) {
@@ -67,12 +67,12 @@ public class Server extends AbstractVerticle {
 
 	private void updateFile(RoutingContext routingContext) {
 		String id = routingContext.request().getParam("id");
-		System.out.println("Was exercise "+id+" modified ?");
+		System.out.println("Was exercise " + id + " modified ?");
 		if (watcher.action()) {
-			System.out.println("Exercise "+id+" modified");
+			System.out.println("Exercise " + id + " modified");
 			routingContext.response().end(exs.getToWebFromKey(id));
 		} else {
-			System.out.println("Exercise "+id+" wasn\'t modified " );
+			System.out.println("Exercise " + id + " wasn\'t modified ");
 			routingContext.response().end();
 		}
 	}
@@ -80,9 +80,12 @@ public class Server extends AbstractVerticle {
 	private void validateExercice(RoutingContext routingContext) {
 		String id = routingContext.request().getParam("id");
 		String input = routingContext.request().getParam("input");
-		MyValidation valid = new MyValidation();
-		valid.addInQueue(input);
 		System.out.println("Asking to validate exercise " + id);
+		valid.addInQueue(input);
+		validateExerciceAnnexe(routingContext, id);
+	}
+
+	private void validateExerciceAnnexe(RoutingContext routingContext, String id) {
 		if (!valid.accept()) {
 			routingContext.response().end(valid.status());
 		} else if (valid.validate().compareTo(exs.getAnswerFromKey(id)) == 0) {
