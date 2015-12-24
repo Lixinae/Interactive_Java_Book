@@ -61,19 +61,18 @@ public class Server extends AbstractVerticle {
 
 	private void getNumberOfFiles(RoutingContext routingContext) {
 		routingContext.request();
-		System.out.println("Asking for number of file in folder");
+		System.out.println("Asking for number of exercise in folder");
 		routingContext.response().end(exs.countFiles());
 	}
 
 	private void updateFile(RoutingContext routingContext) {
 		String id = routingContext.request().getParam("id");
-		System.out.println("Asking for exercise, was he modified ?:" + id);
+		System.out.println("Was exercise "+id+" modified ?");
 		if (watcher.action()) {
-			System.out.println("Asking for exercise because he was modified :"
-					+ id);
+			System.out.println("Exercise "+id+" modified");
 			routingContext.response().end(exs.getToWebFromKey(id));
 		} else {
-			System.out.println("exercise wasnt modified :" + id);
+			System.out.println("Exercise "+id+" wasn\'t modified " );
 			routingContext.response().end();
 		}
 	}
