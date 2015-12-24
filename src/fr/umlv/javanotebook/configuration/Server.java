@@ -1,6 +1,5 @@
 package fr.umlv.javanotebook.configuration;
 
-import fr.umlv.javanotebook.exercice.Exercice;
 import fr.umlv.javanotebook.exercice.Exercices;
 import fr.umlv.javanotebook.validation.MyValidation;
 import fr.umlv.javanotebook.watcher.Watcher;
@@ -63,9 +62,8 @@ public class Server extends AbstractVerticle{
 	private void getExercise(RoutingContext routingContext) {
 		String id = routingContext.request().getParam("id");
 		System.out.println("Asking for exercise " + id);
-		String answer = exs.getAnswerFromKey(id);
-		Exercice ex = new Exercice(id,answer);
-		routingContext.response().end(ex.toWeb());
+		String exToWeb = exs.getToWebFromKey(id);
+		routingContext.response().end(exToWeb);
 	}
 	
 	private void getNumberOfFiles(RoutingContext routingContext){
@@ -80,9 +78,8 @@ public class Server extends AbstractVerticle{
 		System.out.println("Asking for exercise modify " + id);
 		if(watcher.action()){
 			System.out.println("Asking for exercise "+id);
-			String answer = exs.getAnswerFromKey(id);
-			Exercice ex = new Exercice(id,answer);
-			routingContext.response().end(ex.toWeb());
+			String exToWeb = exs.getToWebFromKey(id);
+			routingContext.response().end(exToWeb);
 		}
 		else{
 			System.out.println("Didn\'t update exercice");

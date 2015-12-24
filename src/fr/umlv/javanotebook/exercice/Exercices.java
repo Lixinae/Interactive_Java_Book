@@ -51,5 +51,14 @@ public class Exercices {
 		}
 		throw new IllegalStateException("Answer to exercice "+key +" doesn't exist");
 	}
+	
+	public String getToWebFromKey(String key){
+		for(Exercice ex: exercices){
+			if (ex.getNumero().compareTo(key.substring(0,1))==0){
+				return ex.toWeb();
+			} 
+		}
+		throw new IllegalStateException("Exercice doesnt exist");
+	}
 
 }

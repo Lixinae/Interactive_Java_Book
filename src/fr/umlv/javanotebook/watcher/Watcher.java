@@ -38,10 +38,7 @@ public class Watcher {
 	public boolean action() {
 			WatchKey key;
 			key = watcher.poll();
-			//if(key!=null){
 			return key!=null && doEvents(key);
-//			}
-//			return false;
 	}
 
 	private boolean doEvents(WatchKey key) {
