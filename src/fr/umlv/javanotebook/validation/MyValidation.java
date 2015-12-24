@@ -12,23 +12,24 @@ import java.util.concurrent.locks.ReentrantLock;
 public class MyValidation {
 
 	private final ReentrantLock rlock = new ReentrantLock();
-	private final Condition c = rlock.newCondition();
+	private final Condition condition = rlock.newCondition();
 	private String input=null;
+	private boolean isWaiting = false;
 
 	public MyValidation() {
 	}
-/**
- * add the answer of user in input (thread-safe)
- * @param input is the answer of user.
- */
-	public void addInQueue(String input){
-		
+	/**
+	 * add the answer of user in input (thread-safe)
+	 * @param input is the answer of user.
+	 */
+	public void addInQueue(String input){		
 		Objects.requireNonNull(input);
 		rlock.lock();
 		try {
 			while(this.input!=null){
 				try {
-					c.await();
+					isWaiting=true;
+					condition.await();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -36,73 +37,40 @@ public class MyValidation {
 			this.input=input;
 		}finally{
 			rlock.unlock();
-		}
-			
+		}			
 	}
-	
-	/*
-		String input = takeFromQueue();
-		StringBuilder sbrow = new StringBuilder();
-		try (JShell js = JShell.create()) {
-				List<SnippetEvent> events = js.eval(input);
-				for (SnippetEvent e : events) {
-					StringBuilder sb = new StringBuilder();
-					if (e.causeSnippet() == null) {
-						switch (e.status()) {
-						case VALID:
-							sb.append("Successful ");
-							break;
-						case RECOVERABLE_DEFINED:
-							sb.append("With unresolved references ");
-							break;
-						case RECOVERABLE_NOT_DEFINED:
-							sb.append("Possibly reparable, failed  ");
-							break;
-						case REJECTED:
-							sb.append("Failed ");
-							break;
-						default:
-							throw new IllegalStateException();
-						}
-						if (e.previousStatus() == Status.NONEXISTENT) {
-							sb.append("addition");
-						} else {
-							sb.append("modification");
-						}
-						sb.append(" of ");
-						sb.append(e.snippet().source());
-						sbrow.append(sb.toString());
-						if (e.value() != null) {
-							sbrow.append("Value is: ").append(e.value()).append("\n");
-						}
-						System.out.flush();
-					}
-				}
+
+	/**
+	 * free the code for continue to validate another input.
+	 */
+	public void reset() {
+		input=null;
+		if (isWaiting){			
+			condition.signal();
 		}
-		return sbrow.toString();
-		*/
+	}
 	/**
 	 * the fonction tests if code is valid or not.
 	 * @return return true if code is valid, false else.
 	 */
 	public boolean accept() {
 		try (JShell js = JShell.create()) {
-				for (SnippetEvent e : js.eval(input)) {
-					if (e.causeSnippet() == null) {
-						switch (e.status()) {
-						case VALID:
-							continue;
-						case RECOVERABLE_DEFINED:
-							return false;
-						case RECOVERABLE_NOT_DEFINED:
-							return false;
-						case REJECTED:
-							return false;
-						default:
-							throw new IllegalStateException();
-						}
+			for (SnippetEvent e : js.eval(input)) {
+				if (e.causeSnippet() == null) {
+					switch (e.status()) {
+					case VALID:
+						break;
+					case RECOVERABLE_DEFINED:
+						return false;
+					case RECOVERABLE_NOT_DEFINED:
+						return false;
+					case REJECTED:
+						return false;
+					default:
+						throw new IllegalStateException();
 					}
 				}
+			}
 		}
 		return true;
 	}
@@ -117,7 +85,7 @@ public class MyValidation {
 				if (e.causeSnippet() == null) {
 					switch (e.status()) {
 					case VALID:
-						continue;
+						break;
 					case RECOVERABLE_DEFINED:
 						return "Code with unresolved references";
 					case RECOVERABLE_NOT_DEFINED:
@@ -139,27 +107,27 @@ public class MyValidation {
 	public String validate(){
 		StringBuilder sbrow = new StringBuilder();
 		try (JShell js = JShell.create()) {
-				List<SnippetEvent> events = js.eval(input);
-				for (SnippetEvent e : events) {
-					StringBuilder sb = new StringBuilder();
-						if (e.previousStatus() == Status.NONEXISTENT) {
-							sb.append("addition");
-						} else {
-							sb.append("modification");
-						}
-						sb.append(" of ");
-						sb.append(e.snippet().source());
-						//sbrow.append(sb.toString());
-						if (e.value() != null) {
-							sbrow.append(e.value());
-							//sbrow.append("\n"); inutile car concerne que affichage
-						}
-						System.out.flush();
+			List<SnippetEvent> events = js.eval(input);
+			for (SnippetEvent e : events) {
+				StringBuilder sb = new StringBuilder();
+				if (e.previousStatus() == Status.NONEXISTENT) {
+					sb.append("addition");
+				} else {
+					sb.append("modification");
 				}
+				sb.append(" of ");
+				sb.append(e.snippet().source());
+				//sbrow.append(sb.toString());
+				if (e.value() != null) {
+					sbrow.append(e.value());
+					//sbrow.append("\n"); inutile car concerne que affichage
+				}
+				System.out.flush();
+			}
 		}
 		System.out.println("In function validate "+ sbrow);
 		return sbrow.toString();
-		
+
 	}
 
 	/*private String takeFromQueue() {
@@ -171,15 +139,7 @@ public class MyValidation {
 		}
 		return Objects.requireNonNull(tmp);
 	}*/
-	/**
-	 * free the code for continue to validate another input.
-	 */
-	public void reset() {
-		if (this.input!=null){
-			input=null;
-			c.signal();
-		}
-	}
+
 
 
 }

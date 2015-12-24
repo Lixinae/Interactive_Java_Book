@@ -81,8 +81,21 @@ public class Server extends AbstractVerticle {
 		String id = routingContext.request().getParam("id");
 		String input = routingContext.request().getParam("input");
 		System.out.println("Asking to validate exercise " + id);
+		
+		// must clean the string of stupid web characters
+		input = cleanWebChars(input);
+		System.out.println(input);
 		valid.addInQueue(input);
 		validateExerciceAnnexe(routingContext, id);
+	}
+
+	private String cleanWebChars(String input) {
+		input= input.replaceAll("%20", " ");
+		input=input.replaceAll("%7B", "{");
+		input=input.replaceAll("%7D", "}");
+		input=input.replaceAll("%22", "\"");
+		input=input.replaceAll("%5C","\\");
+		return input;
 	}
 
 	private void validateExerciceAnnexe(RoutingContext routingContext, String id) {
