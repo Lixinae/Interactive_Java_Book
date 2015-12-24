@@ -3,79 +3,103 @@
 	<description>
 		Build file for Interactive_Java_Book
 	</description>
-	<!-- set global properties for this build -->
-	<property name="src.dir" location="src"/>
+
+	<property file="build.properties"/>
+	<!--<property name="src.dir" location="src"/>
 	<property name="classes.dir" location="classes"/>
 	<property name="lib.dir" location="libs"/>
 	<property name="api.dir" location="./docs/api"/>
+	<property name="dest.dir" location="dest"/>
 	<property name="libvertx.dir" location="./vert.x-3.0.0/lib" />
-
+-->
 
 	<!--  Create a classpath container which can be later used in the ant task -->
-	<path id="build.classpath">
+	<path id="compile.classpath">
 		<fileset dir="${lib.dir}">
 			<include name="**/*.jar" />
 		</fileset>
 		<fileset dir="${libvertx.dir}">
 			<include name="**/*.jar" />
 		</fileset>
-
 	</path>
 
 	<!-- Clean all the generated files -->
 	<target name="clean" description="Removing the all generated files.">
 		<delete dir="${classes.dir}"/>
 		<delete dir="${api.dir}"/>
-		<delete file ="jshellbook.jar"/>
-		<delete file ="MANIFEST.MF"/>
-
+		<delete dir="${dest.dir}"/>
+		<!--<delete file ="jshellbook.jar"/>
+		<delete file ="MANIFEST.MF"/> -->
 	</target>
 
-	<!-- Cleans the folder and creates the necessary directorie -->
-	<target name="prepare" depends="clean">
+	<!-- Cleans the folder and creates the necessary directories -->
+	<target name="init" depends="clean">
 		<mkdir dir="${classes.dir}"/>
 		<mkdir dir="${src.dir}"/>
 		<mkdir dir="${api.dir}"/>
-
+		<mkdir dir="${dest.dir}"/>
 	</target>
 
 	<!-- Compile the program -->
-	<target name="compile" depends="prepare" description="Compilation of all source code.">
-		<javac srcdir="${src.dir}"
-			   destdir="${classes.dir}"
-			   fork = "true"
-			   includeantruntime="false"
-			   classpathref="build.classpath"
-		/>
+	<target name="compile" depends="init" description="Compilation of all source code.">
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false">
+			<classpath refid="compile.classpath"/>
+		</javac>
+			   <!--fork = "true"
+
+			   classpathref="classpath"
+
+			   -->
 	</target>
 
 	<!-- Creates Javadoc -->
 	<target name="docs" depends="compile" description="Generate documentation">
 		<javadoc packagenames="src" sourcepath="${src.dir}" destdir="${api.dir}">
-			<!-- Define which files / directory should get included, we include all -->
+			<!--Define which files / directory should get included, we include all -->
 			<fileset dir="${src.dir}">
 				<include name="**" />
 			</fileset>
 		</javadoc>
 	</target>
 
-	<target name="jar" depends="compile" description="Generates jshellbook.jar file in to the 'dest' directory.">
+	<!-- Creates the executable jar file -->
+	<target name="jar" depends="compile" description="Generates jshellbook.jar file in to the dest directory.">
 		<pathconvert property="mf.classpath" pathsep=" ">
-			<path refid="build.classpath"/>
+			<path refid="compile.classpath"/>
 			<flattenmapper />
 		</pathconvert>
 
 		<tstamp/>
-		<manifest file="MANIFEST.MF" >
-			<attribute name ="Main-Class" value="fr.umlv.javanotebook.main.InterJavaBook" />
+		<manifest file="${dest.dir}/MANIFEST.MF" >
+			<attribute name ="Main-Class" value="${main.class}" />
 			<attribute name ="Class-Path" value="${mf.classpath}"/>
 			<attribute name ="Built-Date" value="${TODAY}"/>
 		</manifest>
-		<jar jarfile="jshellbook.jar"
+
+		<jar jarfile="${dest.dir}/${app.name}-${app.version}.jar"
 			 basedir="${classes.dir}"
-			 manifest="MANIFEST.MF">
-			<zipgroupfileset dir="${lib.dir}" includes="*.jar"/>
+			 manifest="${dest.dir}/MANIFEST.MF">
+			<!--<fileset dir="${classes.dir}"/>
+			<fileset dir="${libvertx.dir}"/> -->
+			<!--<zipgroupfileset dir="${lib.dir}" includes="**/*.jar"/>-->
 		</jar>
+
+		<!--
+		<jar destfile="${dest.dir}/jshellbook.jar">
+			<fileset dir="${classes.dir}"/>
+			<restrict>
+				<name name="**/*.class"/>
+				<archives>
+					<zips>
+						<fileset dir="${lib.dir}" includes="**/*.jar"/>
+					</zips>
+				</archives>
+			</restrict>
+			<manifest>
+				<attribute name ="Main-Class" value="fr.umlv.javanotebook.main.InterJavaBook" />
+			</manifest>
+		</jar>
+		-->
 	</target>
 
 	<target name="all" depends="jar,docs" description="Generation complete">
