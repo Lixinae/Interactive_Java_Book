@@ -30,8 +30,7 @@ public class Exercises {
 		Path path = Paths.get("./exercice/answers.rep");
 		try {
 			Files.lines(path).forEach(
-					l -> exercices.add(new Exercise(l.split(" : ")[0], l
-							.split(" : ")[1])));
+					l -> exercices.add(new Exercise(l.split(" : ")[0], l.split(" : ")[1])));
 		} catch (IOException e) {
 			System.err.println(e);
 		}
@@ -39,17 +38,16 @@ public class Exercises {
 
 	public String getAnswerFromKey(String key) {
 		for (Exercise ex : exercices) {
-			if (ex.getNumero().compareTo(key.substring(0, 1)) == 0) {
+			if (ex.getNumero().compareTo(key) == 0) {
 				return ex.getRespons();
 			}
 		}
-		throw new IllegalStateException("Answer to exercice " + key
-				+ " doesn't exist");
+		throw new IllegalStateException("Answer to exercice " + key+ " doesn't exist");
 	}
 
 	public String getToWebFromKey(String key) {
 		for (Exercise ex : exercices) {
-			if (ex.getNumero().compareTo(key.substring(0, 1)) == 0) {
+			if (ex.getNumero().compareTo(key) == 0) {
 				return ex.toWeb();
 			}
 		}
