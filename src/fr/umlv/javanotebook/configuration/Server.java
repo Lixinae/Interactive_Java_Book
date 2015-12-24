@@ -15,7 +15,6 @@ public class Server extends AbstractVerticle{
 	private final String adress; // nom du serveur , localhost because we work on local only
 	private final Watcher watcher;
 	private final Exercices exs;
-	//champ hashmap exerciceAndAnswers
 	
 	/**
 	 * Initialize the name and port of the server
@@ -27,7 +26,6 @@ public class Server extends AbstractVerticle{
 		this.port=8989;
 		watcher = new Watcher("./exercice");
 		exs = new Exercices();
-		//recuperer les exerciceAndAnswers
 	}
 	
 	
@@ -94,27 +92,24 @@ public class Server extends AbstractVerticle{
 		System.out.println("Asking to validate exercice " + id);
 		if (!valid.accept()){
 			routingContext.response().end(valid.status());
-//			valid.reset();
 		}
 		else if (valid.validate().compareTo(exs.getAnswerFromKey(id))==0){
 			routingContext.response().end("Congratulations");
-//			valid.reset();
 		}
 		else{
 			routingContext.response().end("Wrong answer");
-//			valid.reset();
 		}
 		valid.reset();
 	}
 
 
-
+/*
 	private void showJUnitTest(RoutingContext routingContext){
 		String id = routingContext.request().getParam("id");
 		System.out.println("Asking to see JUnit test for exercise "+id);
 		routingContext.response().end();
 	}
-	
+	*/
 	
 	
 	/**

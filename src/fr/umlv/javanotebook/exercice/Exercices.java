@@ -10,12 +10,12 @@ import java.util.List;
 public class Exercices {
 
 	private final List<Exercice> exercices = new ArrayList<>();
-	
+
 	/**
-	 *  Fetches all the exercise
-	 * Associating the id of the exercise with the awaited respons
+	 * Fetches all the exercise Associating the id of the exercise with the
+	 * awaited respons
 	 */
-	public Exercices(){
+	public Exercices() {
 		getAllExercicesAndAnswers();
 	}
 
@@ -24,39 +24,35 @@ public class Exercices {
 	 */
 	public String countFiles() {
 		return Integer.toString(exercices.size());
-		//return "" + (new File("./exercice").listFiles().length - 1);
 	}
 
-	 
 	private void getAllExercicesAndAnswers() {
 		Path path = Paths.get("./exercice/answers.rep");
 		try {
-			Files.lines(path).forEach(l ->
-					exercices.add(
-							new Exercice(
-									l.split(" : ")[0], l.split(" : ")[1]))
-			);
+			Files.lines(path).forEach(
+					l -> exercices.add(new Exercice(l.split(" : ")[0], l
+							.split(" : ")[1])));
 		} catch (IOException e) {
 			System.err.println(e);
 		}
 
-
 	}
 
-	public String getAnswerFromKey(String key){
-		for (Exercice ex: exercices){
-			if (ex.getNumero().compareTo(key.substring(0,1))==0){
+	public String getAnswerFromKey(String key) {
+		for (Exercice ex : exercices) {
+			if (ex.getNumero().compareTo(key.substring(0, 1)) == 0) {
 				return ex.getRespons();
 			}
 		}
-		throw new IllegalStateException("Answer to exercice "+key +" doesn't exist");
+		throw new IllegalStateException("Answer to exercice " + key
+				+ " doesn't exist");
 	}
-	
-	public String getToWebFromKey(String key){
-		for(Exercice ex: exercices){
-			if (ex.getNumero().compareTo(key.substring(0,1))==0){
+
+	public String getToWebFromKey(String key) {
+		for (Exercice ex : exercices) {
+			if (ex.getNumero().compareTo(key.substring(0, 1)) == 0) {
 				return ex.toWeb();
-			} 
+			}
 		}
 		throw new IllegalStateException("Exercice doesnt exist");
 	}
