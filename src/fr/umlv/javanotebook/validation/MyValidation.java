@@ -175,7 +175,10 @@ public class MyValidation {
 	 * free the code for continue to validate another input.
 	 */
 	public void reset() {
-		c.signalAll();
+		if (this.input!=null){
+			input=null;
+			c.signal();
+		}
 	}
 
 
