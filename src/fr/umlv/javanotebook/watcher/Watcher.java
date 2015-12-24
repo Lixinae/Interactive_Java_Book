@@ -5,19 +5,18 @@ import java.nio.file.*;
 
 import static java.nio.file.StandardWatchEventKinds.*;
 
-
 public class Watcher {
 	private WatchService watcher;
 	private Path dir;
 
-	
 	/**
 	 * Creates a watcher on the folder giving by path
 	 * 
-	 * @param path : path of the folder that is watched
+	 * @param path
+	 *            : path of the folder that is watched
 	 *
 	 */
-	
+
 	public Watcher(String path) {
 		try {
 			watcher = FileSystems.getDefault().newWatchService();
@@ -27,18 +26,19 @@ public class Watcher {
 			System.err.println(e);
 		}
 	}
-	
+
 	/**
-	 * This function tests if the watcher finds a modified file in the folder attached
+	 * This function tests if the watcher finds a modified file in the folder
+	 * attached
 	 * 
 	 * @return if file in folder was modified return true, else return false.
 	 * 
 	 */
 
 	public boolean action() {
-			WatchKey key;
-			key = watcher.poll();
-			return key!=null && doEvents(key);
+		WatchKey key;
+		key = watcher.poll();
+		return key != null && doEvents(key);
 	}
 
 	private boolean doEvents(WatchKey key) {
@@ -52,5 +52,3 @@ public class Watcher {
 		return false;
 	}
 }
-
-	
