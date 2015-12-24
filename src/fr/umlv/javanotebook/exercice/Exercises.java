@@ -35,16 +35,24 @@ public class Exercises {
 			System.err.println(e);
 		}
 	}
-
+	/**
+	 * get the answer for the exercice with number key.
+	 * @param key is the number of the exercice
+	 * @return the good answer for the exercice 
+	 */
 	public String getAnswerFromKey(String key) {
 		for (Exercise ex : exercices) {
 			if (ex.getNumero().compareTo(key) == 0) {
 				return ex.getRespons();
 			}
 		}
-		throw new IllegalStateException("Answer to exercice " + key+ " doesn't exist");
+		throw new IllegalArgumentException("Answer to exercice " + key+ " doesn't exist");
 	}
-
+	/**
+	 * get the web format for the exercice with the number key
+	 * @param key is the number of the exercice
+	 * @return the web format for the exercice
+	 */
 	public String getToWebFromKey(String key) {
 		for (Exercise ex : exercices) {
 			if (ex.getNumero().compareTo(key) == 0) {
