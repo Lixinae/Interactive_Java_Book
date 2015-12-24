@@ -37,32 +37,19 @@ public class Exercises {
 		}
 	}
 
-<<<<<<< HEAD
-	public String getAnswerFromKey(String key){
-		for (Exercice ex: exercices){
-			if (ex.getNumero().compareTo(key)==0){
-=======
 	public String getAnswerFromKey(String key) {
 		for (Exercise ex : exercices) {
 			if (ex.getNumero().compareTo(key.substring(0, 1)) == 0) {
->>>>>>> 32a87bf107d6ac549365e4ccc914a359f2a93568
 				return ex.getRespons();
 			}
 		}
 		throw new IllegalStateException("Answer to exercice " + key
 				+ " doesn't exist");
 	}
-<<<<<<< HEAD
-	
-	public String getToWebFromKey(String key){
-		for(Exercice ex: exercices){
-			if (ex.getNumero().compareTo(key)==0){
-=======
 
 	public String getToWebFromKey(String key) {
 		for (Exercise ex : exercices) {
 			if (ex.getNumero().compareTo(key.substring(0, 1)) == 0) {
->>>>>>> 32a87bf107d6ac549365e4ccc914a359f2a93568
 				return ex.toWeb();
 			}
 		}
