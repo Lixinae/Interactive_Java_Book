@@ -3,7 +3,6 @@
   <script src="asset/jquery-2.1.4.js"></script>
   <script>
 		var currentID=-1;
-		//alert(currentID);
   
 		function sendAnswer(id){
 			var element = $("#answerFromServer");
@@ -11,8 +10,7 @@
 			element.html("");
 			$.post('/validateExercice/'+id+'/'+answerToSend.val(),
 					function(data){
-						console.log(data);
-						
+						console.log(data);						
 						element.append(data);
 					}
 				);
@@ -24,7 +22,7 @@
 			var sendB = $("#sendButton");
 
 
-			$.get('/exercice/'+id+'.MARKDOWN',
+			$.get('/exercice/'+id,
 				function(data){
 					var noData = '<p>There is no Exercice '+id+'.MARKDOWN</p>' ;
 					element.html("");
@@ -74,7 +72,7 @@
 			}
 			
 			//alert("testModify");
-			$.get('/watcherModify/'+id+'.MARKDOWN',
+			$.get('/watcherModify/'+id,
 				function(data){
 					var noData = '' ;
 					if(data.localeCompare(noData) != 0){

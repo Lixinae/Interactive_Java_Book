@@ -45,7 +45,7 @@ public class Exercices {
 
 	public String getAnswerFromKey(String key){
 		for (Exercice ex: exercices){
-			if (ex.getNumero().compareTo(key.substring(0,1))==0){
+			if (ex.getNumero().compareTo(key)==0){
 				return ex.getRespons();
 			}
 		}
@@ -54,7 +54,7 @@ public class Exercices {
 	
 	public String getToWebFromKey(String key){
 		for(Exercice ex: exercices){
-			if (ex.getNumero().compareTo(key.substring(0,1))==0){
+			if (ex.getNumero().compareTo(key)==0){
 				return ex.toWeb();
 			} 
 		}
