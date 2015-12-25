@@ -56,7 +56,7 @@
 	</target>
 
 	<!-- Creates Javadoc -->
-	<target name="generate_javadoc" depends="compile" description="Generate documentation">
+	<target name="javadoc" depends="compile" description="Generate documentation">
 		<javadoc sourcepath="${src.dir}" destdir="${api.dir}" version="true">
 			<classpath refid="compile.classpath"/>
 			<!--Define which files / directory should get included, we include all
@@ -75,19 +75,19 @@
 	</target>
 
 	<!-- Creates the executable jar file -->
-	<target name="build-jar" depends="compile" description="Generates jshellbook.jar file in to the dest directory.">
+	<target name="jar" depends="compile" description="Generates jshellbook.jar file in to the dest directory.">
 		<pathconvert property="mf.classpath" pathsep=" ">
 			<path refid="compile.classpath"/>
-			<mapper>
+			<!--<mapper>
 				<chainedmapper>
 					<flattenmapper />
 					<globmapper from="*.jar" to="libs/*.jar"/>
 				</chainedmapper>
-			</mapper>
+			</mapper>-->
 
 		</pathconvert>
 
-		<echo message="mf.classpath : ${mf.classpath}"/>
+		<!--<echo message="mf.classpath : ${mf.classpath}"/>-->
 		<tstamp/>
 		<manifest file="${dest.dir}/MANIFEST.MF" >
 			<attribute name ="Built-By" value="${user.name}"/>
@@ -99,14 +99,44 @@
 
 
 		<jar jarfile="${dest.dir}/${app.name}-${app.version}.jar"
-			 basedir="${classes.dir}"
-			 includes=""
 			 manifest="${dest.dir}/MANIFEST.MF"
 			 duplicate="preserve">
 
 			<!--<fileset dir="${classes.dir}"/>-->
 			<!--<fileset dir="${libvertx.dir}"/> -->
 			<!--<zipgroupfileset dir="${lib.dir}" includes="**/*.jar"/>-->
+			<fileset dir="${classes.dir}"/>
+            <zipfileset src="${basedir}/libs/asm-all-5.0.4.jar"/>
+            <zipfileset src="${basedir}/libs/jdk.jshell.jar"/>
+            <!--<zipfileset src="${basedir}/libs/Parboiled/parboiled-core-1.1.7-javadoc.jar"/>
+            <zipfileset src="${basedir}/libs/Parboiled/parboiled-core-1.1.7-sources.jar"/>-->
+            <zipfileset src="${basedir}/libs/Parboiled/parboiled-core-1.1.7.jar"/>
+            <!--<zipfileset src="${basedir}/libs/Parboiled/parboiled-java-1.1.7-javadoc.jar"/>
+            <zipfileset src="${basedir}/libs/Parboiled/parboiled-java-1.1.7-sources.jar"/>-->
+            <zipfileset src="${basedir}/libs/Parboiled/parboiled-java-1.1.7.jar"/>
+            <!--<zipfileset src="${basedir}/libs/Parboiled/parboiled-scala-1.0.2-javadoc.jar"/>
+            <zipfileset src="${basedir}/libs/Parboiled/parboiled-scala-1.0.2-sources.jar"/>-->
+            <zipfileset src="${basedir}/libs/Parboiled/parboiled-scala-1.0.2.jar"/>
+            <!--<zipfileset src="${basedir}/libs/pegdown/pegdown-1.2.1-javadoc.jar"/>
+            <zipfileset src="${basedir}/libs/pegdown/pegdown-1.2.1-sources.jar"/>-->
+            <zipfileset src="${basedir}/libs/pegdown/pegdown-1.2.1.jar"/>
+            <zipfileset src="${basedir}/vert.x-3.0.0/lib/jackson-annotations-2.5.0.jar"/>
+            <zipfileset src="${basedir}/vert.x-3.0.0/lib/jackson-core-2.5.3.jar"/>
+            <zipfileset src="${basedir}/vert.x-3.0.0/lib/jackson-databind-2.5.3.jar"/>
+            <zipfileset src="${basedir}/vert.x-3.0.0/lib/netty-buffer-4.0.28.Final.jar"/>
+            <zipfileset src="${basedir}/vert.x-3.0.0/lib/netty-codec-4.0.28.Final.jar"/>
+            <zipfileset src="${basedir}/vert.x-3.0.0/lib/netty-codec-http-4.0.28.Final.jar"/>
+            <zipfileset src="${basedir}/vert.x-3.0.0/lib/netty-common-4.0.28.Final.jar"/>
+            <zipfileset src="${basedir}/vert.x-3.0.0/lib/netty-handler-4.0.28.Final.jar"/>
+            <zipfileset src="${basedir}/vert.x-3.0.0/lib/netty-transport-4.0.28.Final.jar"/>
+            <zipfileset src="${basedir}/vert.x-3.0.0/lib/vertx-auth-common-3.0.0.jar"/>
+            <zipfileset src="${basedir}/vert.x-3.0.0/lib/vertx-core-3.0.0.jar"/>
+            <zipfileset src="${basedir}/vert.x-3.0.0/lib/vertx-mail-client-3.0.0.jar"/>
+            <zipfileset src="${basedir}/vert.x-3.0.0/lib/vertx-mail-service-3.0.0.jar"/>
+            <zipfileset src="${basedir}/vert.x-3.0.0/lib/vertx-unit-3.0.0.jar"/>
+            <zipfileset src="${basedir}/vert.x-3.0.0/lib/vertx-web-3.0.0.jar"/>
+			
+			
 		</jar>
 
 		<!--
@@ -128,7 +158,7 @@
 		<echo message="Jar file created"/>
 	</target>
 
-	<target name="all" depends="build-jar,generate_javadoc" description="Generation complete">
+	<target name="all" depends="jar,javadoc" description="Generation complete">
 		<echo message="Generation complete."/>
 	</target>
 
