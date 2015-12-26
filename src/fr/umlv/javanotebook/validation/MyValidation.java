@@ -15,8 +15,10 @@ public class MyValidation {
 	private final Condition condition = rlock.newCondition();
 	private String input=null;
 	private int nbWait = 0;
+	private final JShell js;
 
 	public MyValidation() {
+		js = JShell.create();
 	}
 	/**
 	 * add the answer of user in input (thread-safe)
@@ -55,21 +57,19 @@ public class MyValidation {
 	 * @return return true if code is valid, false else.
 	 */
 	public boolean accept() {
-		try (JShell js = JShell.create()) {
-			for (SnippetEvent e : js.eval(input)) {
-				if (e.causeSnippet() == null) {
-					switch (e.status()) {
-					case VALID:
-						break;
-					case RECOVERABLE_DEFINED:
-						return false;
-					case RECOVERABLE_NOT_DEFINED:
-						return false;
-					case REJECTED:
-						return false;
-					default:
-						throw new IllegalStateException();
-					}
+		for (SnippetEvent e : js.eval(input)) {
+			if (e.causeSnippet() == null) {
+				switch (e.status()) {
+				case VALID:
+					break;
+				case RECOVERABLE_DEFINED:
+					return false;
+				case RECOVERABLE_NOT_DEFINED:
+					return false;
+				case REJECTED:
+					return false;
+				default:
+					throw new IllegalStateException();
 				}
 			}
 		}
@@ -81,21 +81,19 @@ public class MyValidation {
 	 * @exception IllegalStateException if error on program eval, or if
 	 */
 	public String status() {
-		try (JShell js = JShell.create()) {
-			for (SnippetEvent e : js.eval(input)) {
-				if (e.causeSnippet() == null) {
-					switch (e.status()) {
-					case VALID:
-						break;
-					case RECOVERABLE_DEFINED:
-						return "Code with unresolved references";
-					case RECOVERABLE_NOT_DEFINED:
-						return "Code possibly reparable, but failed";
-					case REJECTED:
-						return "Code failed";
-					default:
-						throw new IllegalStateException("internal error");
-					}
+		for (SnippetEvent e : js.eval(input)) {
+			if (e.causeSnippet() == null) {
+				switch (e.status()) {
+				case VALID:
+					break;
+				case RECOVERABLE_DEFINED:
+					return "Code with unresolved references";
+				case RECOVERABLE_NOT_DEFINED:
+					return "Code possibly reparable, but failed";
+				case REJECTED:
+					return "Code failed";
+				default:
+					throw new IllegalStateException("internal error");
 				}
 			}
 		}
@@ -107,23 +105,21 @@ public class MyValidation {
 	 */
 	public String validate(){
 		StringBuilder sbrow = new StringBuilder();
-		try (JShell js = JShell.create()) {
-			List<SnippetEvent> events = js.eval(input);
-			for (SnippetEvent e : events) {
-				StringBuilder sb = new StringBuilder();
-				if (e.previousStatus() == Status.NONEXISTENT) {
-					sb.append("addition");
-				} else {
-					sb.append("modification");
-				}
-				sb.append(" of ");
-				sb.append(e.snippet().source());
-				sbrow.append(sb.toString());
-				if (e.value() != null) {
-					sbrow.append(e.value());
-				}
-				System.out.flush();
+		List<SnippetEvent> events = js.eval(input);
+		for (SnippetEvent e : events) {
+			StringBuilder sb = new StringBuilder();
+			if (e.previousStatus() == Status.NONEXISTENT) {
+				sb.append("addition");
+			} else {
+				sb.append("modification");
 			}
+			sb.append(" of ");
+			sb.append(e.snippet().source());
+			sbrow.append(sb.toString());
+			if (e.value() != null) {
+				sbrow.append(e.value());
+			}
+			System.out.flush();
 		}
 		System.out.println("In function validate "+ sbrow);
 		return sbrow.toString();
