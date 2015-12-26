@@ -121,7 +121,6 @@ public class MyValidation {
 				//sbrow.append(sb.toString());
 				if (e.value() != null) {
 					sbrow.append(e.value());
-					//sbrow.append("\n"); inutile car concerne que affichage
 				}
 				System.out.flush();
 			}
