@@ -102,8 +102,7 @@ public class Server extends AbstractVerticle {
 			validateExerciceAnnexe(routingContext, id,valid3,input);
 			break;
 		default:
-			validateExerciceAnnexe(routingContext, id,valid,input);
-			break;
+			throw new IllegalStateException("Too many users");
 		}
 	}
 	private String cleanWebChars(String input) {
@@ -129,7 +128,6 @@ public class Server extends AbstractVerticle {
 			routingContext.response().end("Wrong answer");
 		}
 		val.reset();
-		countValid--;
 	}
 
 	/*
