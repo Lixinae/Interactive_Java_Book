@@ -14,7 +14,8 @@ public class Server extends AbstractVerticle {
 	private final String adress; // nom du serveur , localhost because we work on local only
 	private final Watcher watcher;
 	private final Exercises exs;
-	private final MyValidation valid;
+	private final MyValidation valid,valid2,valid3;
+	private int countValid=0;
 
 	/**
 	 * Initialize the name and port of the server And create a new watcher on
@@ -27,6 +28,8 @@ public class Server extends AbstractVerticle {
 		watcher = new Watcher("./exercice");
 		exs = new Exercises();
 		valid = new MyValidation();
+		valid2 = new MyValidation();
+		valid3 = new MyValidation();
 	}
 
 	/**
@@ -85,28 +88,46 @@ public class Server extends AbstractVerticle {
 		// must clean the string of stupid web characters
 		input = cleanWebChars(input);
 		System.out.println(input);
-		valid.addInQueue(input);
-		validateExerciceAnnexe(routingContext, id);
+		switch(countValid){
+		case 0:
+			countValid++;
+			validateExerciceAnnexe(routingContext, id,valid,input);
+			break;
+		case 1:
+			countValid++;
+			validateExerciceAnnexe(routingContext, id,valid2,input);
+			break;
+		case 2:
+			countValid++;
+			validateExerciceAnnexe(routingContext, id,valid3,input);
+			break;
+		default:
+			validateExerciceAnnexe(routingContext, id,valid,input);
+		}
 	}
-
 	private String cleanWebChars(String input) {
-		input= input.replaceAll("%20", " ")
-				.replaceAll("%7B", "{")
-				.replaceAll("%7D", "}")
-				.replaceAll("%22", "\"")
-				.replaceAll("%5C","\\");
+		String[] chaineatrad = {"%20","%5B","%5D","%7B","%7D","%22","%5C","%27","%5E","%C3%A8","%C3%A7","%C2%B0"};
+		String[] chainetrad = {" ","[","]","{","}","\"","\\\\","\'","^","é","ç","°"};
+		if(chainetrad.length != chaineatrad.length){
+			throw new IllegalStateException("error traductor WebChars");
+		}
+		for(int i=0;i<chaineatrad.length;i++){
+			input=input.replaceAll(chaineatrad[i],chainetrad[i]);
+		}
 		return input;
 	}
 
-	private void validateExerciceAnnexe(RoutingContext routingContext, String id) {
-		if (!valid.accept()) {
-			routingContext.response().end(valid.status());
-		} else if (valid.validate().compareTo(exs.getAnswerFromKey(id)) == 0) {
+	private void validateExerciceAnnexe(RoutingContext routingContext, String id,MyValidation val,String input) {
+		val.addInQueue(input);
+		if (!val.accept()) {
+			routingContext.response().end(val.status());
+		} else if (val.validate().compareTo(exs.getAnswerFromKey(id)) == 0) {
 			routingContext.response().end("Congratulations");
 		} else {
 			routingContext.response().end("Wrong answer");
 		}
-		valid.reset();
+		val.reset();
+		countValid--;
 	}
 
 	/*
