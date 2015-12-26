@@ -9,7 +9,7 @@ import java.util.Objects;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class MyValidation {
+public class Validation {
 
 	private final ReentrantLock rlock = new ReentrantLock();
 	private final Condition condition = rlock.newCondition();
@@ -17,7 +17,7 @@ public class MyValidation {
 	private int nbWait = 0;
 	private final JShell js;
 
-	public MyValidation() {
+	public Validation() {
 		js = JShell.create();
 	}
 	/**

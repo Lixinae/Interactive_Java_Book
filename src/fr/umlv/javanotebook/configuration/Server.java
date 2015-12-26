@@ -1,7 +1,7 @@
 package fr.umlv.javanotebook.configuration;
 
 import fr.umlv.javanotebook.exercice.Exercises;
-import fr.umlv.javanotebook.validation.MyValidation;
+import fr.umlv.javanotebook.validation.Validation;
 import fr.umlv.javanotebook.watcher.Watcher;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.ext.web.Router;
@@ -14,8 +14,6 @@ public class Server extends AbstractVerticle {
 	private final String adress; // nom du serveur , localhost because we work on local only
 	private final Watcher watcher;
 	private final Exercises exs;
-	private final MyValidation valid,valid2,valid3;
-	private int countValid=0;
 
 	/**
 	 * Initialize the name and port of the server And create a new watcher on
@@ -27,9 +25,6 @@ public class Server extends AbstractVerticle {
 		this.port = 8989;
 		watcher = new Watcher("./exercice");
 		exs = new Exercises();
-		valid = new MyValidation();
-		valid2 = new MyValidation();
-		valid3 = new MyValidation();
 	}
 
 	/**
@@ -88,22 +83,7 @@ public class Server extends AbstractVerticle {
 		// must clean the string of stupid web characters
 		input = cleanWebChars(input);
 		System.out.println(input);
-		switch(countValid){
-		case 0:
-			countValid++;
-			validateExerciceAnnexe(routingContext, id,valid,input);
-			break;
-		case 1:
-			countValid++;
-			validateExerciceAnnexe(routingContext, id,valid2,input);
-			break;
-		case 2:
-			countValid++;
-			validateExerciceAnnexe(routingContext, id,valid3,input);
-			break;
-		default:
-			throw new IllegalStateException("Too many users");
-		}
+		validateExerciceAnnexe(routingContext, id,input);
 	}
 	private String cleanWebChars(String input) {
 		String[] chaineatrad = {"%20","%5B","%5D","%7B","%7D","%22","%5C","%27","%5E","%C3%A8","%C3%A7","%C3%A9"
@@ -118,7 +98,8 @@ public class Server extends AbstractVerticle {
 		return input;
 	}
 
-	private void validateExerciceAnnexe(RoutingContext routingContext, String id,MyValidation val,String input) {
+	private void validateExerciceAnnexe(RoutingContext routingContext, String id,String input) {
+		Validation val = new Validation();
 		val.addInQueue(input);
 		if (!val.accept()) {
 			routingContext.response().end(val.status());
