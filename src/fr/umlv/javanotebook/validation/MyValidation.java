@@ -118,7 +118,7 @@ public class MyValidation {
 				}
 				sb.append(" of ");
 				sb.append(e.snippet().source());
-				//sbrow.append(sb.toString());
+				sbrow.append(sb.toString());
 				if (e.value() != null) {
 					sbrow.append(e.value());
 				}
