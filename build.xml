@@ -96,29 +96,39 @@
 			<attribute name ="Class-Path" value="${mf.classpath}"/>
 		</manifest>
 
-
-
 		<jar jarfile="${dest.dir}/${app.name}-${app.version}.jar"
 			 manifest="${dest.dir}/MANIFEST.MF"
 			 duplicate="preserve">
 
-			<!--<fileset dir="${classes.dir}"/>-->
-			<!--<fileset dir="${libvertx.dir}"/> -->
-			<!--<zipgroupfileset dir="${lib.dir}" includes="**/*.jar"/>-->
 			<fileset dir="${classes.dir}"/>
-            <zipfileset src="${basedir}/libs/asm-all-5.0.4.jar"/>
+			<zipfileset dir="${lib.dir}">
+				<include name="**/*.jar" />
+				<exclude name="**/*javadoc.jar"/>
+				<exclude name="**/*sources.jar"/>
+			</zipfileset>
+
+			<zipfileset dir="${libvertx.dir}">
+				<include name ="**/*.jar"/>
+			</zipfileset>
+            <!--<zipfileset src="${basedir}/libs/asm-all-5.0.4.jar"/>
             <zipfileset src="${basedir}/libs/jdk.jshell.jar"/>
-            <!--<zipfileset src="${basedir}/libs/Parboiled/parboiled-core-1.1.7-javadoc.jar"/>
-            <zipfileset src="${basedir}/libs/Parboiled/parboiled-core-1.1.7-sources.jar"/>-->
+
+            <zipfileset src="${basedir}/libs/Parboiled/parboiled-core-1.1.7-javadoc.jar"/>
+            <zipfileset src="${basedir}/libs/Parboiled/parboiled-core-1.1.7-sources.jar"/>
+
             <zipfileset src="${basedir}/libs/Parboiled/parboiled-core-1.1.7.jar"/>
-            <!--<zipfileset src="${basedir}/libs/Parboiled/parboiled-java-1.1.7-javadoc.jar"/>
-            <zipfileset src="${basedir}/libs/Parboiled/parboiled-java-1.1.7-sources.jar"/>-->
+
+            <zipfileset src="${basedir}/libs/Parboiled/parboiled-java-1.1.7-javadoc.jar"/>
+            <zipfileset src="${basedir}/libs/Parboiled/parboiled-java-1.1.7-sources.jar"/>
+
             <zipfileset src="${basedir}/libs/Parboiled/parboiled-java-1.1.7.jar"/>
-            <!--<zipfileset src="${basedir}/libs/Parboiled/parboiled-scala-1.0.2-javadoc.jar"/>
-            <zipfileset src="${basedir}/libs/Parboiled/parboiled-scala-1.0.2-sources.jar"/>-->
+
+            <zipfileset src="${basedir}/libs/Parboiled/parboiled-scala-1.0.2-javadoc.jar"/>
+            <zipfileset src="${basedir}/libs/Parboiled/parboiled-scala-1.0.2-sources.jar"/>
+
             <zipfileset src="${basedir}/libs/Parboiled/parboiled-scala-1.0.2.jar"/>
-            <!--<zipfileset src="${basedir}/libs/pegdown/pegdown-1.2.1-javadoc.jar"/>
-            <zipfileset src="${basedir}/libs/pegdown/pegdown-1.2.1-sources.jar"/>-->
+            <zipfileset src="${basedir}/libs/pegdown/pegdown-1.2.1-javadoc.jar"/>
+            <zipfileset src="${basedir}/libs/pegdown/pegdown-1.2.1-sources.jar"/>
             <zipfileset src="${basedir}/libs/pegdown/pegdown-1.2.1.jar"/>
             <zipfileset src="${basedir}/vert.x-3.0.0/lib/jackson-annotations-2.5.0.jar"/>
             <zipfileset src="${basedir}/vert.x-3.0.0/lib/jackson-core-2.5.3.jar"/>
@@ -134,9 +144,7 @@
             <zipfileset src="${basedir}/vert.x-3.0.0/lib/vertx-mail-client-3.0.0.jar"/>
             <zipfileset src="${basedir}/vert.x-3.0.0/lib/vertx-mail-service-3.0.0.jar"/>
             <zipfileset src="${basedir}/vert.x-3.0.0/lib/vertx-unit-3.0.0.jar"/>
-            <zipfileset src="${basedir}/vert.x-3.0.0/lib/vertx-web-3.0.0.jar"/>
-			
-			
+            <zipfileset src="${basedir}/vert.x-3.0.0/lib/vertx-web-3.0.0.jar"/>-->
 		</jar>
 
 		<!--
