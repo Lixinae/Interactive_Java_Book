@@ -107,8 +107,9 @@ public class Server extends AbstractVerticle {
 		}
 	}
 	private String cleanWebChars(String input) {
-		String[] chaineatrad = {"%20","%5B","%5D","%7B","%7D","%22","%5C","%27","%5E","%C3%A8","%C3%A7","%C2%B0"};
-		String[] chainetrad = {" ","[","]","{","}","\"","\\\\","\'","^","�","�","�"};
+		String[] chaineatrad = {"%20","%5B","%5D","%7B","%7D","%22","%5C","%27","%5E","%C3%A8","%C3%A7","%C3%A9"
+				,"%C2%B0","%3C","%3E"};
+		String[] chainetrad = {" ","[","]","{","}","\"","\\\\","\'","^","è","ç","é","°","<",">"};
 		if(chainetrad.length != chaineatrad.length){
 			throw new IllegalStateException("error traductor WebChars");
 		}
