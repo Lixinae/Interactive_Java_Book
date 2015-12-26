@@ -90,11 +90,11 @@ public class Server extends AbstractVerticle {
 	}
 
 	private String cleanWebChars(String input) {
-		input= input.replaceAll("%20", " ");
-		input=input.replaceAll("%7B", "{");
-		input=input.replaceAll("%7D", "}");
-		input=input.replaceAll("%22", "\"");
-		input=input.replaceAll("%5C","\\");
+		input= input.replaceAll("%20", " ")
+				.replaceAll("%7B", "{")
+				.replaceAll("%7D", "}")
+				.replaceAll("%22", "\"")
+				.replaceAll("%5C","\\");
 		return input;
 	}
 
