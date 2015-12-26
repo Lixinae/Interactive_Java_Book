@@ -103,11 +103,12 @@ public class Server extends AbstractVerticle {
 			break;
 		default:
 			validateExerciceAnnexe(routingContext, id,valid,input);
+			break;
 		}
 	}
 	private String cleanWebChars(String input) {
 		String[] chaineatrad = {"%20","%5B","%5D","%7B","%7D","%22","%5C","%27","%5E","%C3%A8","%C3%A7","%C2%B0"};
-		String[] chainetrad = {" ","[","]","{","}","\"","\\\\","\'","^","é","ç","°"};
+		String[] chainetrad = {" ","[","]","{","}","\"","\\\\","\'","^","ï¿½","ï¿½","ï¿½"};
 		if(chainetrad.length != chaineatrad.length){
 			throw new IllegalStateException("error traductor WebChars");
 		}
