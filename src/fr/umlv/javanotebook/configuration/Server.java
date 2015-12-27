@@ -7,7 +7,16 @@ import io.vertx.core.AbstractVerticle;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.StaticHandler;
-
+/**
+ * this class extends to AbstractVerticle, it is a Server for connecting 
+ * on local host with port 8989.
+ * he wait an enter on local host for execute his request.
+ * example:
+ * 		Server s = new Server();
+ *      Vertx vertx = Vertx.vertx();
+ *      vertx.deployVerticle(s);
+ *      s.print_url();
+ */
 public class Server extends AbstractVerticle {
 
     private final int port; // port du server

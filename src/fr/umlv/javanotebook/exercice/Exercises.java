@@ -6,7 +6,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * this class implement a list of Exersise.
+ */
 public class Exercises {
 
     private final List<Exercise> exercices = new ArrayList<>();
