@@ -35,7 +35,7 @@ public class Exercises {
             Files.lines(path).forEach(
                     l -> exercices.add(new Exercise(l.split(" : ")[0], l.split(" : ")[1])));
         } catch (IOException e) {
-            System.err.println(e);
+            throw new IllegalArgumentException("The file " + path + " doesn't exist");
         }
     }
 

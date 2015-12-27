@@ -10,7 +10,6 @@ import static java.nio.file.StandardWatchEventKinds.*;
  */
 public class Watcher {
     private WatchService watcher;
-    private Path dir;
 
     /**
      * Creates a watcher on the folder giving by path
@@ -21,10 +20,9 @@ public class Watcher {
     public Watcher(String path) {
         try {
             watcher = FileSystems.getDefault().newWatchService();
-            dir = Paths.get(path);
-            dir.register(watcher, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
+            Paths.get(path).register(watcher, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
         } catch (IOException e) {
-            System.err.println(e);
+            throw new IllegalArgumentException("The folder " + path + " doesn't exist");
         }
     }
 
