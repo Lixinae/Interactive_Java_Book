@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.nio.file.*;
 
 import static java.nio.file.StandardWatchEventKinds.*;
-
+/**
+ * this class implement a Watcher on the folder dir.
+ */
 public class Watcher {
     private WatchService watcher;
     private Path dir;
