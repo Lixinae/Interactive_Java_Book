@@ -112,6 +112,8 @@ public class Server extends AbstractVerticle {
         val.reset();
     }
 
+
+
 	/*
      * private void showJUnitTest(RoutingContext routingContext){ String id =
 	 * routingContext.request().getParam("id");
