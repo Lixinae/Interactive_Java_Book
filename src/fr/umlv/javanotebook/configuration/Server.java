@@ -29,7 +29,7 @@ public class Server extends AbstractVerticle {
 
     /**
      * Starts the vert-x server
-     * <p>
+     *
      * Also starts all the handlers for the JQuery requests
      */
 
