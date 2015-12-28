@@ -70,7 +70,7 @@ public class Validation {
 	 * @param answer
 	 * @return
 	 */
-	public String valid(String input,String answer){
+	public String valid(String input){
 		StringBuilder b = new StringBuilder();
 		List<String> listinput = snippetInput(input);
 
@@ -110,8 +110,13 @@ public class Validation {
 					builder.delete(0, builder.length());
 					nbCrochet = -1;
 				}
-			} else if (input.charAt(i) == '{') {
+			} 
+			else if (input.charAt(i) == '{') {
 				nbCrochet++;
+			}
+			else if(input.charAt(i) == ';' && nbCrochet == -1){
+				b.add(builder.toString());
+				builder.delete(0, builder.length());
 			}
 		}
 		b.add(builder.toString());
