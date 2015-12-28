@@ -7,15 +7,16 @@ import io.vertx.core.AbstractVerticle;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.StaticHandler;
+
 /**
- * this class extends to AbstractVerticle, it is a Server for connecting 
+ * this class extends to AbstractVerticle, it is a Server for connecting
  * on local host with port 8989.
  * he wait an enter on local host for execute his request.
  * example:
- * 		Server s = new Server();
- *      Vertx vertx = Vertx.vertx();
- *      vertx.deployVerticle(s);
- *      s.print_url();
+ * Server s = new Server();
+ * Vertx vertx = Vertx.vertx();
+ * vertx.deployVerticle(s);
+ * s.print_url();
  */
 public class Server extends AbstractVerticle {
 
@@ -38,7 +39,7 @@ public class Server extends AbstractVerticle {
 
     /**
      * Starts the vert-x server
-     * <p>
+     *
      * Also starts all the handlers for the JQuery requests
      */
 
@@ -113,6 +114,8 @@ public class Server extends AbstractVerticle {
         val.valid(input,exs.getAnswerFromKey(id));
         val.reset();
     }
+
+
 
 	/*
      * private void showJUnitTest(RoutingContext routingContext){ String id =

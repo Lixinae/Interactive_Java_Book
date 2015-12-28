@@ -7,26 +7,26 @@ import jdk.jshell.SnippetEvent;
 import java.util.Objects;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
+
 /**
  * this class is used for validate a String for Java Language.
  * example:
  * Validation valid = new Validation()
  * val.addInQueue("public void test(){}");
  * if (!valid.accept()) {
- * 	routingContext.response().end(val.status());
+ * routingContext.response().end(val.status());
  * }
  * else {
- * 	System.out.println(val.validate());
+ * System.out.println(val.validate());
  * }
  * val.reset();
  */
 public class Validation {
-
-	private final ReentrantLock rlock = new ReentrantLock();
-	private final Condition condition = rlock.newCondition();
-	private String input = null;
-	private int nbWait = 0;
-	private final JShell js;
+    private final ReentrantLock rlock = new ReentrantLock();
+    private final Condition condition = rlock.newCondition();
+    private final JShell js;
+    private String input = null;
+    private int nbWait = 0;
 
 	public Validation() {
 		js = JShell.create();
