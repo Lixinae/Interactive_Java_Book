@@ -110,14 +110,7 @@ public class Server extends AbstractVerticle {
 
     private void validateExerciceAnnexe(RoutingContext routingContext, String id, String input) {
         Validation val = new Validation();
-        val.addInQueue(input);
-        if (!val.accept()) {
-            routingContext.response().end(val.status());
-        } else if (val.validate().compareTo(exs.getAnswerFromKey(id)) == 0) {
-            routingContext.response().end("Congratulations");
-        } else {
-            routingContext.response().end("Wrong answer");
-        }
+        val.valid(input,exs.getAnswerFromKey(id));
         val.reset();
     }
 
