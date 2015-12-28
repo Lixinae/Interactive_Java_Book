@@ -92,7 +92,7 @@ public class Server extends AbstractVerticle {
 
         // must clean the string of stupid web characters
         input = cleanWebChars(input);
-        System.out.println(input);
+//        System.out.println(input);
         validateExerciceAnnexe(routingContext, id, input);
     }
 
@@ -101,7 +101,7 @@ public class Server extends AbstractVerticle {
                 , "%C2%B0", "%3C", "%3E"};
         String[] chainetrad = {" ", "[", "]", "{", "}", "\"", "\\\\", "\'", "^", "è", "ç", "é", "°", "<", ">"};
         if (chainetrad.length != chaineatrad.length) {
-            throw new IllegalStateException("error traductor WebChars");
+            throw new IllegalStateException("Strings to translate have different size");
         }
         for (int i = 0; i < chaineatrad.length; i++) {
             input = input.replaceAll(chaineatrad[i], chainetrad[i]);
@@ -113,11 +113,11 @@ public class Server extends AbstractVerticle {
         Validation val = new Validation();
         String answer;
         if((answer = val.valid(input)).compareTo(exs.getAnswerFromKey(id))==0){
-        	System.out.println("bonne reponse");
+            System.out.println("Good answer");
             routingContext.response().end(answer);
         }
         else{
-        	System.out.println("mauvaise reponse");
+            System.out.println("Bad answer");
             routingContext.response().end(answer);
         }
     }

@@ -23,7 +23,7 @@
 			var respon = $("#respons");
 			var sendB = $("#sendButton");
 
-
+			element.html(loading);
 			$.get('/exercice/'+id,
 				function(data){
 					var noData = '<p>There is no Exercice '+id+'.MARKDOWN</p>' ;

@@ -71,8 +71,8 @@ public class Validation {
 	 */
 	public String valid(String input){
 		StringBuilder b = new StringBuilder();
-		List<String> listinput = snippetInput(input);
-		for (String toEval : listinput) {
+		List<String> list_input = snippetInput(input);
+		for (String toEval : list_input) {
 			addInQueue(toEval);
 			for (SnippetEvent e : js.eval(toEval)) {
 				if(!accept(e)){
@@ -117,9 +117,6 @@ public class Validation {
 	}
 
 	private boolean accept(SnippetEvent e) {
-//		System.out.println(e.snippet().kind());
-//
-//		System.out.println(e);
 		if (e.causeSnippet() == null) {
 			switch (e.status()) {
 			case VALID:
@@ -173,6 +170,8 @@ public class Validation {
 			sbrow.append(" ").append(e.value());
 		}
 		System.out.flush();
+
+		// delete before sending
 		System.out.println("In function validate " + sbrow);
 		return sbrow.toString();
 
