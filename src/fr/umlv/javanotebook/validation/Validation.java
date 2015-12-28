@@ -66,17 +66,16 @@ public class Validation {
 	}
 
 	/**
-	 * @param input
-	 * @param answer
-	 * @return
+	 * @param input The answer of the user to the given exercise
+	 * @return Returns the answer of JShell on the input
 	 */
 	public String valid(String input){
 		StringBuilder b = new StringBuilder();
 		List<String> listinput = snippetInput(input);
 
-		for (String s : listinput) {
-			System.out.println(s);
-		}
+//		for (String s : listinput) {
+//			System.out.println(s);
+//		}
 
 		for (String toEval : listinput) {
 			addInQueue(toEval);
@@ -124,9 +123,9 @@ public class Validation {
 	}
 
 	private boolean accept(SnippetEvent e) {
-		System.out.println(e.snippet().kind());
-		
-		System.out.println(e);
+//		System.out.println(e.snippet().kind());
+//
+//		System.out.println(e);
 		if (e.causeSnippet() == null) {
 			switch (e.status()) {
 			case VALID:
