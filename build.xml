@@ -5,13 +5,6 @@
 	</description>
 
 	<property file="build.properties"/>
-	<!--<property name="src.dir" location="src"/>
-	<property name="classes.dir" location="classes"/>
-	<property name="lib.dir" location="libs"/>
-	<property name="api.dir" location="./docs/api"/>
-	<property name="dest.dir" location="dest"/>
-	<property name="libvertx.dir" location="./vert.x-3.0.0/lib" />
--->
 
 	<!--  Create a classpath container which can be later used in the ant task -->
 	<path id="compile.classpath">
@@ -47,11 +40,6 @@
 			<src path="${src.dir}"/>
 			<classpath refid="compile.classpath"/>
 		</javac>
-			   <!--fork = "true"
-
-			   classpathref="classpath"
-
-			   -->
 		<echo message="Compiling done"/>
 	</target>
 
@@ -59,11 +47,6 @@
 	<target name="javadoc" depends="compile" description="Generate documentation">
 		<javadoc sourcepath="${src.dir}" destdir="${api.dir}" version="true">
 			<classpath refid="compile.classpath"/>
-			<!--Define which files / directory should get included, we include all
-			<fileset dir="${src.dir}">
-				<include name="**" />
-			</fileset>
-			-->
 		</javadoc>
 		<echo message="Java doc created"/>
 	</target>
@@ -78,16 +61,8 @@
 	<target name="jar" depends="compile" description="Generates jshellbook.jar file in to the dest directory.">
 		<pathconvert property="mf.classpath" pathsep=" ">
 			<path refid="compile.classpath"/>
-			<!--<mapper>
-				<chainedmapper>
-					<flattenmapper />
-					<globmapper from="*.jar" to="libs/*.jar"/>
-				</chainedmapper>
-			</mapper>-->
-
 		</pathconvert>
 
-		<!--<echo message="mf.classpath : ${mf.classpath}"/>-->
 		<tstamp/>
 		<manifest file="${dest.dir}/MANIFEST.MF" >
 			<attribute name ="Built-By" value="${user.name}"/>
@@ -146,29 +121,10 @@
             <zipfileset src="${basedir}/vert.x-3.0.0/lib/vertx-unit-3.0.0.jar"/>
             <zipfileset src="${basedir}/vert.x-3.0.0/lib/vertx-web-3.0.0.jar"/>-->
 		</jar>
-
-		<!--
-		<jar destfile="${dest.dir}/jshellbook.jar">
-			<fileset dir="${classes.dir}"/>
-			<restrict>
-				<name name="**/*.class"/>
-				<archives>
-					<zips>
-						<fileset dir="${lib.dir}" includes="**/*.jar"/>
-					</zips>
-				</archives>
-			</restrict>
-			<manifest>
-				<attribute name ="Main-Class" value="fr.umlv.javanotebook.main.InterJavaBook" />
-			</manifest>
-		</jar>
-		-->
 		<echo message="Jar file created"/>
 	</target>
 
 	<target name="all" depends="jar,javadoc" description="Generation complete">
 		<echo message="Generation complete."/>
 	</target>
-
-
 </project>
