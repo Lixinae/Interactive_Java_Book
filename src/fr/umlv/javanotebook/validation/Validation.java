@@ -72,26 +72,20 @@ public class Validation {
 	public String valid(String input){
 		StringBuilder b = new StringBuilder();
 		List<String> listinput = snippetInput(input);
-
-//		for (String s : listinput) {
-//			System.out.println(s);
-//		}
-
 		for (String toEval : listinput) {
 			addInQueue(toEval);
 			for (SnippetEvent e : js.eval(toEval)) {
 				if(!accept(e)){
+					js.close();
 					return status(e);
 				}
-//				else if (validate(e).compareTo(answer) == 0) {
-//					return "Congratulations";
-//				}
 				else {
 					b.append(validate(e));
 				}
 			}
 			reset();
 		}
+		js.close();
 		return b.toString();
 	}
 
@@ -164,6 +158,7 @@ public class Validation {
 	private String validate(SnippetEvent e) {
 		StringBuilder sbrow = new StringBuilder();
 		StringBuilder sb = new StringBuilder();
+
 		if (e.previousStatus() == Status.NONEXISTENT) {
 			sb.append("addition");
 		} else {
@@ -172,8 +167,10 @@ public class Validation {
 		sb.append(" of ");
 		sb.append(e.snippet().source());
 		sbrow.append(sb.toString());
-		if (e.value() != null) {
-			sbrow.append(e.value());
+		// We do want the value of M test = new M(); for example , which contains an @ in the value
+		String pattern = "[^@]+";
+		if ((e.value() != null) && e.value().matches(pattern)) {
+			sbrow.append(" ").append(e.value());
 		}
 		System.out.flush();
 		System.out.println("In function validate " + sbrow);

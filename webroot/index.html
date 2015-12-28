@@ -3,14 +3,16 @@
   <script src="asset/jquery-2.1.4.js"></script>
   <script>
 		var currentID=-1;
+		var loading = "Loading...";
   
 		function sendAnswer(id){
 			var element = $("#answerFromServer");
 			var answerToSend = $("#answer");
-			element.html("");
+			element.html(loading);
 			$.post('/validateExercice/'+id+'/'+answerToSend.val(),
 					function(data){
-						console.log(data);						
+						console.log(data);	
+						element.html("");
 						element.append(data);
 					}
 				);
