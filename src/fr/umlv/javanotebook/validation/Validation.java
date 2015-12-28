@@ -39,7 +39,7 @@ public class Validation {
 	 *
 	 * @param input is the answer of user.
 	 */
-	public void addInQueue(String input) {
+	private void addInQueue(String input) {
 		Objects.requireNonNull(input);
 		rlock.lock();
 		try {
@@ -57,10 +57,7 @@ public class Validation {
 		}
 	}
 
-	/**
-	 * free the code for continue to validate another input.
-	 */
-	public void reset() {
+	private void reset() {
 		input = null;
 		if (nbWait > 0) {
 			condition.signal();
@@ -68,53 +65,60 @@ public class Validation {
 		}
 	}
 
+	/**
+	 * @param input
+	 * @param answer
+	 * @return
+	 */
 	public String valid(String input,String answer){
 		StringBuilder b = new StringBuilder();
-		for(String cpinput:snippetInput(input)){
-			addInQueue(cpinput);
-			for (SnippetEvent e : js.eval(cpinput)) {
+		List<String> listinput = snippetInput(input);
+
+		for (String s : listinput) {
+			System.out.println(s);
+		}
+
+		for (String toEval : listinput) {
+			addInQueue(toEval);
+			for (SnippetEvent e : js.eval(toEval)) {
 				if(!accept(e)){
 					return status(e);
 				}
-				else if (validate(e).compareTo(answer) == 0) {
-					System.out.println(validate(e));
-					return "Congratulation";
-				} 
+//				else if (validate(e).compareTo(answer) == 0) {
+//					return "Congratulations";
+//				}
 				else {
 					b.append(validate(e));
 				}
 			}
+			reset();
 		}
 		return b.toString();
 	}
-	  private List<String> snippetInput(String input) {
-	    	List<String> b = new ArrayList<>();
-	    	int nbCrochet=-1;
-	    	StringBuilder builder = new StringBuilder();
-			for (int i=0;i<input.length();i++){
-				if(input.charAt(i) == '}'){
-					if(nbCrochet>0){
-						nbCrochet--;
-					}
-					else{
-						b.add(builder.toString());
-					}
+
+	private List<String> snippetInput(String input) {
+		List<String> b = new ArrayList<>();
+		int nbCrochet = -1;
+		StringBuilder builder = new StringBuilder();
+		for (int i = 0; i < input.length(); i++) {
+			builder.append(input.charAt(i));
+			if (input.charAt(i) == '}') {
+				if (nbCrochet > 0) {
+					nbCrochet--;
+				} else {
+					b.add(builder.toString());
+					builder.delete(0, builder.length());
+					nbCrochet = -1;
 				}
-				else if(input.charAt(i) == '{'){
-					nbCrochet++;
-				}
-				else{
-					builder.append(input.charAt(i));
-				}
+			} else if (input.charAt(i) == '{') {
+				nbCrochet++;
 			}
-			return b;
 		}
-	/**
-	 * the fonction tests if code is valid or not.
-	 *
-	 * @return return true if code is valid, false else.
-	 */
-	public boolean accept(SnippetEvent e) {
+		b.add(builder.toString());
+		return b;
+	}
+
+	private boolean accept(SnippetEvent e) {
 		System.out.println(e.snippet().kind());
 		
 		System.out.println(e);
@@ -135,13 +139,7 @@ public class Validation {
 		throw new IllegalStateException();
 	}
 
-	/**
-	 * the fonction return some trick for correcting the code
-	 *
-	 * @return the specified problem on the code.
-	 * @throws IllegalStateException if error on program eval, or if
-	 */
-	public String status(SnippetEvent e) {
+	private String status(SnippetEvent e) {
 		if (e.causeSnippet() == null) {
 			switch (e.status()) {
 			case VALID:
@@ -159,12 +157,7 @@ public class Validation {
 		throw new IllegalStateException("valid when accept return false (invalid code)");
 	}
 
-	/**
-	 * This function return the answer of user with the good format for testing
-	 *
-	 * @return value of code for answer question
-	 */
-	public String validate(SnippetEvent e) {
+	private String validate(SnippetEvent e) {
 		StringBuilder sbrow = new StringBuilder();
 		StringBuilder sb = new StringBuilder();
 		if (e.previousStatus() == Status.NONEXISTENT) {
