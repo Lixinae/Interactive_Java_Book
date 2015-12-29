@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class Exercises {
 
-    private final List<Exercise> exercices = new ArrayList<>();
+    private final List<Exercise> exercises = new ArrayList<>();
 
     /**
      * Fetches all the exercise Associating the id of the exercise with the
@@ -31,9 +31,10 @@ public class Exercises {
     }
 
     private int numberOfFiles() {
+        File f = new File("./exercice");
+        return f.listFiles().length;
 
-
-        return new File("./exercice").listFiles().length;
+//        return new File("./exercice").listFiles().length;
     }
 
     private void getAllExercicesAndAnswers() {
@@ -45,7 +46,7 @@ public class Exercises {
 //            throw new IllegalArgumentException("The file " + path + " doesn't exist");
 //        }
         for (int i = 0; i < numberOfFiles(); i++) {
-            exercices.add(Exercise.create_Exercise("" + i, Test_Exo.class));
+            exercises.add(Exercise.create_Exercise("" + i, Test_Exo.class));
         }
     }
 
@@ -56,7 +57,7 @@ public class Exercises {
      * @return the good answer for the exercice
      */
     public List<Method> getAnswerFromKey(String key) {
-        for (Exercise ex : exercices) {
+        for (Exercise ex : exercises) {
             if (ex.getNumero().compareTo(key) == 0) {
                 return ex.getRespons();
             }
@@ -71,7 +72,7 @@ public class Exercises {
      * @return the web format for the exercice
      */
     public String getToWebFromKey(String key) {
-        for (Exercise ex : exercices) {
+        for (Exercise ex : exercises) {
             if (ex.getNumero().compareTo(key) == 0) {
                 return ex.toWeb();
             }

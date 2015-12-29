@@ -54,11 +54,6 @@ public class Validation {
 
 	}
 
-	/**
-	 * add the answer of user in input (thread-safe)
-	 *
-	 * @param input is the answer of user.
-	 */
 	private void addInQueue(String input) {
 		Objects.requireNonNull(input);
 		rlock.lock();

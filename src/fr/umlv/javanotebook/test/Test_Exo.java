@@ -39,19 +39,20 @@ public class Test_Exo {
 
 	 */
 
+	/**
+	 * @param js
+	 * @return
+	 */
 	public static boolean test_3(JShell js) {
 		List<String> ListToEval = new ArrayList<>();
 		ListToEval.add("Soldier s = new Soldier(10,10);");
 		ListToEval.add("Soldier s2 = new Soldier(15,15);");
 		ListToEval.add("s.hit(s2);");
-
-		//System.out.println("Js "+js.types());
 		return eval(js, ListToEval);
 	}
 
 	private static boolean eval(JShell js, List<String> listToEval) {
 		for (String toEval : listToEval) {
-			//System.out.println("toEval = "+toEval);
 			List <SnippetEvent> listEvent = js.eval(toEval);
 			if (eval_annexe(listEvent)) {
 				return false;
@@ -62,9 +63,7 @@ public class Test_Exo {
 
 	private static boolean eval_annexe(List<SnippetEvent> listEvent) {
 		for (SnippetEvent event : listEvent) {
-			//System.out.println("event ="+event);
 			if (event.causeSnippet() == null) {
-				//System.out.println("Event status ="+event.status());
 				switch (event.status()) {
 					case VALID:
 						break;
