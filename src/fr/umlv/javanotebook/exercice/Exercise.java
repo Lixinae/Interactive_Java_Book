@@ -7,6 +7,7 @@ import org.pegdown.PegDownProcessor;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.lang.reflect.Method;
 import java.util.Objects;
 
 /**
@@ -14,10 +15,10 @@ import java.util.Objects;
  */
 class Exercise {
 
-    private final String respons;
+    private final Class<?> respons;
     private final String number;
 
-    Exercise(String number, String respons) {
+    Exercise(String number, Class<?> respons) {
         this.number = Objects.requireNonNull(number);
         this.respons = Objects.requireNonNull(respons);
     }
@@ -44,8 +45,8 @@ class Exercise {
         return generateHtml(FileUtils.readAllChars(input));
     }
 
-    String getRespons() {
-        return respons;
+    Method[] getRespons() {
+        return respons.getMethods();
     }
 
     String getNumero() {

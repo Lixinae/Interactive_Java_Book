@@ -1,14 +1,16 @@
 package fr.umlv.javanotebook.validation;
 
-import jdk.jshell.JShell;
-import jdk.jshell.Snippet.Status;
-import jdk.jshell.SnippetEvent;
-
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.UndeclaredThrowableException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
+
+import jdk.jshell.JShell;
+import jdk.jshell.SnippetEvent;
 
 /**
  * this class is used for validate a String for Java Language.
@@ -69,31 +71,52 @@ public class Validation {
 	 * @param input The answer of the user to the given exercise
 	 * @return Returns the answer of JShell on the input
 	 */
-	public boolean valid(String input,String id){
-		StringBuilder b = new StringBuilder();
+	public String valid(String input,Method[] methods){
+//		StringBuilder b = new StringBuilder();
 		List<String> list_input = snippetInput(input);
 		for (String toEval : list_input) {
 			addInQueue(toEval);
 			for (SnippetEvent e : js.eval(toEval)) {
 				if(!accept(e)){
 					js.close();
-					System.out.println(status(e));
-					return false;
+					return status(e);
 				}
-				else {
-					b.append(validate(e));
-				}
+//				else {
+//					b.append(validate(e));
+//				}
 			}
 			reset();
 		}
-		/*recherche de class EXO_id
-		for (SnippetEvent e : js.eval(String de class EXO_id)) {
-			if(!accept(e)){
-				return false;
+		for(Method m: methods){
+			System.out.println(m.getName());
+    		if(m.getReturnType()!=boolean.class){
+    			throw new IllegalStateException("Test isnt boolean type");
+    		}
+    		else{
+    			if(!(boolean) invok(m,m.getClass(),js)){
+    	            return "Bad answer method "+m.getName();
+    			}
+    		}
+    	}
+        return "Good answer";
+	}  
+	
+	public static Object invok(Method m,Object obj,JShell js){
+		try {
+			return m.invoke(obj,js);
+		}catch(SecurityException | IllegalAccessException | IllegalArgumentException e){
+			throw new AssertionError();
+		}catch(InvocationTargetException e) {
+			Throwable cause = e.getCause() ;
+			if (cause instanceof RuntimeException) {
+				throw (RuntimeException)cause;
 			}
+			if (cause instanceof Error) {
+				throw (Error)cause;
+			}
+			throw new UndeclaredThrowableException(cause);
 		}
-		js.close();*/
-		return true;
+
 	}
 
 	private List<String> snippetInput(String input) {
@@ -158,7 +181,7 @@ public class Validation {
 		}
 		throw new IllegalStateException("valid when accept return false (invalid code)");
 	}
-
+/*
 	private String validate(SnippetEvent e) {
 		StringBuilder sbrow = new StringBuilder();
 		StringBuilder sb = new StringBuilder();
@@ -183,7 +206,7 @@ public class Validation {
 		return sbrow.toString();
 
 	}
-
+*/
 	/*private String takeFromQueue() {
         String tmp=null;
 		try {

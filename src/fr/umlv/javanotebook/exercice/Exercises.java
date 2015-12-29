@@ -1,11 +1,14 @@
 package fr.umlv.javanotebook.exercice;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+
+import fr.umlv.javanotebook.test.Test_1;
 
 /**
  * this class implement a list of Exersise.
@@ -33,7 +36,7 @@ public class Exercises {
         Path path = Paths.get("./exercice/answers.rep");
         try {
             Files.lines(path).forEach(
-                    l -> exercices.add(new Exercise(l.split(" : ")[0], l.split(" : ")[1])));
+                    l -> exercices.add(new Exercise(l.split(" : ")[0], Test_1.class)));
         } catch (IOException e) {
             throw new IllegalArgumentException("The file " + path + " doesn't exist");
         }
@@ -45,7 +48,7 @@ public class Exercises {
      * @param key is the number of the exercice
      * @return the good answer for the exercice
      */
-    public String getAnswerFromKey(String key) {
+    public Method[] getAnswerFromKey(String key) {
         for (Exercise ex : exercices) {
             if (ex.getNumero().compareTo(key) == 0) {
                 return ex.getRespons();

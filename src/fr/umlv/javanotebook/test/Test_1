@@ -1,3 +1,0 @@
-Soldier s = new Soldier(10,20);
-Soldier s2 = new Soldier(10,20);
-s.hit(s2);

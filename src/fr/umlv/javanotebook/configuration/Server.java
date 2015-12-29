@@ -8,6 +8,7 @@ import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.StaticHandler;
 
+
 /**
  * this class extends to AbstractVerticle, it is a Server for connecting
  * on local host with port 8989.
@@ -92,7 +93,6 @@ public class Server extends AbstractVerticle {
 
         // must clean the string of stupid web characters
         input = cleanWebChars(input);
-//        System.out.println(input);
         validateExerciceAnnexe(routingContext, id, input);
     }
 
@@ -111,15 +111,7 @@ public class Server extends AbstractVerticle {
 
     private void validateExerciceAnnexe(RoutingContext routingContext, String id, String input) {
         Validation val = new Validation();
-        String answer;
-        if(val.valid(input,id)){
-            System.out.println("Good answer");
-            routingContext.response().end("Good answer");
-        }
-        else{
-            System.out.println("Bad answer");
-            routingContext.response().end("Bad answer");
-        }
+        routingContext.response().end(val.valid(input,exs.getAnswerFromKey(id)));
     }
 
 
@@ -131,7 +123,9 @@ public class Server extends AbstractVerticle {
 	 * routingContext.response().end(); }
 	 */
 
-    /**
+  
+
+	/**
      * Prints the adress of the server on the terminal
      */
     public void print_url() {
