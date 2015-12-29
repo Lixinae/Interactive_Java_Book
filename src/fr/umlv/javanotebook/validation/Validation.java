@@ -1,5 +1,8 @@
 package fr.umlv.javanotebook.validation;
 
+import jdk.jshell.JShell;
+import jdk.jshell.SnippetEvent;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.UndeclaredThrowableException;
@@ -8,9 +11,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
-
-import jdk.jshell.JShell;
-import jdk.jshell.SnippetEvent;
 
 /**
  * this class is used for validate a String for Java Language.
@@ -26,14 +26,32 @@ import jdk.jshell.SnippetEvent;
  * val.reset();
  */
 public class Validation {
-    private final ReentrantLock rlock = new ReentrantLock();
-    private final Condition condition = rlock.newCondition();
-    private final JShell js;
-    private String input = null;
-    private int nbWait = 0;
+	private final ReentrantLock rlock = new ReentrantLock();
+	private final Condition condition = rlock.newCondition();
+	private final JShell js;
+	private String input = null;
+	private int nbWait = 0;
 
 	public Validation() {
 		js = JShell.create();
+	}
+
+	private static Object invok(Method m, Object obj, JShell js) {
+		try {
+			return m.invoke(obj, js);
+		} catch (SecurityException | IllegalAccessException | IllegalArgumentException e) {
+			throw new AssertionError();
+		} catch (InvocationTargetException e) {
+			Throwable cause = e.getCause();
+			if (cause instanceof RuntimeException) {
+				throw (RuntimeException) cause;
+			}
+			if (cause instanceof Error) {
+				throw (Error) cause;
+			}
+			throw new UndeclaredThrowableException(cause);
+		}
+
 	}
 
 	/**
@@ -71,9 +89,11 @@ public class Validation {
 	 * @param input The answer of the user to the given exercise
 	 * @return Returns the answer of JShell on the input
 	 */
-	public String valid(String input,Method[] methods){
+	public String valid(String input, List<Method> methods, String id) {
 //		StringBuilder b = new StringBuilder();
 		List<String> list_input = snippetInput(input);
+
+		/* we need to get only our methods in the test class */
 		for (String toEval : list_input) {
 			addInQueue(toEval);
 			for (SnippetEvent e : js.eval(toEval)) {
@@ -87,36 +107,23 @@ public class Validation {
 			}
 			reset();
 		}
+
 		for(Method m: methods){
 			System.out.println(m.getName());
-    		if(m.getReturnType()!=boolean.class){
-    			throw new IllegalStateException("Test isnt boolean type");
-    		}
-    		else{
-    			if(!(boolean) invok(m,m.getClass(),js)){
-    	            return "Bad answer method "+m.getName();
-    			}
-    		}
-    	}
-        return "Good answer";
-	}  
-	
-	public static Object invok(Method m,Object obj,JShell js){
-		try {
-			return m.invoke(obj,js);
-		}catch(SecurityException | IllegalAccessException | IllegalArgumentException e){
-			throw new AssertionError();
-		}catch(InvocationTargetException e) {
-			Throwable cause = e.getCause() ;
-			if (cause instanceof RuntimeException) {
-				throw (RuntimeException)cause;
-			}
-			if (cause instanceof Error) {
-				throw (Error)cause;
-			}
-			throw new UndeclaredThrowableException(cause);
-		}
 
+			if (m.getReturnType() != boolean.class) {
+				throw new IllegalStateException("This should never happen, Test isnt boolean type");
+			} else {
+				System.out.println("Avant invoke");
+				if (!(boolean) invok(m, m.getClass(), js)) {
+					return "Bad answer method " + m.getName();
+				} else {
+					System.out.println("Muhahahahahahahahahaha");
+				}
+			}
+
+		}
+		return "Good answer";
 	}
 
 	private List<String> snippetInput(String input) {
@@ -133,7 +140,7 @@ public class Validation {
 					builder.delete(0, builder.length());
 					nbCrochet = -1;
 				}
-			} 
+			}
 			else if (input.charAt(i) == '{') {
 				nbCrochet++;
 			}
@@ -149,16 +156,16 @@ public class Validation {
 	private boolean accept(SnippetEvent e) {
 		if (e.causeSnippet() == null) {
 			switch (e.status()) {
-			case VALID:
-				return true;
-			case RECOVERABLE_DEFINED:
-				return false;
-			case RECOVERABLE_NOT_DEFINED:
-				return false;
-			case REJECTED:
-				return false;
-			default:
-				throw new IllegalStateException();
+				case VALID:
+					return true;
+				case RECOVERABLE_DEFINED:
+					return false;
+				case RECOVERABLE_NOT_DEFINED:
+					return false;
+				case REJECTED:
+					return false;
+				default:
+					throw new IllegalStateException();
 			}
 		}
 		throw new IllegalStateException();
@@ -167,16 +174,16 @@ public class Validation {
 	private String status(SnippetEvent e) {
 		if (e.causeSnippet() == null) {
 			switch (e.status()) {
-			case VALID:
-				break;
-			case RECOVERABLE_DEFINED:
-				return "Code with unresolved references";
-			case RECOVERABLE_NOT_DEFINED:
-				return "Code possibly reparable, but failed";
-			case REJECTED:
-				return "Code failed";
-			default:
-				throw new IllegalStateException("internal error");
+				case VALID:
+					break;
+				case RECOVERABLE_DEFINED:
+					return "Code with unresolved references";
+				case RECOVERABLE_NOT_DEFINED:
+					return "Code possibly reparable, but failed";
+				case REJECTED:
+					return "Code failed";
+				default:
+					throw new IllegalStateException("internal error");
 			}
 		}
 		throw new IllegalStateException("valid when accept return false (invalid code)");

@@ -1,14 +1,11 @@
 package fr.umlv.javanotebook.exercice;
 
-import java.io.IOException;
+import fr.umlv.javanotebook.test.Test_Exo;
+
+import java.io.File;
 import java.lang.reflect.Method;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-
-import fr.umlv.javanotebook.test.Test_1;
 
 /**
  * this class implement a list of Exersise.
@@ -29,16 +26,26 @@ public class Exercises {
      * @return returns the number of exercises in the exercice folder
      */
     public String countFiles() {
-        return Integer.toString(exercices.size());
+        return "" + numberOfFiles();
+        //return Integer.toString(exercices.size());
+    }
+
+    private int numberOfFiles() {
+
+
+        return new File("./exercice").listFiles().length;
     }
 
     private void getAllExercicesAndAnswers() {
-        Path path = Paths.get("./exercice/answers.rep");
-        try {
-            Files.lines(path).forEach(
-                    l -> exercices.add(new Exercise(l.split(" : ")[0], Test_1.class)));
-        } catch (IOException e) {
-            throw new IllegalArgumentException("The file " + path + " doesn't exist");
+//        Path path = Paths.get("./exercice/answers.rep");
+//        try {
+//            Files.lines(path).forEach(
+//                    l -> exercices.add(new Exercise(l.split(" : ")[0], Test_Exo.class)));
+//        } catch (IOException e) {
+//            throw new IllegalArgumentException("The file " + path + " doesn't exist");
+//        }
+        for (int i = 0; i < numberOfFiles(); i++) {
+            exercices.add(Exercise.create_Exercise("" + i, Test_Exo.class));
         }
     }
 
@@ -48,7 +55,7 @@ public class Exercises {
      * @param key is the number of the exercice
      * @return the good answer for the exercice
      */
-    public Method[] getAnswerFromKey(String key) {
+    public List<Method> getAnswerFromKey(String key) {
         for (Exercise ex : exercices) {
             if (ex.getNumero().compareTo(key) == 0) {
                 return ex.getRespons();

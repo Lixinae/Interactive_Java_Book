@@ -8,6 +8,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -15,12 +17,28 @@ import java.util.Objects;
  */
 class Exercise {
 
-    private final Class<?> respons;
+    private final List<Method> respons;
     private final String number;
 
-    Exercise(String number, Class<?> respons) {
+    private Exercise(String number, List<Method> respons) {
         this.number = Objects.requireNonNull(number);
         this.respons = Objects.requireNonNull(respons);
+    }
+
+
+    public static Exercise create_Exercise(String number, Class<?> class_test_respons) {
+        return new Exercise(number, filter(number, class_test_respons));
+    }
+
+
+    private static List<Method> filter(String number, Class<?> class_test_respons) {
+        List<Method> tempo = new ArrayList<>();
+        for (Method m : class_test_respons.getMethods()) {
+            if (m.getName().startsWith("test_" + number)) {
+                tempo.add(m);
+            }
+        }
+        return tempo;
     }
 
     private static String generateHtml(char[] markdown) {
@@ -45,8 +63,8 @@ class Exercise {
         return generateHtml(FileUtils.readAllChars(input));
     }
 
-    Method[] getRespons() {
-        return respons.getMethods();
+    List<Method> getRespons() {
+        return respons;
     }
 
     String getNumero() {
