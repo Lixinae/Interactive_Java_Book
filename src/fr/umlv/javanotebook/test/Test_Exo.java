@@ -46,24 +46,35 @@ public class Test_Exo {
 		ListToEval.add("s.hit(s2);");
 
 		//System.out.println("Js "+js.types());
-		for(String toEval:ListToEval){
+		return eval(js, ListToEval);
+	}
+
+	private static boolean eval(JShell js, List<String> listToEval) {
+		for (String toEval : listToEval) {
 			//System.out.println("toEval = "+toEval);
 			List <SnippetEvent> listEvent = js.eval(toEval);
-			for(SnippetEvent event:listEvent){
-				//System.out.println("event ="+event);
-				if (event.causeSnippet() == null) {
-					//System.out.println("Event status ="+event.status());
-					switch(event.status()){
-					case VALID:
-						break;
-					default:
-						return false;
-					}
-				} else {
-					return false;
-				}
+			if (eval_annexe(listEvent)) {
+				return false;
 			}
 		}
 		return true;
+	}
+
+	private static boolean eval_annexe(List<SnippetEvent> listEvent) {
+		for (SnippetEvent event : listEvent) {
+			//System.out.println("event ="+event);
+			if (event.causeSnippet() == null) {
+				//System.out.println("Event status ="+event.status());
+				switch (event.status()) {
+					case VALID:
+						break;
+					default:
+						return true;
+				}
+			} else {
+				return true;
+			}
+		}
+		return false;
 	}
 }
