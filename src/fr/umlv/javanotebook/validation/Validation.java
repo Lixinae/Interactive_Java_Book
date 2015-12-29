@@ -69,7 +69,7 @@ public class Validation {
 	 * @param input The answer of the user to the given exercise
 	 * @return Returns the answer of JShell on the input
 	 */
-	public String valid(String input){
+	public boolean valid(String input,String id){
 		StringBuilder b = new StringBuilder();
 		List<String> list_input = snippetInput(input);
 		for (String toEval : list_input) {
@@ -77,7 +77,8 @@ public class Validation {
 			for (SnippetEvent e : js.eval(toEval)) {
 				if(!accept(e)){
 					js.close();
-					return status(e);
+					System.out.println(status(e));
+					return false;
 				}
 				else {
 					b.append(validate(e));
@@ -85,8 +86,14 @@ public class Validation {
 			}
 			reset();
 		}
-		js.close();
-		return b.toString();
+		/*recherche de class EXO_id
+		for (SnippetEvent e : js.eval(String de class EXO_id)) {
+			if(!accept(e)){
+				return false;
+			}
+		}
+		js.close();*/
+		return true;
 	}
 
 	private List<String> snippetInput(String input) {
