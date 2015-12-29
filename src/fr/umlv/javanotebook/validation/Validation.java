@@ -114,11 +114,13 @@ public class Validation {
 				throw new IllegalStateException("This should never happen, Test isnt boolean type");
 			} else {
 				if (!(boolean) invok(m, m.getClass(), js)) {
+					js.close();
 					return "Bad answer method " + m.getName();
 				}
 			}
 
 		}
+		js.close();
 		return "Good answer";
 	}
 
