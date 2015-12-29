@@ -109,16 +109,12 @@ public class Validation {
 		}
 
 		for(Method m: methods){
-			System.out.println(m.getName());
-
+			//System.out.println(m.getName());
 			if (m.getReturnType() != boolean.class) {
 				throw new IllegalStateException("This should never happen, Test isnt boolean type");
 			} else {
-				System.out.println("Avant invoke");
 				if (!(boolean) invok(m, m.getClass(), js)) {
 					return "Bad answer method " + m.getName();
-				} else {
-					System.out.println("Muhahahahahahahahahaha");
 				}
 			}
 

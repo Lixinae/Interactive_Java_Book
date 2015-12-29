@@ -1,5 +1,7 @@
 <html>
+
  <head>
+	 <meta charset="UTF-8">
   <script src="asset/jquery-2.1.4.js"></script>
   <script>
 		var currentID=-1;
@@ -22,17 +24,20 @@
 			var element = $("#exercice");
 			var respon = $("#respons");
 			var sendB = $("#sendButton");
+			var answerFromServer = $("#answerFromServer");
 
 			element.html(loading);
 			$.get('/exercice/'+id,
 				function(data){
 					var noData = '<p>There is no Exercice '+id+'.MARKDOWN</p>' ;
 					element.html("");
+					answerFromServer.html("");
 					console.log(data);
 					element.append(data);
 					if(data.localeCompare(noData) == 0){
 						respon.html("");
 						sendB.html("");
+						answerFromServer.html("");
 					}
 				}
 			);
@@ -93,9 +98,9 @@
 			setInterval(printButtons,interval);
 			setInterval(testModify,10000);
 		});
-
-		
+  
   </script>
+
  </head>
  <body>
 	<div id="buttons">
