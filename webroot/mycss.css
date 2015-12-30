@@ -1,4 +1,20 @@
 body{
-	background-color:#D3D3D3;
-
+background-color:#D3D3D3;
+}
+#exercice{
+text-align:border-left;
+margin-left:30%;
+}
+#respons{
+text-align:center;
+}
+#buttons{
+text-align:center;
+}
+#sendButton{
+text-align:center;
+}
+#answerFromServer{
+text-align:center;
+color:red;
 }
