@@ -42,7 +42,7 @@
 		function printAnswerArea(){
 			var respon = $("#respons");
 			respon.html("");
-			respon.append('<textarea id=\"answer\" rows=10 cols=50 >Your answser !</textarea>');
+			respon.append('<textarea id=\"answer\" rows=20 cols=100 >Write your answer in here !</textarea>');
 		}
 		
 		function printAnswerButton(id){
