@@ -23,12 +23,12 @@ public class Server extends AbstractVerticle {
 
     private final int port; // port du server
     private final String adress; // nom du serveur , localhost because we work on local only
-    private final Watcher watcher;
-    private final Exercises exs;
+    private final Watcher watcher; // watcher for the main folder
+    private final Exercises exs; // list of exercise
 
     /**
-     * Initialize the name and port of the server And create a new watcher on
-     * the folder "exercice"
+     * Initialize the name, port , exercise of the server
+     * And create a new watcher on the folder "exercice"
      */
 
     public Server() {
@@ -111,12 +111,12 @@ public class Server extends AbstractVerticle {
 
     private void validateExerciceAnnexe(RoutingContext routingContext, String id, String input) {
         Validation val = new Validation();
-        String respons = val.valid(input, exs.getAnswerFromKey(id), id);
+        String respons = val.valid(input, exs.getAnswerFromKey(id));
         routingContext.response().end(respons);
     }
 
 
-
+    /*à quoi elle sert? je supprime?*/
 	/*
      * private void showJUnitTest(RoutingContext routingContext){ String id =
 	 * routingContext.request().getParam("id");

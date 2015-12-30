@@ -25,7 +25,12 @@ class Exercise {
         this.respons = Objects.requireNonNull(respons);
     }
 
-
+    /**
+     * Create an instance of Exercise
+     * @param number number of the Exercise
+     * @param class_test_respons class of the respons test
+     * @return new Exercise use private constructor for build Exercise.
+     */
     public static Exercise create_Exercise(String number, Class<?> class_test_respons) {
         return new Exercise(number, filter(number, class_test_respons));
     }
