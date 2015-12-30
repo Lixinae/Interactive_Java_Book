@@ -6,11 +6,20 @@ import jdk.jshell.SnippetEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * This class must never be used alone !!!
+ * If used alone it will crash
+ */
 public class Test_Exo {
 
-	//	This "suppress warning unused" is there because we use reflection to call these functions
-	@SuppressWarnings("unused")
+
+	public static boolean test_0(JShell js) {
+		List<String> ListToEval = new ArrayList<>();
+
+
+		return eval(js, ListToEval);
+	}
+
 	public static boolean test_1(JShell js) {
 		List<String> ListToEval = new ArrayList<>();
 
@@ -18,8 +27,6 @@ public class Test_Exo {
 		return eval(js, ListToEval);
 	}
 
-	//	This "suppress warning unused" is there because we use reflection to call these functions
-	@SuppressWarnings("unused")
 	public static boolean test_2(JShell js) {
 		List<String> ListToEval = new ArrayList<>();
 		ListToEval.add("Operations o = new Operations();");
@@ -31,8 +38,6 @@ public class Test_Exo {
 		return eval(js, ListToEval);
 	}
 
-	//	This "suppress warning unused" is there because we use reflection to call these functions
-	@SuppressWarnings("unused")
 	public static boolean test_3(JShell js) {
 		List<String> ListToEval = new ArrayList<>();
 		ListToEval.add("Soldier s = new Soldier(10,10);");
@@ -90,12 +95,5 @@ public class Test_Exo {
 		return false;
 	}
 
-	//	This "suppress warning unused" is there because we use reflection to call these functions
-	@SuppressWarnings("unused")
-	public boolean test_0(JShell js) {
-		List<String> ListToEval = new ArrayList<>();
 
-
-		return eval(js, ListToEval);
-	}
 }
