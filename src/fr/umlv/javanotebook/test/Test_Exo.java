@@ -11,15 +11,6 @@ public class Test_Exo {
 
 	//	This "suppress warning unused" is there because we use reflection to call these functions
 	@SuppressWarnings("unused")
-	public static boolean test_0(JShell js) {
-		List<String> ListToEval = new ArrayList<>();
-
-
-		return eval(js, ListToEval);
-	}
-
-	//	This "suppress warning unused" is there because we use reflection to call these functions
-	@SuppressWarnings("unused")
 	public static boolean test_1(JShell js) {
 		List<String> ListToEval = new ArrayList<>();
 
@@ -37,6 +28,16 @@ public class Test_Exo {
 		ListToEval.add("o.divide(2,3)");
 		ListToEval.add("o.multiply(2,3);");
 
+		return eval(js, ListToEval);
+	}
+
+	//	This "suppress warning unused" is there because we use reflection to call these functions
+	@SuppressWarnings("unused")
+	public static boolean test_3(JShell js) {
+		List<String> ListToEval = new ArrayList<>();
+		ListToEval.add("Soldier s = new Soldier(10,10);");
+		ListToEval.add("Soldier s2 = new Soldier(15,15);");
+		ListToEval.add("s.hit(s2);");
 		return eval(js, ListToEval);
 	}
 
@@ -59,16 +60,6 @@ public class Test_Exo {
 
 
 	 */
-
-	//	This "suppress warning unused" is there because we use reflection to call these functions
-	@SuppressWarnings("unused")
-	public static boolean test_3(JShell js) {
-		List<String> ListToEval = new ArrayList<>();
-		ListToEval.add("Soldier s = new Soldier(10,10);");
-		ListToEval.add("Soldier s2 = new Soldier(15,15);");
-		ListToEval.add("s.hit(s2);");
-		return eval(js, ListToEval);
-	}
 
 	private static boolean eval(JShell js, List<String> listToEval) {
 		if(listToEval.isEmpty()){
@@ -97,5 +88,14 @@ public class Test_Exo {
 			}
 		}
 		return false;
+	}
+
+	//	This "suppress warning unused" is there because we use reflection to call these functions
+	@SuppressWarnings("unused")
+	public boolean test_0(JShell js) {
+		List<String> ListToEval = new ArrayList<>();
+
+
+		return eval(js, ListToEval);
 	}
 }
