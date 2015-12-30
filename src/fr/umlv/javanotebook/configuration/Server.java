@@ -90,8 +90,6 @@ public class Server extends AbstractVerticle {
         String id = routingContext.request().getParam("id");
         String input = routingContext.request().getParam("input");
         System.out.println("Asking to validate exercise " + id);
-
-        // must clean the string of stupid web characters
         input = cleanWebChars(input);
         validateExerciceAnnexe(routingContext, id, input);
     }
@@ -116,8 +114,8 @@ public class Server extends AbstractVerticle {
     }
 
 
-    /*à quoi elle sert? je supprime?*/
-	/*
+    /*a quoi elle sert? je supprime?*/
+    /*
      * private void showJUnitTest(RoutingContext routingContext){ String id =
 	 * routingContext.request().getParam("id");
 	 * System.out.println("Asking to see JUnit test for exercise "+id);

@@ -2,8 +2,11 @@ package fr.umlv.javanotebook.exercice;
 
 import fr.umlv.javanotebook.test.Test_Exo;
 
-import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Method;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,14 +33,21 @@ public class Exercises {
 	}
 
 	private int numberOfFiles() {
-		File f = new File("./exercice");
-		return f.listFiles().length;
+		Path path = Paths.get("./exercice");
+		if (Files.exists(path)) {
+			try {
+				Long temp = Files.list(path).count();
+				return temp.intValue();
+			} catch (IOException e) {
+				throw new IllegalArgumentException("There is no folder ./exercice");
+			}
+		}
+		return 0;
 	}
 
 	private void getAllExercicesAndAnswers() {
 		for (int i = 0; i < numberOfFiles(); i++) {
-			exercises.add(Exercise.create_Exercise(Integer.toString(i),
-					Test_Exo.class));
+			exercises.add(Exercise.create_Exercise(Integer.toString(i), Test_Exo.class));
 		}
 	}
 
@@ -71,5 +81,4 @@ public class Exercises {
 		}
 		throw new IllegalStateException("Exercice doesnt exist");
 	}
-
 }

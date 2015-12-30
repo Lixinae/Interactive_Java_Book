@@ -3,44 +3,40 @@ package fr.umlv.javanotebook.test;
 import jdk.jshell.JShell;
 import jdk.jshell.SnippetEvent;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Test_Exo {
-	/**
-	 * this is the method for test if answer's user
-	 * correspond exercise's request.
-	 * @param js is JShell of the answer's user,
-	 * he save all method of the answer.
-	 * @return test working or not.
-	 */
-	public static boolean test_0(JShell js,ByteArrayOutputStream out) {
+
+	//	This "suppress warning unused" is there because we use reflection to call these functions
+	@SuppressWarnings("unused")
+	public static boolean test_0(JShell js) {
 		List<String> ListToEval = new ArrayList<>();
-		ListToEval.add("Main.helloWorld()");
-		boolean bEval = eval(js, ListToEval);
-		return out.toString().compareTo("HelloWorld")==0?bEval:false;
-	}
-	/**
-	 * this is the method for test if answer's user
-	 * correspond exercise's request.
-	 * @param js is JShell of the answer's user,
-	 * he save all method of the answer.
-	 * @return test working or not.
-	 */
-	public static boolean test_1(JShell js,ByteArrayOutputStream out) {
-		List<String> ListToEval = new ArrayList<>();
+
+
 		return eval(js, ListToEval);
 	}
-	/**
-	 * this is the method for test if answer's user
-	 * correspond exercise's request.
-	 * @param js is JShell of the answer's user,
-	 * he save all method of the answer.
-	 * @return test working or not.
-	 */
-	public static boolean test_2(JShell js,ByteArrayOutputStream out) {
+
+	//	This "suppress warning unused" is there because we use reflection to call these functions
+	@SuppressWarnings("unused")
+	public static boolean test_1(JShell js) {
 		List<String> ListToEval = new ArrayList<>();
+
+
+		return eval(js, ListToEval);
+	}
+
+	//	This "suppress warning unused" is there because we use reflection to call these functions
+	@SuppressWarnings("unused")
+	public static boolean test_2(JShell js) {
+		List<String> ListToEval = new ArrayList<>();
+		ListToEval.add("Operations o = new Operations();");
+		ListToEval.add("o.add(2,3);");
+		ListToEval.add("o.sub(2,3);");
+		ListToEval.add("o.divide(2,3)");
+		ListToEval.add("o.multiply(2,3);");
+
 		return eval(js, ListToEval);
 	}
 
@@ -64,14 +60,9 @@ public class Test_Exo {
 
 	 */
 
-	/**
-	 * this is the method for test if answer's user
-	 * correspond exercise's request.
-	 * @param js is JShell of the answer's user,
-	 * he save all method of the answer.
-	 * @return test working or not.
-	 */
-	public static boolean test_3(JShell js,ByteArrayOutputStream out) {
+	//	This "suppress warning unused" is there because we use reflection to call these functions
+	@SuppressWarnings("unused")
+	public static boolean test_3(JShell js) {
 		List<String> ListToEval = new ArrayList<>();
 		ListToEval.add("Soldier s = new Soldier(10,10);");
 		ListToEval.add("Soldier s2 = new Soldier(15,15);");
