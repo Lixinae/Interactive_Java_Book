@@ -11,6 +11,11 @@ text-align:center;
 #buttons{
 text-align:center;
 }
+#answer{
+border-radius:10px;
+}
+
+
 #sendButton{
 text-align:center;
 }
