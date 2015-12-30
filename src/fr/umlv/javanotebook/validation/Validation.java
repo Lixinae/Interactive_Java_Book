@@ -90,19 +90,15 @@ public class Validation {
 	}
 
 	private void addInQueue(String input) {
-		Objects.requireNonNull(input);
 		rlock.lock();
 		try {
 			while (this.input != null) {
 				nbWait++;
-				try {
-					condition.await();
-				} catch (InterruptedException e) {
-
-					e.printStackTrace();
-				}
+				condition.await();
 			}
-			this.input = input;
+			this.input =Objects.requireNonNull(input);
+		} catch (InterruptedException e) {
+			throw new AssertionError(e);
 		} finally {
 			rlock.unlock();
 		}
@@ -118,30 +114,35 @@ public class Validation {
 
 	private List<String> splitInput(String programInput) {
 		List<String> listInput = new ArrayList<>();
+		StringBuilder tmpInput = new StringBuilder();
 		int nbCrochet = -1;
-		StringBuilder oneInput = new StringBuilder();
 		for (int i = 0; i < programInput.length(); i++) {
-			oneInput.append(programInput.charAt(i));
-			if (programInput.charAt(i) == '}') {
-				if (nbCrochet > 0) {
-					nbCrochet--;
-				}
-				else {
-					listInput.add(oneInput.toString());
-					oneInput.delete(0, oneInput.length());
-					nbCrochet = -1;
-				}
-			}
-			else if (programInput.charAt(i) == '{') {
-				nbCrochet++;
-			}
-			else if (programInput.charAt(i) == ';' && nbCrochet == -1) {
-				listInput.add(oneInput.toString());
-				oneInput.delete(0, oneInput.length());
+			tmpInput.append(programInput.charAt(i));
+			nbCrochet = splitInputAnnexe( listInput,tmpInput,programInput.charAt(i),nbCrochet);
+		}
+		listInput.add(tmpInput.toString());
+		return listInput;
+	}
+
+	private int splitInputAnnexe( List<String> listInput, StringBuilder tmpInput, char token,int nbCrochet) {
+		if (token == '}') {
+			nbCrochet=nbCrochet>0?nbCrochet-1:-1;
+			if(nbCrochet==-1){
+				addTmpInputOnList(listInput, tmpInput);
 			}
 		}
+		else if (token == '{') {
+			nbCrochet++;
+		}
+		else if (token == ';' && nbCrochet == -1) {
+			addTmpInputOnList(listInput, tmpInput);
+		}
+		return nbCrochet;
+	}
+
+	private void addTmpInputOnList(List<String> listInput, StringBuilder oneInput) {
 		listInput.add(oneInput.toString());
-		return listInput;
+		oneInput.delete(0, oneInput.length());
 	}
 
 	private boolean accept(SnippetEvent e) {
