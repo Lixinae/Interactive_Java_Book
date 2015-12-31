@@ -40,8 +40,9 @@ class Exercise {
 
     private static List<Method> filter(String number, Class<?> class_test_respons) {
         List<Method> tempo = new ArrayList<>();
-        for (Method m : class_test_respons.getMethods()) {
+        for (Method m : class_test_respons.getDeclaredMethods()) {
             if (m.getName().startsWith("test_" + number)) {
+                m.setAccessible(true);
                 tempo.add(m);
             }
         }

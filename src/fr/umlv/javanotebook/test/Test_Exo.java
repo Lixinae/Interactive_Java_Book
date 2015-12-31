@@ -13,21 +13,21 @@ import java.util.List;
 public class Test_Exo {
 
 
-	public static boolean test_0(JShell js) {
+	private static boolean test_0(JShell js) {
 		List<String> ListToEval = new ArrayList<>();
 
 
 		return eval(js, ListToEval);
 	}
 
-	public static boolean test_1(JShell js) {
+	private static boolean test_1(JShell js) {
 		List<String> ListToEval = new ArrayList<>();
 
 
 		return eval(js, ListToEval);
 	}
 
-	public static boolean test_2(JShell js) {
+	private static boolean test_2(JShell js) {
 		List<String> ListToEval = new ArrayList<>();
 		ListToEval.add("Operations o = new Operations();");
 		ListToEval.add("o.add(2,3);");
@@ -38,7 +38,7 @@ public class Test_Exo {
 		return eval(js, ListToEval);
 	}
 
-	public static boolean test_3(JShell js) {
+	private static boolean test_3(JShell js) {
 		List<String> ListToEval = new ArrayList<>();
 		ListToEval.add("Soldier s = new Soldier(10,10);");
 		ListToEval.add("Soldier s2 = new Soldier(15,15);");
