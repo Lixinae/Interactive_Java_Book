@@ -50,12 +50,12 @@ public class Validation {
 	/**
 	 * valid an answer for java code,
 	 * @param input The answer of the user to the given exercise
-	 * @param methods List of Method Test the answer of the user
+	 * @param methodsTest List of Method Test the answer of the user
 	 * @return Return String explain the error of answer,
 	 * the method test failed, or "good answer" if method doesn't
 	 * failed and Java code haven't error.
 	 */
-	public String valid(String input, List<Method> methods) {
+	public String valid(String input, List<Method> methodsTest) {
 		List<String> list_input = splitInput(input);
 		for (String toEval : list_input) {
 			addInQueue(toEval);
@@ -67,7 +67,7 @@ public class Validation {
 			}
 			reset();
 		}
-		return sendAnswerToServer(methods);
+		return sendAnswerToServer(methodsTest);
 	}
 
 	private String sendAnswerToServer(List<Method> methods) {
