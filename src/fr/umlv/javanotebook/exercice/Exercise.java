@@ -37,7 +37,6 @@ class Exercise {
         return new Exercise(number, filter(number, class_test_respons), folder);
     }
 
-
     private static List<Method> filter(String number, Class<?> class_test_respons) {
         List<Method> tempo = new ArrayList<>();
         for (Method m : class_test_respons.getDeclaredMethods()) {

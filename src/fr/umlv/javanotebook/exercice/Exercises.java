@@ -42,7 +42,7 @@ public class Exercises {
 				Long temp = Files.list(path).count();
 				return temp.intValue();
 			} catch (IOException e) {
-				throw new IllegalArgumentException("There is no folder " + folder);
+				throw new IllegalStateException(folder+" exist and doesn't exist");
 			}
 		}
 		return 0;
@@ -81,6 +81,6 @@ public class Exercises {
 				return ex.toWeb();
 			}
 		}
-		throw new IllegalStateException("Exercice doesnt exist");
+		throw new IllegalStateException("Exercice doesn't exist");
 	}
 }

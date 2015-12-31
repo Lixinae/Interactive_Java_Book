@@ -14,10 +14,9 @@ import io.vertx.ext.web.handler.StaticHandler;
  * on local host with port 8989.
  * he wait an enter on local host for execute his request.
  * example:
- * Server s = new Server();
+ * Server s = new Server("./MyFolderExercice/");
  * Vertx vertx = Vertx.vertx();
  * vertx.deployVerticle(s);
- * s.print_url();
  */
 public class Server extends AbstractVerticle {
 
@@ -47,13 +46,20 @@ public class Server extends AbstractVerticle {
     @Override
     public void start() {
         Router router = Router.router(vertx);
-        // Liste des requetes du javascript
         listOfRequest(router);
-        // otherwise serve static pages
         router.route().handler(StaticHandler.create());
         vertx.createHttpServer().requestHandler(router::accept).listen(port);
     }
 
+    /**
+     * Prints the adress of the server on the terminal
+     */
+    
+    public void print_url() {
+        System.out.println("Copy to browser to start");
+        System.out.println(this.adress + ":" + this.port);
+    }
+    
     private void listOfRequest(Router router) {
         router.get("/exercice/:id").handler(this::getExercise);
         router.get("/countfiles").handler(this::getNumberOfFiles);
@@ -69,7 +75,6 @@ public class Server extends AbstractVerticle {
     }
 
     private void getNumberOfFiles(RoutingContext routingContext) {
-        routingContext.request();
         System.out.println("Asking for number of exercise in folder");
         routingContext.response().end(exs.countFiles());
     }
@@ -95,14 +100,14 @@ public class Server extends AbstractVerticle {
     }
 
     private String cleanWebChars(String input) {
-        String[] chaineatrad = {"%20", "%5B", "%5D", "%7B", "%7D", "%22", "%5C", "%27", "%5E", "%C3%A8", "%C3%A7",
+        String[] webChars = {"%20", "%5B", "%5D", "%7B", "%7D", "%22", "%5C", "%27", "%5E", "%C3%A8", "%C3%A7",
                 "%C3%A9", "%C2%B0", "%3C", "%3E"};
-        String[] chainetrad = {" ", "[", "]", "{", "}", "\"", "\\\\", "\'", "^", "è", "ç", "é", "°", "<", ">"};
-        if (chainetrad.length != chaineatrad.length) {
+        String[] usableChars = {" ", "[", "]", "{", "}", "\"", "\\\\", "\'", "^", "è", "ç", "é", "°", "<", ">"};
+        if (usableChars.length != webChars.length) {
             throw new IllegalStateException("Strings to translate have different size");
         }
-        for (int i = 0; i < chaineatrad.length; i++) {
-            input = input.replaceAll(chaineatrad[i], chainetrad[i]);
+        for (int i = 0; i < webChars.length; i++) {
+            input = input.replaceAll(webChars[i], usableChars[i]);
         }
         return input;
     }
@@ -113,22 +118,4 @@ public class Server extends AbstractVerticle {
         routingContext.response().end(respons);
     }
 
-
-    /*a quoi elle sert? je supprime?*/
-    /*
-     * private void showJUnitTest(RoutingContext routingContext){ String id =
-	 * routingContext.request().getParam("id");
-	 * System.out.println("Asking to see JUnit test for exercise "+id);
-	 * routingContext.response().end(); }
-	 */
-
-  
-
-	/**
-     * Prints the adress of the server on the terminal
-     */
-    public void print_url() {
-        System.out.println("Copy to browser to start");
-        System.out.println(this.adress + ":" + this.port);
-    }
 }
