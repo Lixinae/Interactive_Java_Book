@@ -22,14 +22,11 @@
 		<delete dir="${classes.dir}"/>
 		<delete dir="${api.dir}"/>
 		<delete dir="${dest.dir}"/>
-		<!--<delete file ="jshellbook.jar"/>
-		<delete file ="MANIFEST.MF"/> -->
 	</target>
 
 	<!-- Cleans the folder and creates the necessary directories -->
 	<target name="init" depends="clean">
 		<mkdir dir="${classes.dir}"/>
-		<mkdir dir="${src.dir}"/>
 		<mkdir dir="${api.dir}"/>
 		<mkdir dir="${dest.dir}"/>
 	</target>
