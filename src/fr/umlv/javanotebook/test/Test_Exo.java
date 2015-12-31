@@ -5,26 +5,23 @@ import jdk.jshell.SnippetEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-/**
- * This class must never be used alone !!!
- * If used alone it will crash
- */
 public class Test_Exo {
 
 
 	private static boolean test_0(JShell js) {
 		List<String> ListToEval = new ArrayList<>();
-
-
-		return eval(js, ListToEval);
+		ListToEval.add("Hello h = new Hello();");
+		ListToEval.add("h.HelloWorld();");
+		return eval(js, ListToEval) && validate(js, "h.HelloWorld()").compareTo("HelloWorld") == 0;
 	}
 
 	private static boolean test_1(JShell js) {
 		List<String> ListToEval = new ArrayList<>();
-
-
-		return eval(js, ListToEval);
+		ListToEval.add("Bidule b = new Bidule();");
+		ListToEval.add("b.truc(5);");
+		return eval(js, ListToEval) && validate(js, "b.truc(5);").compareTo("5_ma super concatenation") == 0;
 	}
 
 	private static boolean test_2(JShell js) {
@@ -32,13 +29,16 @@ public class Test_Exo {
 		ListToEval.add("Operations o = new Operations();");
 		ListToEval.add("o.add(2,3);");
 		ListToEval.add("o.sub(2,3);");
-		ListToEval.add("o.divide(2,3)");
+		ListToEval.add("o.divide(2,3);");
 		ListToEval.add("o.multiply(2,3);");
-
-		return eval(js, ListToEval);
+		return eval(js, ListToEval)
+				&& (validate(js, "o.add(2,3)").compareTo("5") == 0)
+				&& (validate(js, "o.sub(2,3);").compareTo("-1") == 0)
+				&& (validate(js, "o.divide(2,3);").compareTo("0") == 0)
+				&& (validate(js, "o.multiply(2,3);").compareTo("6") == 0);
 	}
 
-	private static boolean test_3(JShell js) {
+	private static boolean test_3_hit(JShell js) {
 		List<String> ListToEval = new ArrayList<>();
 		ListToEval.add("Soldier s = new Soldier(10,10);");
 		ListToEval.add("Soldier s2 = new Soldier(15,15);");
@@ -75,12 +75,9 @@ public class Test_Exo {
 		return false;
 	}
 
-	private String validate(SnippetEvent e) {
-		// We do want the value of M test = new M(); for example , which contains an @ in the value
-		if ((e.value() != null)) {
-			return e.value();
-		}
-		throw new IllegalArgumentException("This should never happen , e can't be null");
+	private static String validate(JShell js, String input) {
+		List<SnippetEvent> listEvent = js.eval(input);
+		return Objects.requireNonNull(listEvent.get(0).value());
 	}
 
 }

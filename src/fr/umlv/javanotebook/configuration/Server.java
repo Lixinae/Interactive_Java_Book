@@ -28,6 +28,7 @@ public class Server extends AbstractVerticle {
     /**
      * Initialize the name, port , exercise of the server
      * And create a new watcher on the folder "exercice"
+     * @param folder Folder where the exercises are
      */
 
     public Server(String folder) {
