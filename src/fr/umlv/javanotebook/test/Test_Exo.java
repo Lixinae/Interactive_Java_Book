@@ -75,5 +75,12 @@ public class Test_Exo {
 		return false;
 	}
 
+	private String validate(SnippetEvent e) {
+		// We do want the value of M test = new M(); for example , which contains an @ in the value
+		if ((e.value() != null)) {
+			return e.value();
+		}
+		throw new IllegalArgumentException("This should never happen , e can't be null");
+	}
 
 }
