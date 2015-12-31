@@ -10,7 +10,8 @@ import io.vertx.core.Vertx;
 public class InterJavaBook {
 
     public static void main(String[] args) {
-        Server s = new Server();
+        String folder = "./exercice/";
+        Server s = new Server(folder);
         Vertx vertx = Vertx.vertx();
         vertx.deployVerticle(s);
         s.print_url();

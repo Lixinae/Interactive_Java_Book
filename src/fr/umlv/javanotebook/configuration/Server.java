@@ -31,11 +31,11 @@ public class Server extends AbstractVerticle {
      * And create a new watcher on the folder "exercice"
      */
 
-    public Server() {
+    public Server(String folder) {
         this.adress = "localhost";
         this.port = 8989;
-        watcher = new Watcher("./exercice");
-        exs = new Exercises("./exercice/");
+        watcher = new Watcher(folder);
+        exs = new Exercises(folder);
     }
 
     /**
