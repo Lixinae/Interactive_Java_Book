@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * this class implement a list of Exercise.
@@ -16,12 +17,14 @@ import java.util.List;
 public class Exercises {
 
 	private final List<Exercise> exercises = new ArrayList<>();
+	private final String folder;
 
 	/**
-	 * Fetches all the exercise Associating the id of the exercise with the
-	 * awaited respons
+	 *
+	 * @param folder Folder where the exercises are
 	 */
-	public Exercises() {
+	public Exercises(String folder) {
+		this.folder = Objects.requireNonNull(folder);
 		getAllExercicesAndAnswers();
 	}
 
@@ -33,13 +36,13 @@ public class Exercises {
 	}
 
 	private int numberOfFiles() {
-		Path path = Paths.get("./exercice");
+		Path path = Paths.get(folder);
 		if (Files.exists(path)) {
 			try {
 				Long temp = Files.list(path).count();
 				return temp.intValue();
 			} catch (IOException e) {
-				throw new IllegalArgumentException("There is no folder ./exercice");
+				throw new IllegalArgumentException("There is no folder " + folder);
 			}
 		}
 		return 0;
@@ -47,7 +50,7 @@ public class Exercises {
 
 	private void getAllExercicesAndAnswers() {
 		for (int i = 0; i < numberOfFiles(); i++) {
-			exercises.add(Exercise.create_Exercise(Integer.toString(i), Test_Exo.class));
+			exercises.add(Exercise.create_Exercise(Integer.toString(i), Test_Exo.class, folder));
 		}
 	}
 
@@ -63,8 +66,7 @@ public class Exercises {
 				return ex.getRespons();
 			}
 		}
-		throw new IllegalArgumentException("Answer to exercice " + key
-				+ " doesn't exist");
+		throw new IllegalArgumentException("Answer to exercice " + key + " doesn't exist");
 	}
 
 	/**

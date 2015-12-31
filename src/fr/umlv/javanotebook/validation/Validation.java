@@ -33,8 +33,7 @@ public class Validation {
 	private static Object invok(Method m, Object obj, JShell js) {
 		try {
 			return m.invoke(obj, js);
-		} catch (SecurityException | IllegalAccessException
-				| IllegalArgumentException e) {
+		} catch (SecurityException | IllegalAccessException | IllegalArgumentException e) {
 			throw new AssertionError();
 		} catch (InvocationTargetException e) {
 			Throwable cause = e.getCause();
@@ -46,7 +45,6 @@ public class Validation {
 			}
 			throw new UndeclaredThrowableException(cause);
 		}
-
 	}
 
 	/**
@@ -112,6 +110,7 @@ public class Validation {
 		}
 	}
 
+	// Splits the input so we can use it correctly
 	private List<String> splitInput(String programInput) {
 		List<String> listInput = new ArrayList<>();
 		StringBuilder tmpInput = new StringBuilder();

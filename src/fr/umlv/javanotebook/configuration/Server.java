@@ -35,7 +35,7 @@ public class Server extends AbstractVerticle {
         this.adress = "localhost";
         this.port = 8989;
         watcher = new Watcher("./exercice");
-        exs = new Exercises();
+        exs = new Exercises("./exercice/");
     }
 
     /**
