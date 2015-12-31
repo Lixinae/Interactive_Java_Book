@@ -30,16 +30,16 @@ class Exercise {
     /**
      * Create an instance of Exercise
      * @param number number of the Exercise
-     * @param class_test_respons class of the respons test
+     * @param classTest_Exo class of the respons test
      * @return new Exercise use private constructor for build Exercise.
      */
-    public static Exercise create_Exercise(String number, Class<?> class_test_respons, String folder) {
-        return new Exercise(number, filter(number, class_test_respons), folder);
+    public static Exercise create_Exercise(String number, Class<?> classTest_Exo, String folder) {
+        return new Exercise(number, filter(number, classTest_Exo), folder);
     }
 
-    private static List<Method> filter(String number, Class<?> class_test_respons) {
+    private static List<Method> filter(String number, Class<?> classTest_Exo) {
         List<Method> tempo = new ArrayList<>();
-        for (Method m : class_test_respons.getDeclaredMethods()) {
+        for (Method m : classTest_Exo.getDeclaredMethods()) {
             if (m.getName().startsWith("test_" + number)) {
                 m.setAccessible(true);
                 tempo.add(m);
