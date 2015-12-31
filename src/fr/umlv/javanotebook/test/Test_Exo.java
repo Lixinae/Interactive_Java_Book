@@ -46,26 +46,6 @@ public class Test_Exo {
 		return eval(js, ListToEval);
 	}
 
-
-	/*
-	public class Soldier{
- 		private int health;
- 		private int damage;
-
-  		public Soldier(int health,int damage){
-    		this.health=health;
-    		this.damage=damage;
-  		}
-
- 		public void hit(Soldier soldier){
-   			soldier.health = soldier.health - damage;
-  		}
-
-	}
-
-
-	 */
-
 	private static boolean eval(JShell js, List<String> listToEval) {
 		if(listToEval.isEmpty()){
 			throw new IllegalStateException("empty test");
