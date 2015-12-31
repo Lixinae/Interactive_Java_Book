@@ -82,7 +82,7 @@ public class Server extends AbstractVerticle {
     private void updateFile(RoutingContext routingContext) {
         String id = routingContext.request().getParam("id");
         System.out.println("Was exercise " + id + " modified ?");
-        if (watcher.action()) {
+        if (watcher.testModify()) {
             System.out.println("Exercise " + id + " modified");
             routingContext.response().end(exs.getToWebFromKey(id));
         } else {

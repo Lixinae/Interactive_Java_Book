@@ -33,7 +33,7 @@ public class Watcher {
      * @return if file in folder was modified return true, else return false.
      */
 
-    public boolean action() {
+    public boolean testModify() {
         WatchKey key;
         key = watcher.poll();
         return key != null && doEvents(key);
