@@ -7,9 +7,6 @@ import org.pegdown.PegDownProcessor;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -17,38 +14,25 @@ import java.util.Objects;
  */
 class Exercise {
 
-    private final List<Method> respons;
     private final String number;
     private final String folder;
+    private String testExercise;
 
-    private Exercise(String number, List<Method> respons, String folder) {
+    private Exercise(String number, String folder) {
         this.number = Objects.requireNonNull(number);
-        this.respons = Objects.requireNonNull(respons);
         this.folder = Objects.requireNonNull(folder);
     }
 
     /**
      * Create an instance of Exercise
      * @param number number of the Exercise
-     * @param classTest_Exo class of the respons test
      * @return new Exercise use private constructor for build Exercise.
      */
-    public static Exercise create_Exercise(String number, Class<?> classTest_Exo, String folder) {
-        return new Exercise(number, filter(number, classTest_Exo), folder);
+    public static Exercise create_Exercise(String number, String folder) {
+        return new Exercise(number, folder);
     }
 
-    private static List<Method> filter(String number, Class<?> classTest_Exo) {
-        List<Method> tempo = new ArrayList<>();
-        for (Method m : classTest_Exo.getDeclaredMethods()) {
-            if (m.getName().startsWith("test_" + number)) {
-                m.setAccessible(true);
-                tempo.add(m);
-            }
-        }
-        return tempo;
-    }
-
-    private static String generateHtml(char[] markdown) {
+    private String generateHtml(char[] markdown) {
         PegDownProcessor processor = new PegDownProcessor(Extensions.ALL);
         return processor.markdownToHtml(markdown);
     }
@@ -61,20 +45,29 @@ class Exercise {
      */
     String toWeb() {
         String file = folder + number + ".md";
-        InputStream input;
+        String markdown = "<p>There is no Exercise " + number + "</p>";
         try {
-            input = new FileInputStream(file);
+            markdown = getInput(file);
         } catch (FileNotFoundException e) {
-            return "<p>There is no Exercise " + number + "</p>";
+            return markdown;
         }
-        return generateHtml(FileUtils.readAllChars(input));
+        return generateHtml(markdown.toCharArray());
     }
 
-    List<Method> getRespons() {
-        return respons;
+    private String getInput(String file) throws FileNotFoundException {
+        InputStream input;
+        input = new FileInputStream(file);
+        String s = FileUtils.readAllText(input);
+        String[] tokens = s.split("\\$");
+        this.testExercise = Objects.requireNonNull(tokens[1], "There is no testCode for current exercise ( " + number + ") !!!");
+        return tokens[0];
     }
 
     String getNumero() {
         return number;
+    }
+
+    String getTestExercise() {
+        return testExercise;
     }
 }

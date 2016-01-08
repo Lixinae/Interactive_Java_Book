@@ -1,9 +1,6 @@
 package fr.umlv.javanotebook.exercice;
 
-import fr.umlv.javanotebook.test.Test_Exo;
-
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -50,7 +47,7 @@ public class Exercises {
 
 	private void getAllExercicesAndAnswers() {
 		for (int i = 0; i < numberOfFiles(); i++) {
-			exercises.add(Exercise.create_Exercise(Integer.toString(i), Test_Exo.class, folder));
+			exercises.add(Exercise.create_Exercise(Integer.toString(i), folder));
 		}
 	}
 
@@ -60,10 +57,10 @@ public class Exercises {
 	 * @param key is the number of the exercice
 	 * @return the good answer for the exercice
 	 */
-	public List<Method> getAnswerFromKey(String key) {
+	public String getTestCodeFromKey(String key) {
 		for (Exercise ex : exercises) {
 			if (ex.getNumero().compareTo(key) == 0) {
-				return ex.getRespons();
+				return ex.getTestExercise();
 			}
 		}
 		throw new IllegalArgumentException("Answer to exercice " + key + " doesn't exist");
