@@ -10,6 +10,9 @@ import io.vertx.ext.web.handler.StaticHandler;
  * on local host with port 8989.
  * he wait an enter on local host for execute his request.
  * example:
+ * Server s = new Server("./MyFolderExercice/");
+ * Vertx vertx = Vertx.vertx();
+ * vertx.deployVerticle(s);
  */
 public class Server extends AbstractVerticle {
 

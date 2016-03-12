@@ -1,0 +1,53 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.8.2
+Created-By: 1.8.0_65-b17 (Oracle Corporation)
+Built-By: narex
+Built-Date: January 9 2016
+Main-Class: fr.umlv.javanotebook.main.InterJavaBook
+Class-Path: /home/narex/Dropbox/CoursM1/Java_avance/Interactive_Java_B
+ ook/libs/Parboiled/parboiled-core-1.1.7-javadoc.jar /home/narex/Dropb
+ ox/CoursM1/Java_avance/Interactive_Java_Book/libs/Parboiled/parboiled
+ -core-1.1.7-sources.jar /home/narex/Dropbox/CoursM1/Java_avance/Inter
+ active_Java_Book/libs/Parboiled/parboiled-core-1.1.7.jar /home/narex/
+ Dropbox/CoursM1/Java_avance/Interactive_Java_Book/libs/Parboiled/parb
+ oiled-java-1.1.7-javadoc.jar /home/narex/Dropbox/CoursM1/Java_avance/
+ Interactive_Java_Book/libs/Parboiled/parboiled-java-1.1.7-sources.jar
+  /home/narex/Dropbox/CoursM1/Java_avance/Interactive_Java_Book/libs/P
+ arboiled/parboiled-java-1.1.7.jar /home/narex/Dropbox/CoursM1/Java_av
+ ance/Interactive_Java_Book/libs/Parboiled/parboiled-scala-1.0.2-javad
+ oc.jar /home/narex/Dropbox/CoursM1/Java_avance/Interactive_Java_Book/
+ libs/Parboiled/parboiled-scala-1.0.2-sources.jar /home/narex/Dropbox/
+ CoursM1/Java_avance/Interactive_Java_Book/libs/Parboiled/parboiled-sc
+ ala-1.0.2.jar /home/narex/Dropbox/CoursM1/Java_avance/Interactive_Jav
+ a_Book/libs/asm-all-5.0.4.jar /home/narex/Dropbox/CoursM1/Java_avance
+ /Interactive_Java_Book/libs/jdk.jshell.jar /home/narex/Dropbox/CoursM
+ 1/Java_avance/Interactive_Java_Book/libs/pegdown/pegdown-1.2.1-javado
+ c.jar /home/narex/Dropbox/CoursM1/Java_avance/Interactive_Java_Book/l
+ ibs/pegdown/pegdown-1.2.1-sources.jar /home/narex/Dropbox/CoursM1/Jav
+ a_avance/Interactive_Java_Book/libs/pegdown/pegdown-1.2.1.jar /home/n
+ arex/Dropbox/CoursM1/Java_avance/Interactive_Java_Book/vert.x-3.0.0/l
+ ib/jackson-annotations-2.5.0.jar /home/narex/Dropbox/CoursM1/Java_ava
+ nce/Interactive_Java_Book/vert.x-3.0.0/lib/jackson-core-2.5.3.jar /ho
+ me/narex/Dropbox/CoursM1/Java_avance/Interactive_Java_Book/vert.x-3.0
+ .0/lib/jackson-databind-2.5.3.jar /home/narex/Dropbox/CoursM1/Java_av
+ ance/Interactive_Java_Book/vert.x-3.0.0/lib/netty-buffer-4.0.28.Final
+ .jar /home/narex/Dropbox/CoursM1/Java_avance/Interactive_Java_Book/ve
+ rt.x-3.0.0/lib/netty-codec-4.0.28.Final.jar /home/narex/Dropbox/Cours
+ M1/Java_avance/Interactive_Java_Book/vert.x-3.0.0/lib/netty-codec-htt
+ p-4.0.28.Final.jar /home/narex/Dropbox/CoursM1/Java_avance/Interactiv
+ e_Java_Book/vert.x-3.0.0/lib/netty-common-4.0.28.Final.jar /home/nare
+ x/Dropbox/CoursM1/Java_avance/Interactive_Java_Book/vert.x-3.0.0/lib/
+ netty-handler-4.0.28.Final.jar /home/narex/Dropbox/CoursM1/Java_avanc
+ e/Interactive_Java_Book/vert.x-3.0.0/lib/netty-transport-4.0.28.Final
+ .jar /home/narex/Dropbox/CoursM1/Java_avance/Interactive_Java_Book/ve
+ rt.x-3.0.0/lib/vertx-auth-common-3.0.0.jar /home/narex/Dropbox/CoursM
+ 1/Java_avance/Interactive_Java_Book/vert.x-3.0.0/lib/vertx-core-3.0.0
+ .jar /home/narex/Dropbox/CoursM1/Java_avance/Interactive_Java_Book/ve
+ rt.x-3.0.0/lib/vertx-mail-client-3.0.0.jar /home/narex/Dropbox/CoursM
+ 1/Java_avance/Interactive_Java_Book/vert.x-3.0.0/lib/vertx-mail-servi
+ ce-3.0.0.jar /home/narex/Dropbox/CoursM1/Java_avance/Interactive_Java
+ _Book/vert.x-3.0.0/lib/vertx-unit-3.0.0.jar /home/narex/Dropbox/Cours
+ M1/Java_avance/Interactive_Java_Book/vert.x-3.0.0/lib/vertx-web-3.0.0
+ .jar /home/narex/Dropbox/CoursM1/Java_avance/Interactive_Java_Book/cl
+ asses
+

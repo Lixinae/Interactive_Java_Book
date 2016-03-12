@@ -65,3 +65,6 @@ $RECYCLE.BIN/
 /bin/
 /classes/
 /.settings/
+*.xml
+.idea/.name
+inside.txt
