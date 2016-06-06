@@ -61,15 +61,6 @@ class Exercise {
         String[] tokens = s.split("\\$");
         testExercise = Objects.requireNonNull(tokens[1], "There is no testCode for current exercise ( " + number + ") !!!");
 
-        String[] test = testExercise.split("\\n");
-        int i=0;
-        for (String s2 :test){
-            if(s2.compareTo("")!=0) {
-                System.out.println(i);
-                System.out.println(s2);
-            }
-            i++;
-        }
         return tokens[0];
     }
 

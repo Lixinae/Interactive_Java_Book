@@ -115,9 +115,13 @@ public class ValidationImpl implements Validation {
         return nbCrochet;
     }
 
-    // TODO Need to update the split input for the testInput
     private List<String> splitTestInput(String input) {
         List<String> listInput = new ArrayList<>();
+        String[] inp = input.split(";");
+        for(String i :inp){
+        	listInput.add(i);
+        }
+        System.out.println("listInput :"+listInput);
         return listInput;
     }
 
