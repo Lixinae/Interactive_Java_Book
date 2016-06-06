@@ -42,10 +42,10 @@ public class ValidationImpl implements Validation {
         return "Your code doesn't work with the test input";
     }
 
-    private boolean validateInput(String input, boolean user) {
+    private boolean validateInput(String input, boolean isUserInput) {
 
         List<String> list_input;
-        if (user) {
+        if (isUserInput) {
             list_input = splitUserInput(input);
         } else {
             list_input = splitTestInput(input);
